@@ -1,0 +1,54 @@
+schema_version: control-definition-v1
+id: CTRL-WORKLOAD-0001
+slug: workload-security-context-baseline
+name: Workload security context baseline
+family: workload-hardening
+summary: Detect dangerous workload security-context defaults that materially weaken container isolation.
+description: >
+  This control packages the first high-signal workload hardening checks that
+  should be visible to operators as one baseline: privilege, host namespace
+  access, root execution, privilege escalation, immutable filesystem posture,
+  and capability dropping.
+maturity: seeded
+severity: critical
+supported_surfaces:
+  - static
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - ai
+detection_modes:
+  - native_rule
+resource_kinds:
+  - Deployment
+pattern_ids:
+  - CCVE-2025-3727
+  - CCVE-2025-3729
+  - CCVE-2025-3733
+  - CCVE-2025-3734
+  - CCVE-2025-3735
+  - CCVE-2025-3736
+tags:
+  - workload
+  - pod-security
+  - security-context
+  - container-hardening
+  - baseline
+remediation:
+  strategy: config_fix
+  safety_class: safe_auto
+  guidance:
+    - Remove privileged and host-namespace access unless there is an explicit, reviewed platform need.
+    - Set non-root execution, disable allowPrivilegeEscalation, enforce readOnlyRootFilesystem, and drop ALL capabilities by default.
+    - Treat exceptions as narrow waivers, not baseline config.
+evidence_expectations:
+  intent_signals:
+    - spec.template.spec.containers[].securityContext
+    - spec.template.spec.hostPID
+    - spec.template.spec.hostIPC
+    - spec.template.spec.hostNetwork
+  live_signals: []
+  corroborating_sources:
+    - rendered manifests
+    - deployment yaml

@@ -36,6 +36,8 @@ As of 2026-03-22:
 - the first partial copy wave is now started:
   - 19 items are present in `confighub-patterns` and byte-for-byte matched
   - 20 planned items remain intentionally not copied
+- the first seeded controls and frameworks now live in this repo and validate
+  through `scripts/build-control-taxonomy-summary.py`
 
 ## Intended Layout
 
@@ -62,6 +64,7 @@ See also:
 - `docs/TAXONOMY.md`
 - `docs/PRODUCT-THESIS.md`
 - `docs/CANDIDATE-CONTROL-FAMILIES.md`
+- `dist/control-taxonomy-summary-v1.json`
 
 ## Consumer Model
 

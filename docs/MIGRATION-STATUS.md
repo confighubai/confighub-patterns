@@ -9,6 +9,9 @@ As of 2026-03-22:
 - first-wave copy readiness is now machine-checked by
   `scripts/build-first-wave-copy-manifest.py`
 - the first partial copy wave is now in progress
+- the first seeded control and framework definitions now exist in-repo
+- control/framework summary generation is now machine-checked by
+  `scripts/build-control-taxonomy-summary.py`
 - no canonical pattern source files have been moved yet
 - `confighub-scan` is still the active authoring home for the corpus
 
@@ -48,6 +51,11 @@ The target taxonomy is now explicit:
 - `patterns/` for broad canonical risk knowledge
 - `controls/` for promoted operator-facing checks
 - `frameworks/` for grouped views over controls
+
+The first seeded implementation slice is now explicit too:
+- 4 seeded controls
+- 2 seeded frameworks
+- a summary artifact at `dist/control-taxonomy-summary-v1.json`
 
 ## Explicit Non-Goals For Bootstrap
 

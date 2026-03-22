@@ -1,0 +1,16 @@
+schema_version: framework-definition-v1
+id: FRM-GITOPS-0998
+slug: missing-control-framework
+name: Missing control framework
+family: gitops-operators
+summary: Invalid framework that references a missing control.
+description: Invalid framework that references a missing control.
+maturity: seeded
+control_ids:
+  - CTRL-GITOPS-DOES-NOT-EXIST
+platforms:
+  - argocd
+tags:
+  - gitops
+outcomes:
+  - This should fail validation.

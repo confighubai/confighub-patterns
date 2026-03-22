@@ -1,0 +1,45 @@
+schema_version: control-definition-v1
+id: CTRL-WORKLOAD-0002
+slug: workload-resource-governance-baseline
+name: Workload resource governance baseline
+family: workload-hardening
+summary: Detect missing resource limits that lead to noisy-neighbor behavior and unstable scheduling.
+description: >
+  This control groups the minimum resource-governance baseline that should be
+  visible in operator scorecards and CI gates. It starts with resource limits
+  because that signal is deterministic and widely actionable.
+maturity: seeded
+severity: warning
+supported_surfaces:
+  - static
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - ai
+detection_modes:
+  - native_rule
+resource_kinds:
+  - Deployment
+pattern_ids:
+  - CCVE-2025-3728
+tags:
+  - workload
+  - resources
+  - limits
+  - scheduling
+  - baseline
+remediation:
+  strategy: config_fix
+  safety_class: safe_auto
+  guidance:
+    - Set CPU and memory limits for every container and pair them with requests.
+    - Consider namespace-level defaults where teams repeatedly omit limits.
+    - Treat missing limits as a reliability problem, not only a policy problem.
+evidence_expectations:
+  intent_signals:
+    - spec.template.spec.containers[].resources
+  live_signals: []
+  corroborating_sources:
+    - rendered manifests
+    - deployment yaml

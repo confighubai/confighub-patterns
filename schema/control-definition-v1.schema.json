@@ -1,0 +1,220 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://confighub.ai/schema/control-definition-v1.schema.json",
+  "title": "Control Definition v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "slug",
+    "name",
+    "family",
+    "summary",
+    "description",
+    "maturity",
+    "severity",
+    "supported_surfaces",
+    "supported_consumers",
+    "detection_modes",
+    "resource_kinds",
+    "pattern_ids",
+    "tags",
+    "remediation",
+    "evidence_expectations"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "control-definition-v1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^CTRL-[A-Z0-9-]+$"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "family": {
+      "type": "string",
+      "enum": [
+        "gitops-operators",
+        "workload-hardening",
+        "rbac-and-identity",
+        "network-exposure",
+        "secrets-and-credentials",
+        "cluster-hardening",
+        "platform-best"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "maturity": {
+      "type": "string",
+      "enum": [
+        "seeded",
+        "candidate",
+        "promoted"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "warning",
+        "high",
+        "critical"
+      ]
+    },
+    "supported_surfaces": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "static",
+          "live_state",
+          "imported_evidence",
+          "connected_validation",
+          "repo_vs_live"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "supported_consumers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "cli",
+          "cub_scout",
+          "confighub",
+          "sdk",
+          "ai"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "detection_modes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "native_rule",
+          "external_mapping",
+          "sdk_worker",
+          "derived_comparison"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "resource_kinds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "pattern_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^CCVE-[0-9]{4}-[0-9]{4}$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "remediation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strategy",
+        "safety_class",
+        "guidance"
+      ],
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "enum": [
+            "config_fix",
+            "diagnose_then_fix",
+            "operational_fix",
+            "manual_review"
+          ]
+        },
+        "safety_class": {
+          "type": "string",
+          "enum": [
+            "safe_auto",
+            "review_required",
+            "manual_only",
+            "diagnose_only"
+          ]
+        },
+        "guidance": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "evidence_expectations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "intent_signals",
+        "live_signals",
+        "corroborating_sources"
+      ],
+      "properties": {
+        "intent_signals": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "live_signals": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "corroborating_sources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

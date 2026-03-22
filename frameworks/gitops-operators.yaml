@@ -1,0 +1,27 @@
+schema_version: framework-definition-v1
+id: FRM-GITOPS-0001
+slug: gitops-operators
+name: GitOps operators
+family: gitops-operators
+summary: Curated controls for diagnosing intent, reconciliation, and live-state problems in GitOps-managed workloads.
+description: >
+  This framework groups the first operator-facing controls for Argo CD and Flux.
+  It is aimed at teams who need to distinguish desired-state defects from
+  rollout and reconciliation failures.
+maturity: seeded
+control_ids:
+  - CTRL-GITOPS-0001
+  - CTRL-GITOPS-0002
+platforms:
+  - argocd
+  - flux
+  - kubernetes
+tags:
+  - gitops
+  - operators
+  - reconciliation
+  - intent-vs-live
+outcomes:
+  - Surface the highest-signal GitOps health failures in one operator-facing bundle.
+  - Encourage intent-vs-live comparison instead of treating every failure as the same class of problem.
+  - Provide a stable framework surface before the full pattern corpus is promoted into controls.

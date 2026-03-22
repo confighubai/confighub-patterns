@@ -1,0 +1,57 @@
+schema_version: control-definition-v1
+id: CTRL-GITOPS-0002
+slug: flux-reconciliation-reliability
+name: Flux reconciliation reliability
+family: gitops-operators
+summary: Detect release, source, and dependency conditions that cause Flux reconciliation to stall or fail.
+description: >
+  This control covers the high-signal Flux failure modes that show up as broken
+  HelmRelease or Kustomization reconciliation, especially where static config
+  and live-state evidence need to be read together.
+maturity: seeded
+severity: high
+supported_surfaces:
+  - static
+  - live_state
+  - repo_vs_live
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - ai
+detection_modes:
+  - native_rule
+  - derived_comparison
+resource_kinds:
+  - HelmRelease
+  - Kustomization
+pattern_ids:
+  - CCVE-2025-0007
+  - CCVE-2025-0013
+  - CCVE-2025-0166
+  - CCVE-2025-5001
+  - CCVE-2025-5002
+tags:
+  - flux
+  - gitops
+  - helmrelease
+  - kustomization
+  - reconciliation
+remediation:
+  strategy: diagnose_then_fix
+  safety_class: review_required
+  guidance:
+    - Fix dependency cycles and timeout configuration in intent before retrying reconciliation.
+    - Correlate live Ready or progressing state with the desired config to separate rollout lag from bad configuration.
+    - Use live cluster evidence when investigating stuck or repeatedly failing releases.
+evidence_expectations:
+  intent_signals:
+    - spec.timeout
+    - spec.dependsOn
+  live_signals:
+    - status.conditions
+    - Ready Unknown or Failed reconciliation state
+  corroborating_sources:
+    - flux get all
+    - source-controller logs
+    - helm-controller logs
