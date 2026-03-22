@@ -41,6 +41,7 @@ As of 2026-03-22:
   through `scripts/build-control-taxonomy-summary.py`
 - the first generated promoted-taxonomy bundle now exists at
   `dist/control-framework-bundle-v1.json`
+- the repo-native release manifest now exists at `dist/bundle-manifest-v1.json`
 
 ## Intended Layout
 
@@ -69,6 +70,7 @@ See also:
 - `docs/CANDIDATE-CONTROL-FAMILIES.md`
 - `dist/control-taxonomy-summary-v1.json`
 - `dist/control-framework-bundle-v1.json`
+- `dist/bundle-manifest-v1.json`
 
 ## Consumer Model
 

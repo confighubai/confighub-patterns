@@ -13,6 +13,13 @@ The first bundle release set should include:
 
 Optional alongside the same release set:
 - `helm-pattern-database-v1.json`
+- `control-taxonomy-summary-v1.json`
+- `control-framework-bundle-v1.json`
+
+Current state:
+- the repo now generates `dist/bundle-manifest-v1.json`
+- the manifest already advertises the promoted-taxonomy artifacts alongside the
+  existing runtime catalog files
 
 ## Cache Layout
 

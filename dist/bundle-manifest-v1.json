@@ -1,0 +1,56 @@
+{
+  "schema_version": "bundle-manifest-v1",
+  "published_at": "2026-03-22T22:51:58Z",
+  "bundle_version": "dev",
+  "source_repo": "confighubai/confighub-patterns",
+  "files": [
+    {
+      "name": "risk-catalog",
+      "path": "dist/risk-catalog-v1.json",
+      "schema_version": "risk-catalog-v1",
+      "sha256": "3315e06b520610c00415c5ae700b7bce3277689c99166e396a99ab6532e4f689",
+      "size_bytes": 9162960,
+      "required": true
+    },
+    {
+      "name": "risk-function-links",
+      "path": "dist/risk-function-links-v1.json",
+      "schema_version": "risk-function-links-v1",
+      "sha256": "9ebb1ec77387610642eb3b3f19ed0e8f8a443f73cc8c3aef9f3c4b5e56c4d7b9",
+      "size_bytes": 87750,
+      "required": true
+    },
+    {
+      "name": "cross-tool-mapping",
+      "path": "dist/quality/cross-tool-mapping-v1.json",
+      "schema_version": "cross-tool-mapping-v1",
+      "sha256": "28b6730c689b42adf97167780384eaf2b541e5f52066334fffecd3b4aa02c7f7",
+      "size_bytes": 1554,
+      "required": true
+    },
+    {
+      "name": "helm-pattern-database",
+      "path": "dist/helm-pattern-database-v1.json",
+      "schema_version": "helm-pattern-database-v1",
+      "sha256": "cd90935e4cfd3319824ac1abe8eb2ddd1068bfa6d573aa4fb7fc12a53c5882de",
+      "size_bytes": 32785,
+      "required": false
+    },
+    {
+      "name": "control-taxonomy-summary",
+      "path": "dist/control-taxonomy-summary-v1.json",
+      "schema_version": "control-taxonomy-summary-v1",
+      "sha256": "15b35ba40029d47a6f1024658e57cd31a377825cd99f1daf557273d0bbcf4132",
+      "size_bytes": 6985,
+      "required": false
+    },
+    {
+      "name": "control-framework-bundle",
+      "path": "dist/control-framework-bundle-v1.json",
+      "schema_version": "control-framework-bundle-v1",
+      "sha256": "adcd16da8ff73296213058cdd765c328f8c5267f6e884ef3ac447914dac4c804",
+      "size_bytes": 19592,
+      "required": false
+    }
+  ]
+}
