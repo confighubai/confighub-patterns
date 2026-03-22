@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -29,8 +30,8 @@ MOVE_ITEMS: list[MoveItem] = [
     MoveItem("pattern_source", "glob", "risks/*.yaml", "patterns/"),
     MoveItem("pattern_source", "dir", "risks/archive", "patterns/archive"),
     MoveItem("pattern_source", "file", "risks/README.md", "docs/source-risks-README.md"),
-    MoveItem("external_mappings", "file", "risks/kyverno/kyverno-ccve-mappings-v1.json", "mappings/kyverno-ccve-mappings-v1.json"),
-    MoveItem("external_mappings", "file", "risks/trivy/trivy-ccve-mappings-v1.json", "mappings/trivy-ccve-mappings-v1.json"),
+    MoveItem("external_mappings", "file", "risks/kyverno/kyverno-ccve-mappings-v1.json", "mappings/kyverno/kyverno-ccve-mappings-v1.json"),
+    MoveItem("external_mappings", "file", "risks/trivy/trivy-ccve-mappings-v1.json", "mappings/trivy/trivy-ccve-mappings-v1.json"),
     MoveItem("external_mappings", "file", "scripts/build-cross-tool-mapping.py", "scripts/build-cross-tool-mapping.py"),
     MoveItem("external_mappings", "file", "risks/quality/cross-tool-mapping-policy-v1.json", "quality/cross-tool-mapping-policy-v1.json"),
     MoveItem("schema", "file", "risks/schema/ccve-taxonomy-v1.yaml", "schema/ccve-taxonomy-v1.yaml"),
@@ -75,6 +76,7 @@ def summarize_source(source_repo: Path, item: MoveItem) -> dict[str, Any]:
         "source_type": item.source_type,
         "source": item.source,
         "destination": item.destination,
+        "target": item.destination,
     }
 
     if item.source_type == "glob":
@@ -94,12 +96,71 @@ def summarize_source(source_repo: Path, item: MoveItem) -> dict[str, Any]:
     return entry
 
 
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(65536), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def add_target_state(source_repo: Path, entry: dict[str, Any]) -> dict[str, Any]:
+    source_path = source_repo / entry["source"]
+    target_path = REPO_ROOT / entry["destination"]
+    entry["target_exists"] = target_path.exists()
+
+    if not entry["exists"]:
+        entry["copy_status"] = "missing_source"
+        return entry
+
+    if entry["source_type"] == "file":
+        if source_path.is_file():
+            entry["source_sha256"] = file_sha256(source_path)
+        if target_path.is_file():
+            entry["target_sha256"] = file_sha256(target_path)
+        if not target_path.exists():
+            entry["copy_status"] = "ready_not_copied"
+        elif entry.get("source_sha256") == entry.get("target_sha256"):
+            entry["copy_status"] = "copied_matching"
+        else:
+            entry["copy_status"] = "copied_drifted"
+        return entry
+
+    if entry["source_type"] == "dir":
+        source_files = [path for path in source_path.rglob("*") if path.is_file()]
+        target_files = [path for path in target_path.rglob("*") if path.is_file()] if target_path.exists() else []
+        entry["target_file_count"] = len(target_files)
+        if not target_path.exists():
+            entry["copy_status"] = "ready_not_copied"
+        elif len(source_files) == len(target_files):
+            entry["copy_status"] = "copied_matching"
+        else:
+            entry["copy_status"] = "copy_incomplete"
+        return entry
+
+    source_glob = entry["source"]
+    target_glob = str(Path(entry["destination"]) / Path(source_glob).name)
+    target_matches = sorted(REPO_ROOT.glob(target_glob))
+    entry["target_match_count"] = len(target_matches)
+    entry["target_samples"] = [str(path.relative_to(REPO_ROOT)) for path in target_matches[:5]]
+    if not target_matches:
+        entry["copy_status"] = "ready_not_copied"
+    elif entry.get("match_count") == len(target_matches):
+        entry["copy_status"] = "copied_matching"
+    else:
+        entry["copy_status"] = "copy_incomplete"
+    return entry
+
+
 def build_manifest(source_repo: Path) -> dict[str, Any]:
-    items = [summarize_source(source_repo, item) for item in MOVE_ITEMS]
+    items = [add_target_state(source_repo, summarize_source(source_repo, item)) for item in MOVE_ITEMS]
     missing = [item["source"] for item in items if not item["exists"]]
+    copy_status_counts: dict[str, int] = {}
     category_counts: dict[str, int] = {}
     for item in items:
         category_counts[item["category"]] = category_counts.get(item["category"], 0) + 1
+        copy_status = item["copy_status"]
+        copy_status_counts[copy_status] = copy_status_counts.get(copy_status, 0) + 1
 
     return {
         "schema_version": "first-wave-copy-manifest-v1",
@@ -110,6 +171,7 @@ def build_manifest(source_repo: Path) -> dict[str, Any]:
         "missing_count": len(missing),
         "missing_sources": missing,
         "category_counts": category_counts,
+        "copy_status_counts": copy_status_counts,
         "items": items,
     }
 
@@ -153,7 +215,8 @@ def main() -> int:
     write_manifest(args.out, manifest)
     print(
         f"wrote {args.out} "
-        f"({manifest['item_count']} items, {manifest['missing_count']} missing)"
+        f"({manifest['item_count']} items, {manifest['missing_count']} missing, "
+        f"copy states: {manifest['copy_status_counts']})"
     )
     return 0
 

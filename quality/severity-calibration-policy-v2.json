@@ -1,0 +1,24 @@
+{
+  "schema_version": "severity-calibration-policy-v2",
+  "max_launch_info": 2,
+  "allow_launch_info_ids": [
+    "CCVE-2025-1423",
+    "CCVE-2025-3190"
+  ],
+  "forbid_advisory_critical": true,
+  "max_security_info": 0,
+  "allow_security_info_ids": [],
+  "category_bucket_constraints": [
+    {
+      "category": "SECURITY",
+      "min_bucket": "warning",
+      "max_bucket": "critical",
+      "allow_ids": []
+    }
+  ],
+  "require_launch_rationale": true,
+  "launch_rationale_paths": [
+    "references",
+    "detection.raw.notes"
+  ]
+}

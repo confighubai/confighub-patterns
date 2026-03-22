@@ -1,0 +1,10 @@
+{
+  "schema_version": "promotion-quality-policy-v1",
+  "max_todo_fields": 0,
+  "require_fixture": true,
+  "require_benchmark": true,
+  "require_source_url": true,
+  "require_remediation": true,
+  "require_detection": true,
+  "max_promoted_with_todos": 0
+}

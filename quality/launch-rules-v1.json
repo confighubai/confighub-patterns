@@ -1,0 +1,643 @@
+{
+  "schema_version": "launch-rule-quality-v1",
+  "description": "Launch-track misconfiguration rules with deterministic fixture and evidence requirements.",
+  "rules": [
+    {
+      "id": "CCVE-2025-0001",
+      "tier": "verified",
+      "determinism_note": "Deterministic when GitRepository Ready=False; fixture encodes this exact status condition and rule should always fire.",
+      "evidence_urls": [
+        "https://fluxcd.io/flux/cheatsheets/troubleshooting/#changes-are-not-being-applied"
+      ],
+      "fixture": "CCVE-2025-0001-gitrepo-not-ready.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0002",
+      "tier": "verified",
+      "determinism_note": "Deterministic when Kustomization Ready=False with BuildFailed reason; fixture contains this exact state and no ambiguity.",
+      "evidence_urls": [
+        "https://fluxcd.io/flux/cheatsheets/troubleshooting/#changes-are-not-being-applied"
+      ],
+      "fixture": "CCVE-2025-0002-kustomization-build-failed.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0004",
+      "tier": "verified",
+      "determinism_note": "Deterministic when Argo Application operationState phase is Failed; fixture captures this status directly.",
+      "evidence_urls": [
+        "https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/"
+      ],
+      "fixture": "CCVE-2025-0004-argo-sync-failed.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0005",
+      "tier": "verified",
+      "determinism_note": "Deterministic when Argo Application sync.status is OutOfSync; fixture provides explicit OutOfSync state.",
+      "evidence_urls": [
+        "https://argo-cd.readthedocs.io/en/stable/user-guide/auto_sync/"
+      ],
+      "fixture": "CCVE-2025-0005-argo-out-of-sync.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0012",
+      "tier": "candidate",
+      "determinism_note": "Deterministic by comparing last-applied container image and current container image for the same container name.",
+      "evidence_urls": [
+        "https://kubernetes.io/docs/concepts/containers/images/"
+      ],
+      "fixture": "CCVE-2025-0012-image-tag-drift.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0021",
+      "tier": "candidate",
+      "determinism_note": "Deterministic fixture keying on known invalid datasource token in grafana-datasources ConfigMap content.",
+      "evidence_urls": [
+        "https://grafana.com/docs/grafana/latest/datasources/"
+      ],
+      "fixture": "CCVE-2025-0021-grafana-datasource-failed.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0022",
+      "tier": "verified",
+      "determinism_note": "Deterministic for PVC pending phase and pod condition containing unbound immediate PVC wording.",
+      "evidence_urls": [
+        "https://kubernetes.io/docs/concepts/storage/persistent-volumes/"
+      ],
+      "fixture": "CCVE-2025-0022-grafana-pvc-unbound.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0024",
+      "tier": "candidate",
+      "determinism_note": "Deterministic on missing grafana_dashboard label and missing fsGroup=472 in grafana deployment security context.",
+      "evidence_urls": [
+        "https://grafana.com/docs/grafana/latest/administration/provisioning/#dashboards"
+      ],
+      "fixture": "CCVE-2025-0024-grafana-dashboard-provisioning-failed.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0027",
+      "tier": "gold",
+      "determinism_note": "Deterministic string match for whitespace in comma-separated NAMESPACE env var in grafana-sc-dashboard sidecar.",
+      "evidence_urls": [
+        "https://github.com/kiwigrid/k8s-sidecar#configuration-environment-variables"
+      ],
+      "fixture": "CCVE-2025-0027-grafana-namespace-whitespace.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0028",
+      "tier": "verified",
+      "determinism_note": "Deterministic when IngressRoute service references cannot be resolved to Services in the same namespace.",
+      "evidence_urls": [
+        "https://doc.traefik.io/traefik/routing/providers/kubernetes-crd/"
+      ],
+      "fixture": "CCVE-2025-0028-traefik-service-not-found.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0029",
+      "tier": "verified",
+      "determinism_note": "Deterministic boolean check for tls.passthrough=true on IngressRoute where IngressRouteTCP is required.",
+      "evidence_urls": [
+        "https://doc.traefik.io/traefik/routing/routers/#passthrough"
+      ],
+      "fixture": "CCVE-2025-0029-traefik-tls-passthrough-wrong-type.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0031",
+      "tier": "verified",
+      "determinism_note": "Deterministic by parsing defined Traefik entrypoints from deployment args and comparing to route entryPoints.",
+      "evidence_urls": [
+        "https://doc.traefik.io/traefik/routing/entrypoints/"
+      ],
+      "fixture": "CCVE-2025-0031-traefik-entrypoint-not-defined.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0056",
+      "tier": "verified",
+      "determinism_note": "Deterministic comparison between Kustomization expected replicas annotation and owned Deployment replica count.",
+      "evidence_urls": [
+        "https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/patches/"
+      ],
+      "fixture": "CCVE-2025-0056-silent-patch-failure.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-3727",
+      "tier": "verified",
+      "determinism_note": "Deterministic when static Deployment (no status) has any container with securityContext.privileged=true.",
+      "evidence_urls": [
+        "https://kubernetes.io/docs/concepts/security/pod-security-standards/"
+      ],
+      "fixture": "CCVE-2025-3727-deployment-privileged-container.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-3728",
+      "tier": "verified",
+      "determinism_note": "Deterministic when static Deployment (no status) has all containers missing resources.limits.",
+      "evidence_urls": [
+        "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
+      ],
+      "fixture": "CCVE-2025-3728-deployment-missing-resource-limits.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-3729",
+      "tier": "verified",
+      "determinism_note": "Deterministic when static Deployment (no status) has hostNetwork, hostPID, or hostIPC set to true in pod spec.",
+      "evidence_urls": [
+        "https://kubernetes.io/docs/concepts/security/pod-security-standards/"
+      ],
+      "fixture": "CCVE-2025-3729-deployment-host-namespaces.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-3731",
+      "tier": "verified",
+      "determinism_note": "Deterministic when static Deployment (no status) has any container image with :latest tag or no tag (digest refs excluded).",
+      "evidence_urls": [
+        "https://kubernetes.io/docs/concepts/containers/images/#image-names"
+      ],
+      "fixture": "CCVE-2025-3731-deployment-image-latest-tag.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0081",
+      "tier": "verified",
+      "determinism_note": "Deterministic when Pod status.phase is Pending and status.conditions[PodScheduled].status is False with message containing Insufficient cpu or memory.",
+      "evidence_urls": [
+        "https://kubernetes.io/docs/concepts/scheduling-eviction/pod-scheduling-readiness/"
+      ],
+      "fixture": "CCVE-2025-0081-pod-pending-insufficient-resources.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-1026",
+      "tier": "verified",
+      "determinism_note": "Deterministic when Node status.conditions contains DiskPressure with status True.",
+      "evidence_urls": [
+        "https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/"
+      ],
+      "fixture": "CCVE-2025-1026-node-disk-pressure.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-2075",
+      "tier": "verified",
+      "determinism_note": "Deterministic when Deployment status.conditions[Progressing].status is False with reason ProgressDeadlineExceeded.",
+      "evidence_urls": [
+        "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#progress-deadline-seconds"
+      ],
+      "fixture": "CCVE-2025-2075-deployment-progress-deadline-exceeded.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-1915",
+      "tier": "verified",
+      "determinism_note": "Deterministic when DaemonSet status.currentNumberScheduled < status.desiredNumberScheduled.",
+      "evidence_urls": [
+        "https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/"
+      ],
+      "fixture": "CCVE-2025-1915-daemonset-scheduling-mismatch.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-1229",
+      "tier": "verified",
+      "determinism_note": "Deterministic when Job status.conditions contains Failed with status True and reason DeadlineExceeded.",
+      "evidence_urls": [
+        "https://kubernetes.io/docs/concepts/workloads/controllers/job/#job-termination-and-cleanup"
+      ],
+      "fixture": "CCVE-2025-1229-job-deadline-exceeded.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0972",
+      "tier": "verified",
+      "determinism_note": "Deterministic when Node Ready condition is False or Unknown and spec.taints lacks unreachable or not-ready NoExecute taint.",
+      "evidence_urls": [
+        "https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/#taint-based-evictions"
+      ],
+      "fixture": "CCVE-2025-0972-node-notready-missing-taint.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0128",
+      "tier": "verified",
+      "determinism_note": "Deterministic when Argo Application has spec.syncPolicy.automated present but prune is missing or false.",
+      "evidence_urls": [
+        "https://argo-cd.readthedocs.io/en/stable/user-guide/auto_sync/"
+      ],
+      "fixture": "CCVE-2025-0128-application-automated-sync-no-prune.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0062",
+      "tier": "verified",
+      "determinism_note": "Deterministic when Istio Gateway spec.selector labels do not match any Pod labels in the scanned documents.",
+      "evidence_urls": [
+        "https://istio.io/latest/docs/reference/config/networking/gateway/"
+      ],
+      "fixture": "CCVE-2025-0062-gateway-selector-no-pods.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-1531",
+      "tier": "verified",
+      "determinism_note": "Deterministic when CephCluster has spec.external.enable=true and status.state is Connecting.",
+      "evidence_urls": [
+        "https://rook.io/docs/rook/latest/CRDs/Cluster/external-cluster/"
+      ],
+      "fixture": "CCVE-2025-1531-cephcluster-external-stuck-connecting.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-2992",
+      "tier": "verified",
+      "determinism_note": "Deterministic when PipelineRun has deletionTimestamp set, finalizers present, and Succeeded condition resolved (True or False).",
+      "evidence_urls": [
+        "https://github.com/tektoncd/pipeline/issues/8824"
+      ],
+      "fixture": "CCVE-2025-2992-pipelinerun-finalizers-stuck.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0577",
+      "tier": "verified",
+      "determinism_note": "Deterministic when Prometheus spec.retentionSize uses Kubernetes binary units (Ki, Mi, Gi, Ti) instead of Prometheus decimal units (KB, MB, GB, TB).",
+      "evidence_urls": [
+        "https://github.com/prometheus-community/helm-charts/issues/2567"
+      ],
+      "fixture": "CCVE-2025-0577-prometheus-retention-size-wrong-format.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-3009",
+      "tier": "verified",
+      "determinism_note": "Deterministic when TaskRun status condition Succeeded=False with reason TaskRunTimeout.",
+      "evidence_urls": [
+        "https://github.com/tektoncd/pipeline/issues/9144"
+      ],
+      "fixture": "CCVE-2025-3009-taskrun-timed-out.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-2991",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when Pipeline spec.params[].default contains $(params.) references to other parameters.",
+      "evidence_urls": ["https://tekton.dev/docs/pipelines/pipelines/#specifying-parameters"],
+      "fixture": "CCVE-2025-2991-pipeline-param-default-refs.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-3003",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when Pipeline uses local/cluster resolver and parameter default references another parameter.",
+      "evidence_urls": ["https://tekton.dev/docs/pipelines/pipelines/#specifying-parameters"],
+      "fixture": "CCVE-2025-3003-pipeline-local-resolver-param-ref.yaml",
+      "allowed_extra_ids": ["CCVE-2025-2991"]
+    },
+    {
+      "id": "CCVE-2025-3019",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when EventListener has both triggerRef and namespaceSelector configured simultaneously.",
+      "evidence_urls": ["https://tekton.dev/docs/triggers/eventlisteners/"],
+      "fixture": "CCVE-2025-3019-eventlistener-duplicate-triggers.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-3020",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when EventListener uses GitHub interceptor with secretRef (SHA-1 only).",
+      "evidence_urls": ["https://tekton.dev/docs/triggers/interceptors/#github-interceptors"],
+      "fixture": "CCVE-2025-3020-eventlistener-github-sha1.yaml",
+      "allowed_extra_ids": ["CCVE-2025-3005"]
+    },
+    {
+      "id": "CCVE-2025-1984",
+      "tier": "candidate",
+      "determinism_note": "Deterministic cross-resource check when TriggerAuthentication secretTargetRef references Secret in different namespace.",
+      "evidence_urls": ["https://keda.sh/docs/latest/concepts/authentication/"],
+      "fixture": "CCVE-2025-1984-triggerauthentication-cross-ns-secret.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0096",
+      "tier": "candidate",
+      "determinism_note": "Deterministic cross-resource check when TriggerAuthentication references Secret not present in scanned documents.",
+      "evidence_urls": ["https://keda.sh/docs/latest/concepts/authentication/"],
+      "fixture": "CCVE-2025-0096-triggerauthentication-missing-secret.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-1979",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when ScaledJob spec.scalingStrategy.strategy is accurate.",
+      "evidence_urls": ["https://keda.sh/docs/latest/concepts/scaling-jobs/"],
+      "fixture": "CCVE-2025-1979-scaledjob-accurate-strategy.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-1983",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when ScaledJob jobTargetRef containers have volumeMounts but no volumes defined.",
+      "evidence_urls": ["https://keda.sh/docs/latest/concepts/scaling-jobs/"],
+      "fixture": "CCVE-2025-1983-scaledjob-empty-volumes.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0530",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when AnalysisRun status.phase is Inconclusive.",
+      "evidence_urls": ["https://argoproj.github.io/argo-rollouts/features/analysis/"],
+      "fixture": "CCVE-2025-0530-analysisrun-inconclusive.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-3093",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when AnalysisTemplate has multiple metrics and none has successCondition.",
+      "evidence_urls": ["https://argoproj.github.io/argo-rollouts/features/analysis/"],
+      "fixture": "CCVE-2025-3093-analysistemplate-multi-metric-no-success.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-3013",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when Pipeline task uses matrix strategy and subsequent task references results from matrix task.",
+      "evidence_urls": ["https://tekton.dev/docs/pipelines/matrix/"],
+      "fixture": "CCVE-2025-3013-pipeline-matrix-result-ref.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-3005",
+      "tier": "candidate",
+      "determinism_note": "Deterministic cross-resource check when EventListener references ClusterInterceptor not present in scanned documents.",
+      "evidence_urls": ["https://tekton.dev/docs/triggers/clusterinterceptors/"],
+      "fixture": "CCVE-2025-3005-eventlistener-missing-interceptor.yaml",
+      "allowed_extra_ids": ["CCVE-2025-3020"]
+    },
+    {
+      "id": "CCVE-2025-2652",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when PushSecret references Vault store and has refreshInterval configured.",
+      "evidence_urls": ["https://external-secrets.io/latest/api/pushsecret/"],
+      "fixture": "CCVE-2025-2652-pushsecret-vault-unnecessary-updates.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-2698",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when 3+ PushSecrets exist, indicating potential concurrency bottleneck.",
+      "evidence_urls": ["https://external-secrets.io/latest/api/pushsecret/"],
+      "fixture": "CCVE-2025-2698-pushsecret-concurrency-limited.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-2630",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when OCIRepository spec.ref.tag differs from status.artifact.revision.",
+      "evidence_urls": ["https://fluxcd.io/flux/components/source/ocirepositories/"],
+      "fixture": "CCVE-2025-2630-ocirepository-version-drift.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0686",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when HelmRepository artifact lastUpdateTime is stale and not suspended.",
+      "evidence_urls": ["https://fluxcd.io/flux/components/source/helmrepositories/"],
+      "fixture": "CCVE-2025-0686-helmrepository-stale-artifact.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-2628",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when ImageUpdateAutomation status conditions contain push failure message.",
+      "evidence_urls": ["https://fluxcd.io/flux/components/image/imageupdateautomations/"],
+      "fixture": "CCVE-2025-2628-imageupdateautomation-push-failed.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0143",
+      "tier": "verified",
+      "determinism_note": "Deterministic cross-resource check when IngressRoute middleware namespace differs from IngressRoute namespace.",
+      "evidence_urls": ["https://doc.traefik.io/traefik/routing/providers/kubernetes-crd/"],
+      "fixture": "CCVE-2025-0143-ingressroute-cross-namespace-middleware.yaml",
+      "allowed_extra_ids": ["CCVE-2025-0028"]
+    },
+    {
+      "id": "CCVE-2025-0159",
+      "tier": "verified",
+      "determinism_note": "Deterministic when Middleware uses spec.ipWhiteList which is deprecated in Traefik v3.",
+      "evidence_urls": ["https://doc.traefik.io/traefik/middlewares/http/ipallowlist/"],
+      "fixture": "CCVE-2025-0159-middleware-ipwhitelist-deprecated.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-2924",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when ServiceProfile routes do not specify explicit timeout.",
+      "evidence_urls": ["https://linkerd.io/2/reference/service-profiles/"],
+      "fixture": "CCVE-2025-2924-serviceprofile-missing-timeout.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0120",
+      "tier": "verified",
+      "determinism_note": "Deterministic cross-resource check when L2Advertisement lacks ipAddressPoolSelectors and multiple IPAddressPools exist.",
+      "evidence_urls": ["https://metallb.universe.tf/configuration/_advanced_l2_configuration/"],
+      "fixture": "CCVE-2025-0120-l2advertisement-missing-selector.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-2530",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when Velero Schedule spec.template.orderedResources key is present but value is empty.",
+      "evidence_urls": ["https://velero.io/docs/main/api-types/schedule/"],
+      "fixture": "CCVE-2025-2530-schedule-ordered-resources-empty.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-3129",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when EventSource webhook endpoint field is empty string.",
+      "evidence_urls": ["https://argoproj.github.io/argo-events/eventsources/setup/webhook/"],
+      "fixture": "CCVE-2025-3129-eventsource-webhook-empty-endpoint.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-2253",
+      "tier": "candidate",
+      "determinism_note": "Deterministic cross-resource check when ContourConfiguration has globalExtAuth and HTTPProxy uses TLS redirect.",
+      "evidence_urls": ["https://projectcontour.io/docs/main/config/fundamentals/"],
+      "fixture": "CCVE-2025-2253-contour-globalextauth-https-redirect.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-2378",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when FalcoRule exception has empty fields list.",
+      "evidence_urls": ["https://falco.org/docs/rules/exceptions/"],
+      "fixture": "CCVE-2025-2378-falcorule-exception-empty-fields.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-2017",
+      "tier": "candidate",
+      "determinism_note": "Deterministic cross-resource check when Alertmanager configSecret references Secret with extra keys beyond alertmanager.yaml.",
+      "evidence_urls": ["https://prometheus-operator.dev/docs/api-reference/api/#monitoring.coreos.com/v1.Alertmanager"],
+      "fixture": "CCVE-2025-2017-alertmanager-configsecret-multikey.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0114",
+      "tier": "verified",
+      "determinism_note": "Deterministic when RabbitmqCluster additionalConfig does not contain cluster_partition_handling.",
+      "evidence_urls": ["https://www.rabbitmq.com/docs/partitions"],
+      "fixture": "CCVE-2025-0114-rabbitmqcluster-no-partition-handling.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-3190",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when RuntimeClass has scheduling.nodeSelector set (nodeAffinity not supported by API).",
+      "evidence_urls": ["https://kubernetes.io/docs/concepts/containers/runtime-class/"],
+      "fixture": "CCVE-2025-3190-runtimeclass-nodeselector-no-affinity.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0918",
+      "tier": "candidate",
+      "determinism_note": "Deterministic cross-resource check when Pod in Succeeded/Failed phase uses SecretProviderClass CSI volume.",
+      "evidence_urls": ["https://secrets-store-csi-driver.sigs.k8s.io/topics/secret-auto-rotation.html"],
+      "fixture": "CCVE-2025-0918-secretproviderclass-completed-pod.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-1423",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when GatewayClass status condition Accepted has deprecated reason Waiting.",
+      "evidence_urls": ["https://gateway-api.sigs.k8s.io/reference/spec/#gateway.networking.k8s.io/v1.GatewayClass"],
+      "fixture": "CCVE-2025-1423-gatewayclass-accepted-waiting.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-1434",
+      "tier": "verified",
+      "determinism_note": "Deterministic cross-resource check when Gateway TLS certificateRef crosses namespace without matching ReferenceGrant.",
+      "evidence_urls": ["https://gateway-api.sigs.k8s.io/reference/spec/#gateway.networking.k8s.io/v1beta1.ReferenceGrant"],
+      "fixture": "CCVE-2025-1434-gateway-tls-cross-ns-no-referencegrant.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-2736",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when PolicyException lacks containerSelector and imageSelector, applying to entire workload.",
+      "evidence_urls": ["https://kyverno.io/docs/writing-policies/exceptions/"],
+      "fixture": "CCVE-2025-2736-policyexception-missing-container-selector.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-0197",
+      "tier": "candidate",
+      "determinism_note": "Deterministic cross-resource check when ValidatingAdmissionPolicy targets CRD with additionalProperties:true.",
+      "evidence_urls": ["https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy/"],
+      "fixture": "CCVE-2025-0197-validatingadmissionpolicy-crd-additionalprops.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-1547",
+      "tier": "verified",
+      "determinism_note": "Deterministic when CephObjectStore status.phase is not Ready.",
+      "evidence_urls": ["https://rook.io/docs/rook/latest/CRDs/Object-Storage/object-storage-crd/"],
+      "fixture": "CCVE-2025-1547-cephobjectstore-not-ready.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-3037",
+      "tier": "candidate",
+      "determinism_note": "Deterministic when KafkaRebalance status conditions show Rebalancing state stuck.",
+      "evidence_urls": ["https://strimzi.io/docs/operators/latest/configuring.html#proc-optimizing-broker-rebalancing-str"],
+      "fixture": "CCVE-2025-3037-kafkarebalance-stuck-rebalancing.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-4075",
+      "tier": "verified",
+      "determinism_note": "Deterministic when ClusterRole rules[].resources[] contains nodes/proxy or wildcard *. Fixture provides exact nodes/proxy grant.",
+      "evidence_urls": [
+        "https://blog.aquasec.com/privilege-escalation-kubernetes-rbac",
+        "https://github.com/kubernetes/enhancements/tree/master/keps/sig-auth/2862-kubelet-fine-grained-auth"
+      ],
+      "fixture": "CCVE-2025-4075-clusterrole-nodes-proxy.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-4077",
+      "tier": "verified",
+      "determinism_note": "Deterministic when ClusterRole rules[].resources[] contains pods/exec and verbs include create or wildcard.",
+      "evidence_urls": [
+        "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
+      ],
+      "fixture": "CCVE-2025-4077-clusterrole-pods-exec-create.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-4078",
+      "tier": "verified",
+      "determinism_note": "Deterministic when ClusterRole rules[].resources[] contains secrets and verbs include get/list or wildcard.",
+      "evidence_urls": [
+        "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
+      ],
+      "fixture": "CCVE-2025-4078-clusterrole-secrets-read.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-4079",
+      "tier": "verified",
+      "determinism_note": "Deterministic when ClusterRole rules[].resources[] contains serviceaccounts/token and verbs include create or wildcard.",
+      "evidence_urls": [
+        "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
+      ],
+      "fixture": "CCVE-2025-4079-clusterrole-serviceaccount-token-create.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-4080",
+      "tier": "verified",
+      "determinism_note": "Deterministic when ClusterRole rules[].resources[] contains certificatesigningrequests/approval and verbs include update, patch, or wildcard.",
+      "evidence_urls": [
+        "https://kubernetes.io/docs/reference/access-authn-authz/certificate-signing-requests/"
+      ],
+      "fixture": "CCVE-2025-4080-clusterrole-csr-approval-update.yaml",
+      "allowed_extra_ids": []
+    },
+    {
+      "id": "CCVE-2025-4081",
+      "tier": "verified",
+      "determinism_note": "Deterministic when ClusterRole has wildcard resources and broad verbs, indicating overprivileged admin scope.",
+      "evidence_urls": [
+        "https://kubernetes.io/docs/concepts/security/rbac-good-practices/"
+      ],
+      "fixture": "CCVE-2025-4081-clusterrole-wildcard-overprivileged.yaml",
+      "allowed_extra_ids": [
+        "CCVE-2025-4075",
+        "CCVE-2025-4077",
+        "CCVE-2025-4078",
+        "CCVE-2025-4079",
+        "CCVE-2025-4080"
+      ]
+    }
+  ]
+}

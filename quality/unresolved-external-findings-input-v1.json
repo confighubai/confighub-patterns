@@ -1,0 +1,50 @@
+{
+  "schema_version": "unresolved-external-findings-input-v1",
+  "as_of": "2026-03-02",
+  "findings": [
+    {
+      "source": "trivy",
+      "finding_id": "trivy/AVD-KSV-0017",
+      "resource": "Deployment/payments-api",
+      "title": "Container runs as privileged",
+      "status": "open",
+      "ccve_id": "CCVE-2025-0680",
+      "base_severity": "high",
+      "first_seen": "2026-02-28",
+      "last_seen": "2026-03-02"
+    },
+    {
+      "source": "trivy",
+      "finding_id": "trivy/CVE-2026-0001",
+      "resource": "Deployment/edge-proxy",
+      "title": "Critical package vulnerability",
+      "status": "open",
+      "ccve_id": "CCVE-2025-0680",
+      "base_severity": "critical",
+      "first_seen": "2026-03-02",
+      "last_seen": "2026-03-02"
+    },
+    {
+      "source": "kyverno",
+      "finding_id": "kyverno/require-probes",
+      "resource": "Namespace/production",
+      "title": "Probe policy failed",
+      "status": "open",
+      "ccve_id": "CCVE-2025-0682",
+      "base_severity": "medium",
+      "first_seen": "2026-02-24",
+      "last_seen": "2026-03-02"
+    },
+    {
+      "source": "gatekeeper",
+      "finding_id": "gatekeeper/require-team-label",
+      "resource": "Deployment/api",
+      "title": "Missing team label",
+      "status": "unresolved",
+      "ccve_id": "CCVE-2025-0682",
+      "base_severity": "low",
+      "first_seen": "2026-01-31",
+      "last_seen": "2026-03-02"
+    }
+  ]
+}

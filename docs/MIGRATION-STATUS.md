@@ -8,6 +8,7 @@ As of 2026-03-22:
 - repo scope, bundle scope, and directory ownership docs are in place
 - first-wave copy readiness is now machine-checked by
   `scripts/build-first-wave-copy-manifest.py`
+- the first partial copy wave is now in progress
 - no canonical pattern source files have been moved yet
 - `confighub-scan` is still the active authoring home for the corpus
 
@@ -36,6 +37,12 @@ The current readiness artifact is:
 
 At the time this bootstrap was created, the manifest found 39 planned first-wave
 items and 0 missing sources in the sibling `confighub-scan` checkout.
+
+Current copy state:
+- 19 items are copied into `confighub-patterns` and match source bytes
+- 20 planned items remain `ready_not_copied`
+- the copied wave currently consists of schema files, mapping JSONs, and
+  pattern-quality policy inputs
 
 ## Explicit Non-Goals For Bootstrap
 

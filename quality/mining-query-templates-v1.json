@@ -1,0 +1,45 @@
+{
+  "schema_version": "mining-query-templates-v1",
+  "templates": [
+    {
+      "name": "kubernetes-core-high-signal",
+      "purpose": "Find high-engagement completed core Kubernetes bugs for deterministic candidate scoring.",
+      "query": "repo:kubernetes/kubernetes is:issue is:closed reason:completed label:\"kind/bug\" comments:>=8 sort:updated-desc",
+      "guardrails": [
+        "Require reason:completed so resolved behavior is documented.",
+        "Require comments threshold to avoid low-signal one-off reports.",
+        "Keep sort stable and record query execution date in run notes."
+      ]
+    },
+    {
+      "name": "ingress-autoscaler-targeted",
+      "purpose": "Target ingress and autoscaler production regressions with enough discussion for evidence extraction.",
+      "query": "(repo:kubernetes/ingress-nginx OR repo:kubernetes/autoscaler) is:issue is:closed reason:completed label:\"kind/bug\" comments:>=6",
+      "guardrails": [
+        "Restrict to repos in current execution wave.",
+        "Require kind/bug label to avoid feature requests.",
+        "Exclude duplicates before scoring."
+      ]
+    },
+    {
+      "name": "security-impact-keyword",
+      "purpose": "Capture completed issues likely to map to critical impact categories.",
+      "query": "is:issue is:closed reason:completed (\"denial of service\" OR outage OR \"data loss\") comments:>=5",
+      "guardrails": [
+        "Use impact keywords only as seed, never as final severity assignment.",
+        "Require human review for category and severity mapping.",
+        "Record source URL and reproduction evidence for promoted candidates."
+      ]
+    },
+    {
+      "name": "regression-backport",
+      "purpose": "Prioritize issues with clear fix and version evidence useful for CCVE provenance.",
+      "query": "is:issue is:closed reason:completed (regression OR backport OR \"fixed in\") comments:>=5",
+      "guardrails": [
+        "Require fix-reference text or linked PR evidence in body/comments.",
+        "Prefer issues with explicit affected/fixed version notes.",
+        "Reject candidates without reproducible impact statements."
+      ]
+    }
+  ]
+}

@@ -36,7 +36,8 @@ From `confighub-scan`:
 - `risks/quality/cross-tool-mapping-policy-v1.json`
 
 To here:
-- `mappings/`
+- `mappings/kyverno/`
+- `mappings/trivy/`
 - `scripts/`
 - `quality/`
 

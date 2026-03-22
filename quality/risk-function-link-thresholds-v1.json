@@ -1,0 +1,9 @@
+{
+  "schema_version": "risk-function-link-policy-v1",
+  "max_missing_function_definitions": 178,
+  "max_function_declares_missing_risks": 0,
+  "max_function_ccve_link_mismatches": 0,
+  "max_unreferenced_functions": 3,
+  "min_risks_with_function_ref": 196,
+  "min_total_functions": 21
+}

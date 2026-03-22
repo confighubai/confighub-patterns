@@ -1,0 +1,11 @@
+{
+  "schema_version": "severity-calibration-policy-v1",
+  "max_launch_info": 2,
+  "allow_launch_info_ids": [
+    "CCVE-2025-1423",
+    "CCVE-2025-3190"
+  ],
+  "forbid_advisory_critical": true,
+  "max_security_info": 0,
+  "allow_security_info_ids": []
+}

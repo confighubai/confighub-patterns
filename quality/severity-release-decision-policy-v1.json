@@ -1,0 +1,21 @@
+{
+  "schema_version": "severity-release-decision-policy-v1",
+  "release_version_pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+(?:-rc\\.[0-9]+)?$",
+  "allowed_decisions": [
+    "accept",
+    "adjust",
+    "defer"
+  ],
+  "min_decisions": 10,
+  "require_all_launch_items_decided": true,
+  "required_summary_fields": [
+    "reviewer",
+    "decision_basis",
+    "follow_up_url"
+  ],
+  "required_decision_fields": [
+    "id",
+    "decision",
+    "rationale"
+  ]
+}

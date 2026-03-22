@@ -1,0 +1,27 @@
+{
+  "schema_version": "severity-review-sample-policy-v1",
+  "seed": "severity-review-v1",
+  "sample_size": 30,
+  "launch_rule_sample_size": 10,
+  "per_severity_min": {
+    "critical": 12,
+    "warning": 10,
+    "info": 4
+  },
+  "per_category_max": {
+    "CONFIG": 16,
+    "STATE": 10,
+    "SECURITY": 8
+  },
+  "category_priority": [
+    "SECURITY",
+    "CONFIG",
+    "STATE",
+    "APPLY",
+    "DEPEND"
+  ],
+  "required_rationale_paths": [
+    "references",
+    "detection.raw.notes"
+  ]
+}
