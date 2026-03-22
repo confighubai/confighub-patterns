@@ -61,6 +61,7 @@ The first seeded implementation slice is now explicit too:
 - 4 seeded controls
 - 2 seeded frameworks
 - a summary artifact at `dist/control-taxonomy-summary-v1.json`
+- an initial promoted-taxonomy bundle at `dist/control-framework-bundle-v1.json`
 
 ## Explicit Non-Goals For Bootstrap
 

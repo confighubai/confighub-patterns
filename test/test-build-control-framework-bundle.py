@@ -1,0 +1,74 @@
+#!/usr/bin/env python3
+"""Tests for control/framework bundle builder."""
+
+from __future__ import annotations
+
+import json
+import subprocess
+import tempfile
+import unittest
+from pathlib import Path
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+SCRIPT = REPO_ROOT / "scripts" / "build-control-framework-bundle.py"
+FIXTURES = REPO_ROOT / "test" / "fixtures" / "build-control-framework-bundle"
+
+
+class BuildControlFrameworkBundleTests(unittest.TestCase):
+    def test_valid_fixture_builds_bundle(self) -> None:
+        fixture_root = FIXTURES / "valid"
+        with tempfile.TemporaryDirectory() as tmpdir:
+            out_path = Path(tmpdir) / "bundle.json"
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(SCRIPT),
+                    "--repo-root",
+                    str(fixture_root),
+                    "--summary",
+                    str(fixture_root / "summary.json"),
+                    "--catalog",
+                    str(fixture_root / "catalog.json"),
+                    "--out",
+                    str(out_path),
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr or result.stdout)
+            bundle = json.loads(out_path.read_text(encoding="utf-8"))
+            self.assertEqual(bundle["control_count"], 1)
+            self.assertEqual(bundle["framework_count"], 1)
+            self.assertEqual(bundle["pattern_coverage_count"], 2)
+            self.assertEqual(bundle["controls"][0]["pattern_refs"][0]["name"], "Application sync failed")
+            self.assertEqual(bundle["frameworks"][0]["controls"][0]["name"], "Sample GitOps control")
+
+    def test_missing_catalog_pattern_fails(self) -> None:
+        fixture_root = FIXTURES / "invalid_missing_pattern"
+        with tempfile.TemporaryDirectory() as tmpdir:
+            out_path = Path(tmpdir) / "bundle.json"
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(SCRIPT),
+                    "--repo-root",
+                    str(fixture_root),
+                    "--summary",
+                    str(fixture_root / "summary.json"),
+                    "--catalog",
+                    str(fixture_root / "catalog.json"),
+                    "--out",
+                    str(out_path),
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("missing catalog entry", result.stdout + result.stderr)
+
+
+if __name__ == "__main__":
+    unittest.main()

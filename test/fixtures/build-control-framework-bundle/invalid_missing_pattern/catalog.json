@@ -1,0 +1,16 @@
+{
+  "schema_version": "risk-catalog-v1",
+  "entries": [
+    {
+      "id": "CCVE-2025-0004",
+      "name": "Application sync failed",
+      "category": "APPLY",
+      "track": "misconfiguration",
+      "severity": "critical",
+      "confidence": "high",
+      "tags": [
+        "argocd"
+      ]
+    }
+  ]
+}

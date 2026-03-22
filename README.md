@@ -39,6 +39,8 @@ As of 2026-03-22:
   - `confighub-scan` still remains the active write home until consumer cutover
 - the first seeded controls and frameworks now live in this repo and validate
   through `scripts/build-control-taxonomy-summary.py`
+- the first generated promoted-taxonomy bundle now exists at
+  `dist/control-framework-bundle-v1.json`
 
 ## Intended Layout
 
@@ -66,6 +68,7 @@ See also:
 - `docs/PRODUCT-THESIS.md`
 - `docs/CANDIDATE-CONTROL-FAMILIES.md`
 - `dist/control-taxonomy-summary-v1.json`
+- `dist/control-framework-bundle-v1.json`
 
 ## Consumer Model
 

@@ -1,0 +1,16 @@
+schema_version: framework-definition-v1
+id: FRM-GITOPS-0999
+slug: sample-gitops-framework
+name: Sample GitOps framework
+family: gitops-operators
+summary: Sample framework for bundle testing.
+description: Sample framework for bundle testing.
+maturity: seeded
+control_ids:
+  - CTRL-GITOPS-0999
+platforms:
+  - argocd
+tags:
+  - gitops
+outcomes:
+  - Sample outcome.
