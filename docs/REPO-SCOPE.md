@@ -1,10 +1,13 @@
 # Repo Scope
 
-`confighub-patterns` owns the pattern corpus and the released runtime bundles.
+`confighub-patterns` owns the pattern corpus, promoted control views, framework
+views, and the released runtime bundles.
 
 ## In Scope
 
 - canonical CCVE and related pattern definitions
+- promoted controls built from those pattern definitions
+- framework views that group controls for standards and workflow surfaces
 - aliases, source references, and metadata overlays
 - Kyverno, Trivy, and future external mapping tables
 - remediation metadata and safety classes
@@ -25,8 +28,8 @@
 ## Repo Boundary
 
 Expected long-term split:
-- `confighub-patterns`: corpus, mappings, remedies, schema, quality inputs,
-  runtime bundles
+- `confighub-patterns`: patterns, controls, frameworks, mappings, remedies,
+  schema, quality inputs, runtime bundles
 - `confighub-scan`: engine, adapters, findings model, local bundle consumption,
   engine quality reports
 - ConfigHub/SDK: connected worker execution and orchestration

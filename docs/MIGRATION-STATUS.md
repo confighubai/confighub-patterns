@@ -5,7 +5,7 @@
 As of 2026-03-22:
 - `confighub-patterns` exists locally as the first extraction bootstrap
 - the bootstrap repo is now published at `https://github.com/confighubai/confighub-patterns`
-- repo scope, bundle scope, and directory ownership docs are in place
+- repo scope, bundle scope, directory ownership docs, and taxonomy docs are in place
 - first-wave copy readiness is now machine-checked by
   `scripts/build-first-wave-copy-manifest.py`
 - the first partial copy wave is now in progress
@@ -43,6 +43,11 @@ Current copy state:
 - 20 planned items remain `ready_not_copied`
 - the copied wave currently consists of schema files, mapping JSONs, and
   pattern-quality policy inputs
+
+The target taxonomy is now explicit:
+- `patterns/` for broad canonical risk knowledge
+- `controls/` for promoted operator-facing checks
+- `frameworks/` for grouped views over controls
 
 ## Explicit Non-Goals For Bootstrap
 

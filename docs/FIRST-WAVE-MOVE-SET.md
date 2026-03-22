@@ -7,6 +7,13 @@ The goal of the first wave is not to finish the split. The goal is to move the
 data-like pattern assets that clearly belong here while leaving engine/runtime
 code in place.
 
+The long-term taxonomy for this repo is:
+- `patterns/`
+- `controls/`
+- `frameworks/`
+
+The current first wave mostly seeds the inputs needed to build that taxonomy.
+
 ## Rules For This Wave
 
 - copy first, then verify consumers, then switch authoring

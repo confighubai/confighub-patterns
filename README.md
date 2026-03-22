@@ -6,6 +6,8 @@ data and released runtime bundles.
 This repo exists to separate data-like pattern assets from the scanner engine.
 It should become the authoring home for:
 - canonical CCVE and related pattern definitions,
+- promoted controls derived from the broader corpus,
+- framework views that group controls for standards and workflows,
 - third-party mapping tables,
 - remediation metadata and safety classes,
 - taxonomy and bundle schemas,
@@ -39,6 +41,10 @@ As of 2026-03-22:
 
 - `patterns/`
   - canonical CCVE and related pattern definitions
+- `controls/`
+  - promoted operator-facing controls derived from patterns
+- `frameworks/`
+  - grouped views over controls for standards, platforms, and workflows
 - `mappings/`
   - Kyverno, Trivy, and future external mapping tables
 - `schema/`
@@ -51,6 +57,11 @@ As of 2026-03-22:
   - released bundle artifacts
 - `docs/`
   - authoring, taxonomy, and release guidance
+
+See also:
+- `docs/TAXONOMY.md`
+- `docs/PRODUCT-THESIS.md`
+- `docs/CANDIDATE-CONTROL-FAMILIES.md`
 
 ## Consumer Model
 
