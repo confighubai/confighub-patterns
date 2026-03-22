@@ -80,7 +80,7 @@ Launch quality/determinism gate:
 ```bash
 go run ./cmd/validate-risk-quality \
   --catalog dist/risk-catalog-v1.json \
-  --policy risks/quality/launch-rules-v1.json \
+  --policy quality/launch-rules-v1.json \
   --fixtures-dir fixtures \
   --report-out dist/quality/launch-quality-report.json
 ```
@@ -90,7 +90,7 @@ Risk/function link non-regression gate:
 ```bash
 python3 scripts/validate-risk-function-links.py \
   --report dist/risk-function-links-v1.json \
-  --policy risks/quality/risk-function-link-thresholds-v1.json
+  --policy quality/risk-function-link-thresholds-v1.json
 ```
 
 Expected runtime feed fields:

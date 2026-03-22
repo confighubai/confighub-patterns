@@ -23,7 +23,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--policy",
-        default="risks/quality/risk-function-link-thresholds-v1.json",
+        default="quality/risk-function-link-thresholds-v1.json",
         help="Path to risk/function link policy",
     )
     return parser.parse_args()

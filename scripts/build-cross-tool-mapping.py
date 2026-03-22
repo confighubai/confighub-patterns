@@ -24,7 +24,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--policy",
-        default="risks/quality/cross-tool-mapping-policy-v1.json",
+        default="quality/cross-tool-mapping-policy-v1.json",
         help="Cross-tool mapping policy path",
     )
     parser.add_argument(

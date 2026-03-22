@@ -42,6 +42,8 @@ As of 2026-03-22:
 - the first generated promoted-taxonomy bundle now exists at
   `dist/control-framework-bundle-v1.json`
 - the repo-native release manifest now exists at `dist/bundle-manifest-v1.json`
+- the release manifest now advertises Kyverno and Trivy mapping files as
+  first-class runtime bundle assets
 
 ## Intended Layout
 

@@ -1,6 +1,6 @@
 {
   "schema_version": "bundle-manifest-v1",
-  "published_at": "2026-03-22T22:51:58Z",
+  "published_at": "2026-03-22T23:06:44Z",
   "bundle_version": "dev",
   "source_repo": "confighubai/confighub-patterns",
   "files": [
@@ -21,11 +21,27 @@
       "required": true
     },
     {
+      "name": "kyverno-ccve-mappings",
+      "path": "mappings/kyverno/kyverno-ccve-mappings-v1.json",
+      "schema_version": "kyverno-ccve-mapping-v1",
+      "sha256": "edc6fc7155f45d5aa73d3bb2486701208e955385599a12376d125c679227e767",
+      "size_bytes": 465,
+      "required": true
+    },
+    {
+      "name": "trivy-ccve-mappings",
+      "path": "mappings/trivy/trivy-ccve-mappings-v1.json",
+      "schema_version": "trivy-ccve-mapping-v1",
+      "sha256": "fa8323306463c5b5898462a62d682b19f126777f744bf953f3d1a5a0ada5a469",
+      "size_bytes": 212,
+      "required": true
+    },
+    {
       "name": "cross-tool-mapping",
       "path": "dist/quality/cross-tool-mapping-v1.json",
       "schema_version": "cross-tool-mapping-v1",
-      "sha256": "28b6730c689b42adf97167780384eaf2b541e5f52066334fffecd3b4aa02c7f7",
-      "size_bytes": 1554,
+      "sha256": "8c3a97b1406e13dd390f31adfb4e167de7bfb427d2fb0dd25d08d31ff1d0c758",
+      "size_bytes": 1569,
       "required": true
     },
     {

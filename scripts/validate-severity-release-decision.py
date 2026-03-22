@@ -29,7 +29,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--policy",
-        default="risks/quality/severity-release-decision-policy-v1.json",
+        default="quality/severity-release-decision-policy-v1.json",
         help="Path to severity release decision policy",
     )
     parser.add_argument(

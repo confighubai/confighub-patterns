@@ -24,6 +24,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--source-repo", default="confighubai/confighub-patterns", help="Source repository label")
     parser.add_argument("--catalog", default="dist/risk-catalog-v1.json", help="Path to risk catalog")
     parser.add_argument("--risk-function-links", default="dist/risk-function-links-v1.json", help="Path to risk/function links")
+    parser.add_argument("--kyverno-mappings", default="mappings/kyverno/kyverno-ccve-mappings-v1.json", help="Path to Kyverno mapping file")
+    parser.add_argument("--trivy-mappings", default="mappings/trivy/trivy-ccve-mappings-v1.json", help="Path to Trivy mapping file")
     parser.add_argument("--cross-tool-mapping", default="dist/quality/cross-tool-mapping-v1.json", help="Path to cross-tool mapping artifact")
     parser.add_argument("--helm-pattern-db", default="dist/helm-pattern-database-v1.json", help="Path to Helm pattern database artifact")
     parser.add_argument("--control-taxonomy-summary", default="dist/control-taxonomy-summary-v1.json", help="Path to control taxonomy summary artifact")
@@ -95,6 +97,8 @@ def build_manifest(args: argparse.Namespace) -> dict[str, Any]:
     entries = [
         ("risk-catalog", Path(args.catalog), True),
         ("risk-function-links", Path(args.risk_function_links), True),
+        ("kyverno-ccve-mappings", Path(args.kyverno_mappings), True),
+        ("trivy-ccve-mappings", Path(args.trivy_mappings), True),
         ("cross-tool-mapping", Path(args.cross_tool_mapping), True),
         ("helm-pattern-database", Path(args.helm_pattern_db), False),
         ("control-taxonomy-summary", Path(args.control_taxonomy_summary), False),

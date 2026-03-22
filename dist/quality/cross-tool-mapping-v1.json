@@ -12,13 +12,13 @@
   },
   "tools": {
     "kyverno": {
-      "path": "risks/kyverno/kyverno-ccve-mappings-v1.json",
+      "path": "mappings/kyverno/kyverno-ccve-mappings-v1.json",
       "mappings": 2,
       "unique_ccve_ids": 2,
       "missing_catalog_refs": 0
     },
     "trivy": {
-      "path": "risks/trivy/trivy-ccve-mappings-v1.json",
+      "path": "mappings/trivy/trivy-ccve-mappings-v1.json",
       "mappings": 1,
       "unique_ccve_ids": 1,
       "missing_catalog_refs": 0
@@ -31,7 +31,7 @@
       "ccve_id": "CCVE-2025-3727",
       "category": "CONFIG",
       "track": "misconfiguration",
-      "source_file": "risks/kyverno/kyverno-ccve-mappings-v1.json"
+      "source_file": "mappings/kyverno/kyverno-ccve-mappings-v1.json"
     },
     {
       "tool": "kyverno",
@@ -39,7 +39,7 @@
       "ccve_id": "CCVE-2025-4075",
       "category": "SECURITY",
       "track": "misconfiguration",
-      "source_file": "risks/kyverno/kyverno-ccve-mappings-v1.json"
+      "source_file": "mappings/kyverno/kyverno-ccve-mappings-v1.json"
     },
     {
       "tool": "trivy",
@@ -47,7 +47,7 @@
       "ccve_id": "CCVE-2025-3727",
       "category": "CONFIG",
       "track": "misconfiguration",
-      "source_file": "risks/trivy/trivy-ccve-mappings-v1.json"
+      "source_file": "mappings/trivy/trivy-ccve-mappings-v1.json"
     }
   ],
   "missing_catalog_refs": [],

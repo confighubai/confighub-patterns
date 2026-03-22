@@ -24,6 +24,8 @@ class BuildBundleManifestTests(unittest.TestCase):
             root = Path(tmpdir)
             catalog = root / "dist" / "risk-catalog-v1.json"
             links = root / "dist" / "risk-function-links-v1.json"
+            kyverno = root / "mappings" / "kyverno" / "kyverno-ccve-mappings-v1.json"
+            trivy = root / "mappings" / "trivy" / "trivy-ccve-mappings-v1.json"
             mapping = root / "dist" / "quality" / "cross-tool-mapping-v1.json"
             control_summary = root / "dist" / "control-taxonomy-summary-v1.json"
             control_bundle = root / "dist" / "control-framework-bundle-v1.json"
@@ -31,6 +33,8 @@ class BuildBundleManifestTests(unittest.TestCase):
 
             self.write_json(catalog, {"schema_version": "risk-catalog-v1"})
             self.write_json(links, {"schema_version": "risk-function-links-v1"})
+            self.write_json(kyverno, {"schema_version": "kyverno-ccve-mappings-v1", "mappings": []})
+            self.write_json(trivy, {"schema_version": "trivy-ccve-mappings-v1", "mappings": []})
             self.write_json(mapping, {"schema_version": "cross-tool-mapping-v1"})
             self.write_json(control_summary, {"schema_version": "control-taxonomy-summary-v1"})
             self.write_json(control_bundle, {"schema_version": "control-framework-bundle-v1"})
@@ -43,6 +47,10 @@ class BuildBundleManifestTests(unittest.TestCase):
                     str(catalog),
                     "--risk-function-links",
                     str(links),
+                    "--kyverno-mappings",
+                    str(kyverno),
+                    "--trivy-mappings",
+                    str(trivy),
                     "--cross-tool-mapping",
                     str(mapping),
                     "--control-taxonomy-summary",
@@ -60,6 +68,8 @@ class BuildBundleManifestTests(unittest.TestCase):
             manifest = json.loads(output.read_text(encoding="utf-8"))
             names = [item["name"] for item in manifest["files"]]
             self.assertIn("risk-catalog", names)
+            self.assertIn("kyverno-ccve-mappings", names)
+            self.assertIn("trivy-ccve-mappings", names)
             self.assertIn("control-taxonomy-summary", names)
             self.assertIn("control-framework-bundle", names)
 
@@ -71,6 +81,10 @@ class BuildBundleManifestTests(unittest.TestCase):
                     str(catalog),
                     "--risk-function-links",
                     str(links),
+                    "--kyverno-mappings",
+                    str(kyverno),
+                    "--trivy-mappings",
+                    str(trivy),
                     "--cross-tool-mapping",
                     str(mapping),
                     "--control-taxonomy-summary",

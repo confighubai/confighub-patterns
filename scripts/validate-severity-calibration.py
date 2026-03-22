@@ -25,12 +25,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--launch-policy",
-        default="risks/quality/launch-rules-v1.json",
+        default="quality/launch-rules-v1.json",
         help="Path to launch quality rules policy",
     )
     parser.add_argument(
         "--policy",
-        default="risks/quality/severity-calibration-policy-v2.json",
+        default="quality/severity-calibration-policy-v2.json",
         help="Path to severity calibration policy",
     )
     parser.add_argument(

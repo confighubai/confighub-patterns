@@ -3,7 +3,7 @@
   "tool_mappings": [
     {
       "tool": "kyverno",
-      "path": "risks/kyverno/kyverno-ccve-mappings-v1.json",
+      "path": "mappings/kyverno/kyverno-ccve-mappings-v1.json",
       "schema_version": "kyverno-ccve-mapping-v1",
       "external_id_fields": [
         "policy",
@@ -12,7 +12,7 @@
     },
     {
       "tool": "trivy",
-      "path": "risks/trivy/trivy-ccve-mappings-v1.json",
+      "path": "mappings/trivy/trivy-ccve-mappings-v1.json",
       "schema_version": "trivy-ccve-mapping-v1",
       "external_id_fields": [
         "trivy_id"
