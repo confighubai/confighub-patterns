@@ -8,15 +8,14 @@
     "schema": 3
   },
   "copy_status_counts": {
-    "copied_matching": 19,
-    "ready_not_copied": 20
+    "copied_matching": 39
   },
-  "generated_at": "2026-03-22T22:03:27+00:00",
+  "generated_at": "2026-03-22T22:47:06+00:00",
   "item_count": 39,
   "items": [
     {
       "category": "pattern_source",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "patterns/",
       "exists": true,
       "match_count": 3513,
@@ -31,12 +30,18 @@
       "source_type": "glob",
       "target": "patterns/",
       "target_exists": true,
-      "target_match_count": 0,
-      "target_samples": []
+      "target_match_count": 3513,
+      "target_samples": [
+        "patterns/CCVE-2025-0001.yaml",
+        "patterns/CCVE-2025-0002.yaml",
+        "patterns/CCVE-2025-0003.yaml",
+        "patterns/CCVE-2025-0004.yaml",
+        "patterns/CCVE-2025-0005.yaml"
+      ]
     },
     {
       "category": "pattern_source",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "patterns/archive",
       "exists": true,
       "file_count": 7,
@@ -50,12 +55,12 @@
       "source": "risks/archive",
       "source_type": "dir",
       "target": "patterns/archive",
-      "target_exists": false,
-      "target_file_count": 0
+      "target_exists": true,
+      "target_file_count": 7
     },
     {
       "category": "pattern_source",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "docs/source-risks-README.md",
       "exists": true,
       "size_bytes": 6607,
@@ -63,7 +68,8 @@
       "source_sha256": "a62e716adb53c73200caa19684c6d1dda357aa026f7b07d0a559308eeca81de0",
       "source_type": "file",
       "target": "docs/source-risks-README.md",
-      "target_exists": false
+      "target_exists": true,
+      "target_sha256": "a62e716adb53c73200caa19684c6d1dda357aa026f7b07d0a559308eeca81de0"
     },
     {
       "category": "external_mappings",
@@ -93,7 +99,7 @@
     },
     {
       "category": "external_mappings",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "scripts/build-cross-tool-mapping.py",
       "exists": true,
       "size_bytes": 12892,
@@ -101,7 +107,8 @@
       "source_sha256": "0db8210594f302da1d1ae7138c6a0db4164e80e15e213203b544b914893ab7ea",
       "source_type": "file",
       "target": "scripts/build-cross-tool-mapping.py",
-      "target_exists": false
+      "target_exists": true,
+      "target_sha256": "0db8210594f302da1d1ae7138c6a0db4164e80e15e213203b544b914893ab7ea"
     },
     {
       "category": "external_mappings",
@@ -326,7 +333,7 @@
     },
     {
       "category": "pattern_builders",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "scripts/classify-remedies.py",
       "exists": true,
       "size_bytes": 12213,
@@ -334,11 +341,12 @@
       "source_sha256": "3f46ee404fa434ac0e366ea6f57055475f0ff9f314ee3f784b7e438ebb05ba96",
       "source_type": "file",
       "target": "scripts/classify-remedies.py",
-      "target_exists": false
+      "target_exists": true,
+      "target_sha256": "3f46ee404fa434ac0e366ea6f57055475f0ff9f314ee3f784b7e438ebb05ba96"
     },
     {
       "category": "pattern_builders",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "scripts/build-risk-function-links.py",
       "exists": true,
       "size_bytes": 10894,
@@ -346,11 +354,12 @@
       "source_sha256": "44d378a5854ef0a380645e37bb87ca0c411cbe4aac3e3d1b2d2773b19bd7b593",
       "source_type": "file",
       "target": "scripts/build-risk-function-links.py",
-      "target_exists": false
+      "target_exists": true,
+      "target_sha256": "44d378a5854ef0a380645e37bb87ca0c411cbe4aac3e3d1b2d2773b19bd7b593"
     },
     {
       "category": "pattern_builders",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "scripts/build-severity-review-sample.py",
       "exists": true,
       "size_bytes": 11119,
@@ -358,11 +367,12 @@
       "source_sha256": "9f7d9c6700c9bb18d12b102a0b2d2f634f066baf1d0322668cdf8fe9d56beb5d",
       "source_type": "file",
       "target": "scripts/build-severity-review-sample.py",
-      "target_exists": false
+      "target_exists": true,
+      "target_sha256": "9f7d9c6700c9bb18d12b102a0b2d2f634f066baf1d0322668cdf8fe9d56beb5d"
     },
     {
       "category": "pattern_builders",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "scripts/validate-risk-function-links.py",
       "exists": true,
       "size_bytes": 7024,
@@ -370,11 +380,12 @@
       "source_sha256": "ef43c4e8593b7fd1876f97cc09598f2f2f1124b1dbbbec702f247a0914de0b06",
       "source_type": "file",
       "target": "scripts/validate-risk-function-links.py",
-      "target_exists": false
+      "target_exists": true,
+      "target_sha256": "ef43c4e8593b7fd1876f97cc09598f2f2f1124b1dbbbec702f247a0914de0b06"
     },
     {
       "category": "pattern_builders",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "scripts/validate-severity-calibration.py",
       "exists": true,
       "size_bytes": 13942,
@@ -382,11 +393,12 @@
       "source_sha256": "d49b7929f31692dc5ee350f8af389efaf43e26ea6911beba5b3a05a8b5a7ef7d",
       "source_type": "file",
       "target": "scripts/validate-severity-calibration.py",
-      "target_exists": false
+      "target_exists": true,
+      "target_sha256": "d49b7929f31692dc5ee350f8af389efaf43e26ea6911beba5b3a05a8b5a7ef7d"
     },
     {
       "category": "pattern_builders",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "scripts/validate-severity-release-decision.py",
       "exists": true,
       "size_bytes": 7326,
@@ -394,11 +406,12 @@
       "source_sha256": "b80c62285fae616496fa3275621ff1ed65b5a3d1c6c267dc05daede814eb9177",
       "source_type": "file",
       "target": "scripts/validate-severity-release-decision.py",
-      "target_exists": false
+      "target_exists": true,
+      "target_sha256": "b80c62285fae616496fa3275621ff1ed65b5a3d1c6c267dc05daede814eb9177"
     },
     {
       "category": "released_bundles",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "dist/risk-catalog-v1.json",
       "exists": true,
       "size_bytes": 9162960,
@@ -406,11 +419,12 @@
       "source_sha256": "3315e06b520610c00415c5ae700b7bce3277689c99166e396a99ab6532e4f689",
       "source_type": "file",
       "target": "dist/risk-catalog-v1.json",
-      "target_exists": false
+      "target_exists": true,
+      "target_sha256": "3315e06b520610c00415c5ae700b7bce3277689c99166e396a99ab6532e4f689"
     },
     {
       "category": "released_bundles",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "dist/risk-function-links-v1.json",
       "exists": true,
       "size_bytes": 87750,
@@ -418,11 +432,12 @@
       "source_sha256": "9ebb1ec77387610642eb3b3f19ed0e8f8a443f73cc8c3aef9f3c4b5e56c4d7b9",
       "source_type": "file",
       "target": "dist/risk-function-links-v1.json",
-      "target_exists": false
+      "target_exists": true,
+      "target_sha256": "9ebb1ec77387610642eb3b3f19ed0e8f8a443f73cc8c3aef9f3c4b5e56c4d7b9"
     },
     {
       "category": "released_bundles",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "dist/helm-pattern-database-v1.json",
       "exists": true,
       "size_bytes": 32785,
@@ -430,11 +445,12 @@
       "source_sha256": "cd90935e4cfd3319824ac1abe8eb2ddd1068bfa6d573aa4fb7fc12a53c5882de",
       "source_type": "file",
       "target": "dist/helm-pattern-database-v1.json",
-      "target_exists": false
+      "target_exists": true,
+      "target_sha256": "cd90935e4cfd3319824ac1abe8eb2ddd1068bfa6d573aa4fb7fc12a53c5882de"
     },
     {
       "category": "released_bundles",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "dist/quality/cross-tool-mapping-v1.json",
       "exists": true,
       "size_bytes": 1554,
@@ -442,11 +458,12 @@
       "source_sha256": "28b6730c689b42adf97167780384eaf2b541e5f52066334fffecd3b4aa02c7f7",
       "source_type": "file",
       "target": "dist/quality/cross-tool-mapping-v1.json",
-      "target_exists": false
+      "target_exists": true,
+      "target_sha256": "28b6730c689b42adf97167780384eaf2b541e5f52066334fffecd3b4aa02c7f7"
     },
     {
       "category": "released_bundles",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "dist/quality/pattern-inventory-v1.json",
       "exists": true,
       "size_bytes": 4043476,
@@ -454,11 +471,12 @@
       "source_sha256": "56a1a4479dd9717017bef165c13e2838c0d72efa101a6d15f56d307392c9bc90",
       "source_type": "file",
       "target": "dist/quality/pattern-inventory-v1.json",
-      "target_exists": false
+      "target_exists": true,
+      "target_sha256": "56a1a4479dd9717017bef165c13e2838c0d72efa101a6d15f56d307392c9bc90"
     },
     {
       "category": "released_bundles",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "dist/quality/pattern-inventory-summary-v1.json",
       "exists": true,
       "size_bytes": 3430,
@@ -466,11 +484,12 @@
       "source_sha256": "f846fa329490fd66053e0dd28ba85de3189420d0fb44cd3c55dc303325048a75",
       "source_type": "file",
       "target": "dist/quality/pattern-inventory-summary-v1.json",
-      "target_exists": false
+      "target_exists": true,
+      "target_sha256": "f846fa329490fd66053e0dd28ba85de3189420d0fb44cd3c55dc303325048a75"
     },
     {
       "category": "released_bundles",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "dist/quality/pattern-queue-report-v1.json",
       "exists": true,
       "size_bytes": 854702,
@@ -478,11 +497,12 @@
       "source_sha256": "3b73b286b6d37d294427693dac62da6e16b5587a0dd253647a4014b9dcfc3939",
       "source_type": "file",
       "target": "dist/quality/pattern-queue-report-v1.json",
-      "target_exists": false
+      "target_exists": true,
+      "target_sha256": "3b73b286b6d37d294427693dac62da6e16b5587a0dd253647a4014b9dcfc3939"
     },
     {
       "category": "released_bundles",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "dist/quality/mining-candidate-queue-v1.json",
       "exists": true,
       "size_bytes": 7966,
@@ -490,11 +510,12 @@
       "source_sha256": "bb3cd20522375ec1c20e0130eba33db305ea21459e03c572a625602ce8dd46ba",
       "source_type": "file",
       "target": "dist/quality/mining-candidate-queue-v1.json",
-      "target_exists": false
+      "target_exists": true,
+      "target_sha256": "bb3cd20522375ec1c20e0130eba33db305ea21459e03c572a625602ce8dd46ba"
     },
     {
       "category": "released_bundles",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "dist/quality/severity-review-sample-v1.json",
       "exists": true,
       "size_bytes": 17524,
@@ -502,11 +523,12 @@
       "source_sha256": "a0ac37a86837b910b655f1fdb6f087f78b4de36d395310e4d82a1f5d6a273c70",
       "source_type": "file",
       "target": "dist/quality/severity-review-sample-v1.json",
-      "target_exists": false
+      "target_exists": true,
+      "target_sha256": "a0ac37a86837b910b655f1fdb6f087f78b4de36d395310e4d82a1f5d6a273c70"
     },
     {
       "category": "released_bundles",
-      "copy_status": "ready_not_copied",
+      "copy_status": "copied_matching",
       "destination": "dist/quality/unresolved-external-findings-rollout-v1.json",
       "exists": true,
       "size_bytes": 2809,
@@ -514,7 +536,8 @@
       "source_sha256": "2bd3ffb673d460426bd95d90d2cdcc15ae2d0d64788b06aac8a36b1bd217ab3b",
       "source_type": "file",
       "target": "dist/quality/unresolved-external-findings-rollout-v1.json",
-      "target_exists": false
+      "target_exists": true,
+      "target_sha256": "2bd3ffb673d460426bd95d90d2cdcc15ae2d0d64788b06aac8a36b1bd217ab3b"
     }
   ],
   "missing_count": 0,

@@ -1,0 +1,912 @@
+{
+  "schema_version": "helm-pattern-database-v1",
+  "total_patterns": 28,
+  "total_charts": 3,
+  "patterns_by_chart": [
+    {
+      "name": "cert-manager",
+      "count": 8
+    },
+    {
+      "name": "kube-prometheus-stack",
+      "count": 10
+    },
+    {
+      "name": "traefik",
+      "count": 10
+    }
+  ],
+  "patterns_by_phase": [
+    {
+      "name": "post_render",
+      "count": 11
+    },
+    {
+      "name": "pre_render",
+      "count": 17
+    }
+  ],
+  "patterns_by_severity": [
+    {
+      "name": "critical",
+      "count": 3
+    },
+    {
+      "name": "info",
+      "count": 3
+    },
+    {
+      "name": "warning",
+      "count": 22
+    }
+  ],
+  "patterns_by_category": [
+    {
+      "name": "compliance",
+      "count": 2
+    },
+    {
+      "name": "cost",
+      "count": 1
+    },
+    {
+      "name": "operability",
+      "count": 3
+    },
+    {
+      "name": "reliability",
+      "count": 15
+    },
+    {
+      "name": "security",
+      "count": 6
+    },
+    {
+      "name": "upgrade",
+      "count": 1
+    }
+  ],
+  "entries": [
+    {
+      "id": "HELM-CERTMANAGER-0001",
+      "chart": "cert-manager",
+      "repository": "https://github.com/cert-manager/cert-manager/tree/master/deploy/charts/cert-manager",
+      "phase": "pre_render",
+      "category": "reliability",
+      "severity": "warning",
+      "title": "cert-manager controller replica count stays single",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "values_assertion",
+        "expression": "values.replicaCount is missing or less than 2"
+      },
+      "impact": "Certificate issuance and renewal lose HA during node disruption.",
+      "remediation": {
+        "summary": "Run at least two controller replicas for production clusters.",
+        "actions": [
+          "Set replicaCount=2 or greater in production values.",
+          "Validate leader election and failover behavior in staging."
+        ]
+      },
+      "evidence": [
+        "https://cert-manager.io/docs/installation/helm/"
+      ],
+      "tags": [
+        "availability",
+        "controller"
+      ],
+      "source_file": "risks/helm-patterns/cert-manager.yaml"
+    },
+    {
+      "id": "HELM-CERTMANAGER-0002",
+      "chart": "cert-manager",
+      "repository": "https://github.com/cert-manager/cert-manager/tree/master/deploy/charts/cert-manager",
+      "phase": "pre_render",
+      "category": "reliability",
+      "severity": "warning",
+      "title": "cert-manager webhook replica count stays single",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "values_assertion",
+        "expression": "values.webhook.replicaCount is missing or less than 2"
+      },
+      "impact": "Admission reliability degrades when webhook pod restarts or nodes drain.",
+      "remediation": {
+        "summary": "Run at least two webhook replicas for resilient admission flow.",
+        "actions": [
+          "Set webhook.replicaCount=2 or greater.",
+          "Verify anti-affinity and disruption budgets for webhook pods."
+        ]
+      },
+      "evidence": [
+        "https://cert-manager.io/docs/installation/best-practice/"
+      ],
+      "tags": [
+        "webhook",
+        "availability"
+      ],
+      "source_file": "risks/helm-patterns/cert-manager.yaml"
+    },
+    {
+      "id": "HELM-CERTMANAGER-0003",
+      "chart": "cert-manager",
+      "repository": "https://github.com/cert-manager/cert-manager/tree/master/deploy/charts/cert-manager",
+      "phase": "post_render",
+      "category": "reliability",
+      "severity": "critical",
+      "title": "Rendered cert-manager controller deployment is single replica",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "rendered_manifest_assertion",
+        "expression": "Deployment cert-manager has spec.replicas < 2"
+      },
+      "impact": "Controller downtime can block renewals and certificate issuance workflows.",
+      "remediation": {
+        "summary": "Render cert-manager deployment with at least two replicas.",
+        "actions": [
+          "Increase deployment replicas for cert-manager controller.",
+          "Confirm leader election and queue processing continuity."
+        ]
+      },
+      "evidence": [
+        "https://cert-manager.io/docs/installation/best-practice/"
+      ],
+      "tags": [
+        "rendered",
+        "availability"
+      ],
+      "source_file": "risks/helm-patterns/cert-manager.yaml"
+    },
+    {
+      "id": "HELM-CERTMANAGER-0004",
+      "chart": "cert-manager",
+      "repository": "https://github.com/cert-manager/cert-manager/tree/master/deploy/charts/cert-manager",
+      "phase": "post_render",
+      "category": "reliability",
+      "severity": "warning",
+      "title": "Rendered cert-manager webhook container lacks resource requests/limits",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "rendered_manifest_assertion",
+        "expression": "Deployment cert-manager-webhook container resources.requests or resources.limits missing"
+      },
+      "impact": "Admission path can become unstable under load or node pressure.",
+      "remediation": {
+        "summary": "Define CPU and memory requests/limits for webhook containers.",
+        "actions": [
+          "Configure requests and limits for cert-manager-webhook.",
+          "Tune resource envelopes with admission latency SLO targets."
+        ]
+      },
+      "evidence": [
+        "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+        "https://cert-manager.io/docs/"
+      ],
+      "tags": [
+        "resources",
+        "webhook"
+      ],
+      "source_file": "risks/helm-patterns/cert-manager.yaml"
+    },
+    {
+      "id": "HELM-CERTMANAGER-0005",
+      "chart": "cert-manager",
+      "repository": "https://github.com/cert-manager/cert-manager/tree/master/deploy/charts/cert-manager",
+      "phase": "pre_render",
+      "category": "reliability",
+      "severity": "warning",
+      "title": "cert-manager cainjector replica count stays single",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "values_assertion",
+        "expression": "values.cainjector.replicaCount is missing or less than 2"
+      },
+      "impact": "CA bundle injection can become unavailable during node disruption.",
+      "remediation": {
+        "summary": "Run at least two cainjector replicas for resilient certificate updates.",
+        "actions": [
+          "Set cainjector.replicaCount=2 or greater.",
+          "Validate failover while certificate resources continue reconciling."
+        ]
+      },
+      "evidence": [
+        "https://cert-manager.io/docs/installation/best-practice/"
+      ],
+      "tags": [
+        "cainjector",
+        "availability"
+      ],
+      "source_file": "risks/helm-patterns/cert-manager.yaml"
+    },
+    {
+      "id": "HELM-CERTMANAGER-0006",
+      "chart": "cert-manager",
+      "repository": "https://github.com/cert-manager/cert-manager/tree/master/deploy/charts/cert-manager",
+      "phase": "post_render",
+      "category": "reliability",
+      "severity": "warning",
+      "title": "Rendered cert-manager webhook deployment is single replica",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "rendered_manifest_assertion",
+        "expression": "Deployment cert-manager-webhook has spec.replicas < 2"
+      },
+      "impact": "Admission path resilience degrades during node drain or restart events.",
+      "remediation": {
+        "summary": "Render cert-manager webhook deployment with at least two replicas.",
+        "actions": [
+          "Increase webhook replicas in chart values and re-render manifests.",
+          "Verify pod disruption behavior during maintenance windows."
+        ]
+      },
+      "evidence": [
+        "https://cert-manager.io/docs/installation/best-practice/",
+        "https://kubernetes.io/docs/tasks/run-application/configure-pdb/"
+      ],
+      "tags": [
+        "rendered",
+        "webhook"
+      ],
+      "source_file": "risks/helm-patterns/cert-manager.yaml"
+    },
+    {
+      "id": "HELM-CERTMANAGER-0007",
+      "chart": "cert-manager",
+      "repository": "https://github.com/cert-manager/cert-manager/tree/master/deploy/charts/cert-manager",
+      "phase": "post_render",
+      "category": "reliability",
+      "severity": "warning",
+      "title": "Rendered cert-manager cainjector deployment is single replica",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "rendered_manifest_assertion",
+        "expression": "Deployment cert-manager-cainjector has spec.replicas < 2"
+      },
+      "impact": "CA bundle propagation resilience degrades during pod restarts or node drains.",
+      "remediation": {
+        "summary": "Render cert-manager cainjector with at least two replicas.",
+        "actions": [
+          "Increase cainjector replicas in chart values and re-render manifests.",
+          "Verify CA injection continuity during maintenance windows."
+        ]
+      },
+      "evidence": [
+        "https://cert-manager.io/docs/installation/best-practice/",
+        "https://kubernetes.io/docs/tasks/run-application/configure-pdb/"
+      ],
+      "tags": [
+        "rendered",
+        "cainjector"
+      ],
+      "source_file": "risks/helm-patterns/cert-manager.yaml"
+    },
+    {
+      "id": "HELM-CERTMANAGER-0008",
+      "chart": "cert-manager",
+      "repository": "https://github.com/cert-manager/cert-manager/tree/master/deploy/charts/cert-manager",
+      "phase": "post_render",
+      "category": "reliability",
+      "severity": "warning",
+      "title": "Rendered cert-manager cainjector container lacks resource requests/limits",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "rendered_manifest_assertion",
+        "expression": "Deployment cert-manager-cainjector container resources.requests or resources.limits missing"
+      },
+      "impact": "CA injection throughput can degrade under load or node pressure.",
+      "remediation": {
+        "summary": "Define CPU and memory requests/limits for cainjector containers.",
+        "actions": [
+          "Configure requests and limits for cert-manager-cainjector.",
+          "Tune resource envelopes with injection latency SLO targets."
+        ]
+      },
+      "evidence": [
+        "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+        "https://cert-manager.io/docs/"
+      ],
+      "tags": [
+        "resources",
+        "cainjector"
+      ],
+      "source_file": "risks/helm-patterns/cert-manager.yaml"
+    },
+    {
+      "id": "HELM-PROMSTACK-0001",
+      "chart": "kube-prometheus-stack",
+      "repository": "https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack",
+      "phase": "pre_render",
+      "category": "reliability",
+      "severity": "warning",
+      "title": "Prometheus retention configured without retention size cap",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "values_assertion",
+        "expression": "prometheus.prometheusSpec.retention is set and retentionSize is empty"
+      },
+      "impact": "Disk usage can grow unpredictably and exhaust PV capacity.",
+      "remediation": {
+        "summary": "Set retention and retentionSize together.",
+        "actions": [
+          "Configure both retention duration and retentionSize limits.",
+          "Alert on Prometheus storage utilization."
+        ]
+      },
+      "evidence": [
+        "https://prometheus.io/docs/prometheus/latest/storage/"
+      ],
+      "tags": [
+        "storage",
+        "retention"
+      ],
+      "source_file": "risks/helm-patterns/prometheus-stack.yaml"
+    },
+    {
+      "id": "HELM-PROMSTACK-0002",
+      "chart": "kube-prometheus-stack",
+      "repository": "https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack",
+      "phase": "pre_render",
+      "category": "security",
+      "severity": "critical",
+      "title": "Grafana admin credentials rely on default values",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "values_assertion",
+        "expression": "grafana.adminPassword is default or unset while admin access is enabled"
+      },
+      "impact": "Dashboard and datasource control plane can be compromised.",
+      "remediation": {
+        "summary": "Source Grafana credentials from managed secrets.",
+        "actions": [
+          "Set admin credentials from external secret.",
+          "Rotate credentials and disable anonymous admin access."
+        ]
+      },
+      "evidence": [
+        "https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/"
+      ],
+      "tags": [
+        "grafana",
+        "credentials"
+      ],
+      "source_file": "risks/helm-patterns/prometheus-stack.yaml"
+    },
+    {
+      "id": "HELM-PROMSTACK-0003",
+      "chart": "kube-prometheus-stack",
+      "repository": "https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack",
+      "phase": "pre_render",
+      "category": "reliability",
+      "severity": "warning",
+      "title": "Alertmanager HA replicas without persistent storage",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "values_assertion",
+        "expression": "alertmanager.alertmanagerSpec.replicas > 1 and storage is not configured"
+      },
+      "impact": "Silences and notification state can be lost on restarts.",
+      "remediation": {
+        "summary": "Enable durable storage for Alertmanager state.",
+        "actions": [
+          "Configure alertmanager storage volume claim template.",
+          "Back up silences during upgrades."
+        ]
+      },
+      "evidence": [
+        "https://prometheus.io/docs/alerting/latest/alertmanager/"
+      ],
+      "tags": [
+        "alertmanager",
+        "ha"
+      ],
+      "source_file": "risks/helm-patterns/prometheus-stack.yaml"
+    },
+    {
+      "id": "HELM-PROMSTACK-0004",
+      "chart": "kube-prometheus-stack",
+      "repository": "https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack",
+      "phase": "pre_render",
+      "category": "reliability",
+      "severity": "warning",
+      "title": "kube-state-metrics resource requests or limits omitted",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "values_assertion",
+        "expression": "kube-state-metrics resources requests/limits are missing"
+      },
+      "impact": "Scrape and metric freshness degrades under cluster churn.",
+      "remediation": {
+        "summary": "Allocate bounded resources for kube-state-metrics.",
+        "actions": [
+          "Define CPU and memory requests/limits.",
+          "Tune scrape intervals to workload scale."
+        ]
+      },
+      "evidence": [
+        "https://github.com/kubernetes/kube-state-metrics"
+      ],
+      "tags": [
+        "resources",
+        "kube-state-metrics"
+      ],
+      "source_file": "risks/helm-patterns/prometheus-stack.yaml"
+    },
+    {
+      "id": "HELM-PROMSTACK-0005",
+      "chart": "kube-prometheus-stack",
+      "repository": "https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack",
+      "phase": "post_render",
+      "category": "compliance",
+      "severity": "warning",
+      "title": "ServiceMonitor namespace selectors are unconstrained",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "rendered_manifest_assertion",
+        "expression": "ServiceMonitor namespaceSelector matches all namespaces without allowlist"
+      },
+      "impact": "Monitoring scope can exceed policy boundaries and increase noise.",
+      "remediation": {
+        "summary": "Constrain ServiceMonitor scope by namespace labels or explicit list.",
+        "actions": [
+          "Set namespaceSelector to approved namespaces.",
+          "Require labels for opt-in monitoring."
+        ]
+      },
+      "evidence": [
+        "https://prometheus-operator.dev/docs/operator/api/"
+      ],
+      "tags": [
+        "servicemonitor",
+        "scope"
+      ],
+      "source_file": "risks/helm-patterns/prometheus-stack.yaml"
+    },
+    {
+      "id": "HELM-PROMSTACK-0006",
+      "chart": "kube-prometheus-stack",
+      "repository": "https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack",
+      "phase": "pre_render",
+      "category": "security",
+      "severity": "warning",
+      "title": "Admission webhooks enabled without TLS secret strategy",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "values_assertion",
+        "expression": "prometheusOperator.admissionWebhooks.enabled is true and cert management path is undefined"
+      },
+      "impact": "Webhook startup or rotation failures can block reconciliations.",
+      "remediation": {
+        "summary": "Define cert-manager or self-signed certificate path explicitly.",
+        "actions": [
+          "Configure webhook certificate source in chart values.",
+          "Validate certificate rotation in staging before release."
+        ]
+      },
+      "evidence": [
+        "https://github.com/prometheus-operator/prometheus-operator"
+      ],
+      "tags": [
+        "webhook",
+        "tls"
+      ],
+      "source_file": "risks/helm-patterns/prometheus-stack.yaml"
+    },
+    {
+      "id": "HELM-PROMSTACK-0007",
+      "chart": "kube-prometheus-stack",
+      "repository": "https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack",
+      "phase": "pre_render",
+      "category": "reliability",
+      "severity": "warning",
+      "title": "Pod disruption budget blocks voluntary disruption",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "values_assertion",
+        "expression": "minAvailable equals replicas for stateful monitoring components"
+      },
+      "impact": "Node drain and cluster upgrade workflows can stall.",
+      "remediation": {
+        "summary": "Use disruption budgets that allow one replica unavailable during maintenance.",
+        "actions": [
+          "Set minAvailable lower than replicas or use maxUnavailable=1.",
+          "Verify eviction behavior in staging."
+        ]
+      },
+      "evidence": [
+        "https://kubernetes.io/docs/tasks/run-application/configure-pdb/"
+      ],
+      "tags": [
+        "pdb",
+        "maintenance"
+      ],
+      "source_file": "risks/helm-patterns/prometheus-stack.yaml"
+    },
+    {
+      "id": "HELM-PROMSTACK-0008",
+      "chart": "kube-prometheus-stack",
+      "repository": "https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack",
+      "phase": "post_render",
+      "category": "security",
+      "severity": "warning",
+      "title": "ClusterRole grants broad wildcard permissions",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "rendered_manifest_assertion",
+        "expression": "ClusterRole rules include wildcard verbs or resources without scoping constraints"
+      },
+      "impact": "Monitoring stack compromise can escalate cluster-wide access.",
+      "remediation": {
+        "summary": "Reduce RBAC grants to required APIs and verbs only.",
+        "actions": [
+          "Review generated ClusterRole rules for wildcard entries.",
+          "Override chart RBAC with least-privilege custom role."
+        ]
+      },
+      "evidence": [
+        "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
+      ],
+      "tags": [
+        "rbac",
+        "least-privilege"
+      ],
+      "source_file": "risks/helm-patterns/prometheus-stack.yaml"
+    },
+    {
+      "id": "HELM-PROMSTACK-0009",
+      "chart": "kube-prometheus-stack",
+      "repository": "https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack",
+      "phase": "pre_render",
+      "category": "operability",
+      "severity": "info",
+      "title": "Alertmanager and Prometheus run with single replicas",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "values_assertion",
+        "expression": "alertmanager replicas = 1 or prometheus replicas = 1 in production profile"
+      },
+      "impact": "Monitoring plane becomes a single point of failure.",
+      "remediation": {
+        "summary": "Configure at least two replicas for control-plane observability components.",
+        "actions": [
+          "Scale Prometheus and Alertmanager replicas for HA.",
+          "Validate anti-affinity and storage strategy."
+        ]
+      },
+      "evidence": [
+        "https://prometheus-operator.dev/docs/platform/high-availability/"
+      ],
+      "tags": [
+        "availability"
+      ],
+      "source_file": "risks/helm-patterns/prometheus-stack.yaml"
+    },
+    {
+      "id": "HELM-PROMSTACK-0010",
+      "chart": "kube-prometheus-stack",
+      "repository": "https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack",
+      "phase": "pre_render",
+      "category": "cost",
+      "severity": "info",
+      "title": "High-cardinality exporters enabled without budget controls",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "values_assertion",
+        "expression": "expensive exporters enabled while scrape intervals and limits remain default"
+      },
+      "impact": "Metrics ingestion cost and storage growth can exceed budget unexpectedly.",
+      "remediation": {
+        "summary": "Tune scrape intervals and exporter selection against SLO and cost budgets.",
+        "actions": [
+          "Disable unused exporters and collectors.",
+          "Increase scrape intervals for non-critical metrics."
+        ]
+      },
+      "evidence": [
+        "https://prometheus.io/docs/practices/instrumentation/"
+      ],
+      "tags": [
+        "cardinality",
+        "cost-control"
+      ],
+      "source_file": "risks/helm-patterns/prometheus-stack.yaml"
+    },
+    {
+      "id": "HELM-TRAEFIK-0001",
+      "chart": "traefik",
+      "repository": "https://github.com/traefik/traefik-helm-chart",
+      "phase": "post_render",
+      "category": "security",
+      "severity": "warning",
+      "title": "Wildcard IngressRoute without explicit TLSOption",
+      "chart_version_selectors": [
+        ">=26.0.0"
+      ],
+      "predicate": {
+        "type": "rendered_manifest_assertion",
+        "expression": "IngressRoute wildcard host is present and spec.tls.options.name is missing or unresolved"
+      },
+      "impact": "Wildcard routes can inherit weak or unexpected TLS behavior.",
+      "remediation": {
+        "summary": "Bind wildcard routes to an explicit hardened TLSOption.",
+        "actions": [
+          "Create a TLSOption with minimum TLS version and cipher policy.",
+          "Reference the TLSOption from every wildcard IngressRoute."
+        ]
+      },
+      "evidence": [
+        "https://doc.traefik.io/traefik/routing/routers/#tls",
+        "https://github.com/traefik/traefik-helm-chart"
+      ],
+      "tags": [
+        "tls",
+        "ingressroute"
+      ],
+      "source_file": "risks/helm-patterns/traefik.yaml"
+    },
+    {
+      "id": "HELM-TRAEFIK-0002",
+      "chart": "traefik",
+      "repository": "https://github.com/traefik/traefik-helm-chart",
+      "phase": "post_render",
+      "category": "security",
+      "severity": "warning",
+      "title": "Dashboard/API route exposed without authentication middleware",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "rendered_manifest_assertion",
+        "expression": "IngressRoute targets api@internal and does not include auth middleware"
+      },
+      "impact": "Operational endpoints can be exposed to untrusted clients.",
+      "remediation": {
+        "summary": "Require auth middleware on any dashboard or api@internal route.",
+        "actions": [
+          "Add basic auth or OIDC middleware for dashboard endpoints.",
+          "Restrict dashboard route exposure to internal entrypoints."
+        ]
+      },
+      "evidence": [
+        "https://doc.traefik.io/traefik/operations/dashboard/"
+      ],
+      "tags": [
+        "dashboard",
+        "auth"
+      ],
+      "source_file": "risks/helm-patterns/traefik.yaml"
+    },
+    {
+      "id": "HELM-TRAEFIK-0003",
+      "chart": "traefik",
+      "repository": "https://github.com/traefik/traefik-helm-chart",
+      "phase": "pre_render",
+      "category": "operability",
+      "severity": "warning",
+      "title": "Access logging disabled in production profile",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "values_assertion",
+        "expression": "values.logs.access.enabled is false for production deployment profile"
+      },
+      "impact": "Incident triage and forensic analysis are degraded.",
+      "remediation": {
+        "summary": "Enable access logs with bounded retention and redaction.",
+        "actions": [
+          "Set logs.access.enabled=true in production values.",
+          "Configure log shipping and retention policy."
+        ]
+      },
+      "evidence": [
+        "https://doc.traefik.io/traefik/observability/access-logs/"
+      ],
+      "tags": [
+        "logging",
+        "production"
+      ],
+      "source_file": "risks/helm-patterns/traefik.yaml"
+    },
+    {
+      "id": "HELM-TRAEFIK-0004",
+      "chart": "traefik",
+      "repository": "https://github.com/traefik/traefik-helm-chart",
+      "phase": "pre_render",
+      "category": "reliability",
+      "severity": "warning",
+      "title": "Multiple replicas without anti-affinity",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "values_assertion",
+        "expression": "values.deployment.replicas > 1 and pod anti-affinity is not configured"
+      },
+      "impact": "Node failure can remove all ingress capacity at once.",
+      "remediation": {
+        "summary": "Spread replicas across nodes using anti-affinity or topology spread constraints.",
+        "actions": [
+          "Configure required or preferred anti-affinity for Traefik pods.",
+          "Add topology spread constraints for zone and node."
+        ]
+      },
+      "evidence": [
+        "https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/"
+      ],
+      "tags": [
+        "ha",
+        "scheduling"
+      ],
+      "source_file": "risks/helm-patterns/traefik.yaml"
+    },
+    {
+      "id": "HELM-TRAEFIK-0005",
+      "chart": "traefik",
+      "repository": "https://github.com/traefik/traefik-helm-chart",
+      "phase": "pre_render",
+      "category": "security",
+      "severity": "critical",
+      "title": "Pod security context permits privilege escalation",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "values_assertion",
+        "expression": "securityContext.allowPrivilegeEscalation is true or runAsNonRoot is false"
+      },
+      "impact": "Container escape impact and lateral movement risk increase materially.",
+      "remediation": {
+        "summary": "Enforce restricted pod security defaults.",
+        "actions": [
+          "Set runAsNonRoot=true and allowPrivilegeEscalation=false.",
+          "Drop all Linux capabilities unless explicitly required."
+        ]
+      },
+      "evidence": [
+        "https://kubernetes.io/docs/concepts/security/pod-security-standards/"
+      ],
+      "tags": [
+        "pod-security"
+      ],
+      "source_file": "risks/helm-patterns/traefik.yaml"
+    },
+    {
+      "id": "HELM-TRAEFIK-0006",
+      "chart": "traefik",
+      "repository": "https://github.com/traefik/traefik-helm-chart",
+      "phase": "pre_render",
+      "category": "reliability",
+      "severity": "warning",
+      "title": "Requests/limits omitted for Traefik container",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "values_assertion",
+        "expression": "values.resources.requests or values.resources.limits are missing"
+      },
+      "impact": "Autoscaling and scheduler fairness become unstable under load.",
+      "remediation": {
+        "summary": "Define CPU and memory requests/limits for gateway workloads.",
+        "actions": [
+          "Configure resource requests for steady-state demand.",
+          "Set limits to prevent noisy-neighbor exhaustion."
+        ]
+      },
+      "evidence": [
+        "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
+      ],
+      "tags": [
+        "resources"
+      ],
+      "source_file": "risks/helm-patterns/traefik.yaml"
+    },
+    {
+      "id": "HELM-TRAEFIK-0007",
+      "chart": "traefik",
+      "repository": "https://github.com/traefik/traefik-helm-chart",
+      "phase": "pre_render",
+      "category": "reliability",
+      "severity": "warning",
+      "title": "ACME resolver configured without persistent storage",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "values_assertion",
+        "expression": "certificatesResolvers.acme is enabled while persistence.enabled is false"
+      },
+      "impact": "Certificate state can be lost across restarts causing issuance churn.",
+      "remediation": {
+        "summary": "Persist ACME storage for certificate lifecycle continuity.",
+        "actions": [
+          "Enable persistence and durable volume for ACME storage.",
+          "Backup and restore ACME state during migration."
+        ]
+      },
+      "evidence": [
+        "https://doc.traefik.io/traefik/https/acme/"
+      ],
+      "tags": [
+        "acme",
+        "certs"
+      ],
+      "source_file": "risks/helm-patterns/traefik.yaml"
+    },
+    {
+      "id": "HELM-TRAEFIK-0008",
+      "chart": "traefik",
+      "repository": "https://github.com/traefik/traefik-helm-chart",
+      "phase": "pre_render",
+      "category": "operability",
+      "severity": "info",
+      "title": "Provider ingressClass left implicit",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "values_assertion",
+        "expression": "providers.kubernetesIngress.ingressClass is empty"
+      },
+      "impact": "Route ownership can be ambiguous in multi-controller clusters.",
+      "remediation": {
+        "summary": "Set explicit ingress class ownership in chart values.",
+        "actions": [
+          "Configure providers.kubernetesIngress.ingressClass explicitly.",
+          "Align ingressClassName on rendered Ingress resources."
+        ]
+      },
+      "evidence": [
+        "https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-class"
+      ],
+      "tags": [
+        "ingress-class"
+      ],
+      "source_file": "risks/helm-patterns/traefik.yaml"
+    },
+    {
+      "id": "HELM-TRAEFIK-0009",
+      "chart": "traefik",
+      "repository": "https://github.com/traefik/traefik-helm-chart",
+      "phase": "post_render",
+      "category": "compliance",
+      "severity": "warning",
+      "title": "Service uses external exposure without source range restrictions",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "rendered_manifest_assertion",
+        "expression": "Service type is LoadBalancer and spec.loadBalancerSourceRanges is empty"
+      },
+      "impact": "Gateway exposure surface is broader than intended.",
+      "remediation": {
+        "summary": "Restrict load balancer source CIDRs to trusted networks.",
+        "actions": [
+          "Define loadBalancerSourceRanges for administrative entrypoints.",
+          "Apply network policy controls around ingress namespace."
+        ]
+      },
+      "evidence": [
+        "https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer"
+      ],
+      "tags": [
+        "exposure"
+      ],
+      "source_file": "risks/helm-patterns/traefik.yaml"
+    },
+    {
+      "id": "HELM-TRAEFIK-0010",
+      "chart": "traefik",
+      "repository": "https://github.com/traefik/traefik-helm-chart",
+      "phase": "post_render",
+      "category": "upgrade",
+      "severity": "warning",
+      "title": "Deprecated API versions in rendered Traefik resources",
+      "chart_version_selectors": [],
+      "predicate": {
+        "type": "rendered_manifest_assertion",
+        "expression": "Rendered resources include deprecated apiVersion values for target Kubernetes minor"
+      },
+      "impact": "Cluster upgrades can fail or silently drop resources.",
+      "remediation": {
+        "summary": "Pin chart versions compatible with target Kubernetes API versions.",
+        "actions": [
+          "Validate rendered manifests against target cluster API set.",
+          "Upgrade chart and CRDs before cluster minor upgrades."
+        ]
+      },
+      "evidence": [
+        "https://kubernetes.io/docs/reference/using-api/deprecation-guide/"
+      ],
+      "tags": [
+        "api-lifecycle"
+      ],
+      "source_file": "risks/helm-patterns/traefik.yaml"
+    }
+  ]
+}

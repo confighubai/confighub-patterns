@@ -42,10 +42,15 @@ At the time this bootstrap was created, the manifest found 39 planned first-wave
 items and 0 missing sources in the sibling `confighub-scan` checkout.
 
 Current copy state:
-- 19 items are copied into `confighub-patterns` and match source bytes
-- 20 planned items remain `ready_not_copied`
-- the copied wave currently consists of schema files, mapping JSONs, and
-  pattern-quality policy inputs
+- all 39 planned first-wave items are copied into `confighub-patterns` and
+  match source bytes
+- the raw pattern corpus, archive, pattern-facing builders, released bundle
+  artifacts, mappings, schemas, and policy inputs are all now present locally
+- this is still a non-destructive copy wave; `confighub-scan` remains the
+  active write home until consumers switch to released bundles
+- the copied wave now includes schema files, mapping JSONs, pattern-quality
+  policy inputs, pattern-facing builders, released bundle artifacts, and the
+  source corpus README
 
 The target taxonomy is now explicit:
 - `patterns/` for broad canonical risk knowledge

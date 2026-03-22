@@ -1,0 +1,110 @@
+{
+  "schema_version": "unresolved-external-findings-rollout-v1",
+  "policy_schema_version": "unresolved-external-findings-policy-v1",
+  "input_schema_version": "unresolved-external-findings-input-v1",
+  "as_of": "2026-03-02",
+  "summary": {
+    "open_findings": 4,
+    "sources": 3,
+    "critical_findings": 0,
+    "warning_findings": 3,
+    "info_findings": 1,
+    "oldest_age_days": 30,
+    "rollout_allowed": true,
+    "policy_failures": 0,
+    "errors": 0
+  },
+  "thresholds": {
+    "severity_age_days": {
+      "critical_days": 1,
+      "high_days": 7,
+      "medium_days": 14,
+      "low_days": 30
+    },
+    "rollout_limits": {
+      "max_critical": 0,
+      "max_warning": 8,
+      "max_total": 50,
+      "max_oldest_age_days": 60
+    }
+  },
+  "by_source": {
+    "gatekeeper": {
+      "open_findings": 1,
+      "critical": 0,
+      "warning": 1,
+      "info": 0,
+      "oldest_age_days": 30
+    },
+    "kyverno": {
+      "open_findings": 1,
+      "critical": 0,
+      "warning": 0,
+      "info": 1,
+      "oldest_age_days": 6
+    },
+    "trivy": {
+      "open_findings": 2,
+      "critical": 0,
+      "warning": 2,
+      "info": 0,
+      "oldest_age_days": 2
+    }
+  },
+  "findings": [
+    {
+      "source": "gatekeeper",
+      "finding_id": "gatekeeper/require-team-label",
+      "resource": "Deployment/api",
+      "title": "Missing team label",
+      "status": "unresolved",
+      "ccve_id": "CCVE-2025-0682",
+      "base_severity": "low",
+      "effective_severity": "warning",
+      "first_seen": "2026-01-31",
+      "last_seen": "2026-03-02",
+      "age_days": 30
+    },
+    {
+      "source": "kyverno",
+      "finding_id": "kyverno/require-probes",
+      "resource": "Namespace/production",
+      "title": "Probe policy failed",
+      "status": "open",
+      "ccve_id": "CCVE-2025-0682",
+      "base_severity": "medium",
+      "effective_severity": "info",
+      "first_seen": "2026-02-24",
+      "last_seen": "2026-03-02",
+      "age_days": 6
+    },
+    {
+      "source": "trivy",
+      "finding_id": "trivy/AVD-KSV-0017",
+      "resource": "Deployment/payments-api",
+      "title": "Container runs as privileged",
+      "status": "open",
+      "ccve_id": "CCVE-2025-0680",
+      "base_severity": "high",
+      "effective_severity": "warning",
+      "first_seen": "2026-02-28",
+      "last_seen": "2026-03-02",
+      "age_days": 2
+    },
+    {
+      "source": "trivy",
+      "finding_id": "trivy/CVE-2026-0001",
+      "resource": "Deployment/edge-proxy",
+      "title": "Critical package vulnerability",
+      "status": "open",
+      "ccve_id": "CCVE-2025-0680",
+      "base_severity": "critical",
+      "effective_severity": "warning",
+      "first_seen": "2026-03-02",
+      "last_seen": "2026-03-02",
+      "age_days": 0
+    }
+  ],
+  "policy_failure_messages": [],
+  "error_messages": []
+}

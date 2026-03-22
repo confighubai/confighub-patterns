@@ -1,0 +1,632 @@
+{
+  "schema_version": "severity-review-sample-v1",
+  "policy_schema": "severity-review-sample-policy-v1",
+  "seed": "severity-review-v1",
+  "summary": {
+    "catalog_entries": 3513,
+    "launch_rules": 70,
+    "selected_count": 30,
+    "launch_selected_count": 12,
+    "severity_counts": {
+      "critical": 16,
+      "warning": 10,
+      "info": 4
+    },
+    "category_counts": {
+      "DEPEND": 1,
+      "CONFIG": 16,
+      "SOURCE": 1,
+      "SECURITY": 8,
+      "STATE": 4
+    },
+    "rationale_complete_count": 12
+  },
+  "items": [
+    {
+      "id": "CCVE-2025-0062",
+      "name": "Gateway selector matches no pods",
+      "category": "CONFIG",
+      "track": "misconfiguration",
+      "severity_bucket": "critical",
+      "severity_raw": "critical",
+      "source_file": "risks/CCVE-2025-0062.yaml",
+      "references_count": 2,
+      "launch_rule": true,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [],
+        "has_required_evidence": true
+      }
+    },
+    {
+      "id": "CCVE-2025-0256",
+      "name": "kubectl cp fails silently on large files",
+      "category": "CONFIG",
+      "track": "misconfiguration",
+      "severity_bucket": "warning",
+      "severity_raw": "warning",
+      "source_file": "risks/CCVE-2025-0256.yaml",
+      "references_count": 2,
+      "launch_rule": false,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [],
+        "has_required_evidence": true
+      }
+    },
+    {
+      "id": "CCVE-2025-0810",
+      "name": "Hard evicted pods receive full termination grace period",
+      "category": "CONFIG",
+      "track": "misconfiguration",
+      "severity_bucket": "warning",
+      "severity_raw": "warning",
+      "source_file": "risks/CCVE-2025-0810.yaml",
+      "references_count": 2,
+      "launch_rule": false,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [],
+        "has_required_evidence": true
+      }
+    },
+    {
+      "id": "CCVE-2025-0918",
+      "name": "Secret auto-rotation skipped for completed/failed pods",
+      "category": "CONFIG",
+      "track": "misconfiguration",
+      "severity_bucket": "warning",
+      "severity_raw": "warning",
+      "source_file": "risks/CCVE-2025-0918.yaml",
+      "references_count": 3,
+      "launch_rule": true,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [
+          "detection.raw.notes"
+        ],
+        "has_required_evidence": false
+      }
+    },
+    {
+      "id": "CCVE-2025-1162",
+      "name": "Kubelet --provider-id flag deprecated but no alternative for kubeadm",
+      "category": "CONFIG",
+      "track": "misconfiguration",
+      "severity_bucket": "warning",
+      "severity_raw": "warning",
+      "source_file": "risks/CCVE-2025-1162.yaml",
+      "references_count": 3,
+      "launch_rule": false,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [
+          "detection.raw.notes"
+        ],
+        "has_required_evidence": false
+      }
+    },
+    {
+      "id": "CCVE-2025-1531",
+      "name": "Rook CephCluster stuck in Connecting state for external cluster",
+      "category": "CONFIG",
+      "track": "misconfiguration",
+      "severity_bucket": "critical",
+      "severity_raw": "high",
+      "source_file": "risks/CCVE-2025-1531.yaml",
+      "references_count": 3,
+      "launch_rule": true,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [],
+        "has_required_evidence": true
+      }
+    },
+    {
+      "id": "CCVE-2025-1677",
+      "name": "Longhorn corrupted snapshot chain causes data loss",
+      "category": "STATE",
+      "track": "misconfiguration",
+      "severity_bucket": "critical",
+      "severity_raw": "critical",
+      "source_file": "risks/CCVE-2025-1677.yaml",
+      "references_count": 2,
+      "launch_rule": false,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [],
+        "has_required_evidence": true
+      }
+    },
+    {
+      "id": "CCVE-2025-1897",
+      "name": "Control plane taint not tolerated",
+      "category": "CONFIG",
+      "track": "misconfiguration",
+      "severity_bucket": "info",
+      "severity_raw": "low",
+      "source_file": "risks/CCVE-2025-1897.yaml",
+      "references_count": 3,
+      "launch_rule": false,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [
+          "detection.raw.notes"
+        ],
+        "has_required_evidence": false
+      }
+    },
+    {
+      "id": "CCVE-2025-2206",
+      "name": "SSA field managers not cleared during function migration",
+      "category": "CONFIG",
+      "track": "misconfiguration",
+      "severity_bucket": "warning",
+      "severity_raw": "medium",
+      "source_file": "risks/CCVE-2025-2206.yaml",
+      "references_count": 2,
+      "launch_rule": false,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [],
+        "has_required_evidence": true
+      }
+    },
+    {
+      "id": "CCVE-2025-2239",
+      "name": "Log forwarding via TCP not supported",
+      "category": "CONFIG",
+      "track": "misconfiguration",
+      "severity_bucket": "info",
+      "severity_raw": "low",
+      "source_file": "risks/CCVE-2025-2239.yaml",
+      "references_count": 3,
+      "launch_rule": false,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [],
+        "has_required_evidence": true
+      }
+    },
+    {
+      "id": "CCVE-2025-2253",
+      "name": "HTTPS redirect fails when GlobalExtAuth is enabled",
+      "category": "CONFIG",
+      "track": "misconfiguration",
+      "severity_bucket": "critical",
+      "severity_raw": "high",
+      "source_file": "risks/CCVE-2025-2253.yaml",
+      "references_count": 2,
+      "launch_rule": true,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [
+          "detection.raw.notes"
+        ],
+        "has_required_evidence": false
+      }
+    },
+    {
+      "id": "CCVE-2025-2258",
+      "name": "Contour not ready when routing config is absent",
+      "category": "CONFIG",
+      "track": "misconfiguration",
+      "severity_bucket": "warning",
+      "severity_raw": "medium",
+      "source_file": "risks/CCVE-2025-2258.yaml",
+      "references_count": 2,
+      "launch_rule": false,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [
+          "detection.raw.notes"
+        ],
+        "has_required_evidence": false
+      }
+    },
+    {
+      "id": "CCVE-2025-2401",
+      "name": "CronJob won't run after long suspension (100+ missed starts)",
+      "category": "STATE",
+      "track": "misconfiguration",
+      "severity_bucket": "critical",
+      "severity_raw": "high",
+      "source_file": "risks/CCVE-2025-2401.yaml",
+      "references_count": 3,
+      "launch_rule": false,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [
+          "detection.raw.notes"
+        ],
+        "has_required_evidence": false
+      }
+    },
+    {
+      "id": "CCVE-2025-2619",
+      "name": "HelmRelease upgrade retries exhausted without recovery path",
+      "category": "STATE",
+      "track": "misconfiguration",
+      "severity_bucket": "critical",
+      "severity_raw": "high",
+      "source_file": "risks/CCVE-2025-2619.yaml",
+      "references_count": 2,
+      "launch_rule": false,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [
+          "detection.raw.notes"
+        ],
+        "has_required_evidence": false
+      }
+    },
+    {
+      "id": "CCVE-2025-2630",
+      "name": "OCIRepository version suffix causes chart edge cases",
+      "category": "SOURCE",
+      "track": "misconfiguration",
+      "severity_bucket": "warning",
+      "severity_raw": "medium",
+      "source_file": "risks/CCVE-2025-2630.yaml",
+      "references_count": 3,
+      "launch_rule": true,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [
+          "detection.raw.notes"
+        ],
+        "has_required_evidence": false
+      }
+    },
+    {
+      "id": "CCVE-2025-2789",
+      "name": "Ingress ServicePort validation schema mismatch",
+      "category": "CONFIG",
+      "track": "misconfiguration",
+      "severity_bucket": "info",
+      "severity_raw": "low",
+      "source_file": "risks/CCVE-2025-2789.yaml",
+      "references_count": 3,
+      "launch_rule": false,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [
+          "detection.raw.notes"
+        ],
+        "has_required_evidence": false
+      }
+    },
+    {
+      "id": "CCVE-2025-2861",
+      "name": "CiliumLoadBalancerIPPool serviceSelector does not match Gateway",
+      "category": "CONFIG",
+      "track": "misconfiguration",
+      "severity_bucket": "warning",
+      "severity_raw": "warning",
+      "source_file": "risks/CCVE-2025-2861.yaml",
+      "references_count": 3,
+      "launch_rule": false,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [
+          "detection.raw.notes"
+        ],
+        "has_required_evidence": false
+      }
+    },
+    {
+      "id": "CCVE-2025-2924",
+      "name": "Linkerd default 10s route timeout causes unexpected 504s",
+      "category": "CONFIG",
+      "track": "misconfiguration",
+      "severity_bucket": "warning",
+      "severity_raw": "warning",
+      "source_file": "risks/CCVE-2025-2924.yaml",
+      "references_count": 3,
+      "launch_rule": true,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [],
+        "has_required_evidence": true
+      }
+    },
+    {
+      "id": "CCVE-2025-3005",
+      "name": "EventListener fails with empty caBundle in ClusterInterceptor",
+      "category": "DEPEND",
+      "track": "misconfiguration",
+      "severity_bucket": "critical",
+      "severity_raw": "high",
+      "source_file": "risks/CCVE-2025-3005.yaml",
+      "references_count": 3,
+      "launch_rule": true,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [
+          "detection.raw.notes"
+        ],
+        "has_required_evidence": false
+      }
+    },
+    {
+      "id": "CCVE-2025-3093",
+      "name": "AnalysisRun field to enable success if any metric succeeds missing",
+      "category": "CONFIG",
+      "track": "misconfiguration",
+      "severity_bucket": "warning",
+      "severity_raw": "medium",
+      "source_file": "risks/CCVE-2025-3093.yaml",
+      "references_count": 2,
+      "launch_rule": true,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [],
+        "has_required_evidence": true
+      }
+    },
+    {
+      "id": "CCVE-2025-3116",
+      "name": "Memory leak in Sensor processing",
+      "category": "STATE",
+      "track": "misconfiguration",
+      "severity_bucket": "critical",
+      "severity_raw": "critical",
+      "source_file": "risks/CCVE-2025-3116.yaml",
+      "references_count": 2,
+      "launch_rule": false,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [],
+        "has_required_evidence": true
+      }
+    },
+    {
+      "id": "CCVE-2025-3190",
+      "name": "RuntimeClass nodeSelector limitation - nodeAffinity not supported",
+      "category": "CONFIG",
+      "track": "misconfiguration",
+      "severity_bucket": "info",
+      "severity_raw": "info",
+      "source_file": "risks/CCVE-2025-3190.yaml",
+      "references_count": 4,
+      "launch_rule": true,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [],
+        "has_required_evidence": true
+      }
+    },
+    {
+      "id": "CCVE-2025-3734",
+      "name": "Container does not disable allowPrivilegeEscalation",
+      "category": "SECURITY",
+      "track": "misconfiguration",
+      "severity_bucket": "critical",
+      "severity_raw": "critical",
+      "source_file": "risks/CCVE-2025-3734.yaml",
+      "references_count": 3,
+      "launch_rule": false,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [
+          "detection.raw.notes"
+        ],
+        "has_required_evidence": false
+      }
+    },
+    {
+      "id": "CCVE-2025-3737",
+      "name": "Deployment mounts hostPath volume",
+      "category": "SECURITY",
+      "track": "misconfiguration",
+      "severity_bucket": "critical",
+      "severity_raw": "critical",
+      "source_file": "risks/CCVE-2025-3737.yaml",
+      "references_count": 3,
+      "launch_rule": false,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [
+          "detection.raw.notes"
+        ],
+        "has_required_evidence": false
+      }
+    },
+    {
+      "id": "CCVE-2025-3748",
+      "name": "StatefulSet container does not set runAsNonRoot",
+      "category": "SECURITY",
+      "track": "misconfiguration",
+      "severity_bucket": "critical",
+      "severity_raw": "critical",
+      "source_file": "risks/CCVE-2025-3748.yaml",
+      "references_count": 2,
+      "launch_rule": false,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [
+          "detection.raw.notes"
+        ],
+        "has_required_evidence": false
+      }
+    },
+    {
+      "id": "CCVE-2025-3761",
+      "name": "CronJob container does not set runAsNonRoot",
+      "category": "SECURITY",
+      "track": "misconfiguration",
+      "severity_bucket": "critical",
+      "severity_raw": "critical",
+      "source_file": "risks/CCVE-2025-3761.yaml",
+      "references_count": 1,
+      "launch_rule": false,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [
+          "detection.raw.notes"
+        ],
+        "has_required_evidence": false
+      }
+    },
+    {
+      "id": "CCVE-2025-4075",
+      "name": "ClusterRole grants nodes/proxy enabling Kubelet API RCE",
+      "category": "SECURITY",
+      "track": "misconfiguration",
+      "severity_bucket": "critical",
+      "severity_raw": "critical",
+      "source_file": "risks/CCVE-2025-4075.yaml",
+      "references_count": 3,
+      "launch_rule": true,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [],
+        "has_required_evidence": true
+      }
+    },
+    {
+      "id": "CCVE-2025-4076",
+      "name": "ClusterRoleBinding binds nodes/proxy ClusterRole to subjects",
+      "category": "SECURITY",
+      "track": "misconfiguration",
+      "severity_bucket": "critical",
+      "severity_raw": "critical",
+      "source_file": "risks/CCVE-2025-4076.yaml",
+      "references_count": 2,
+      "launch_rule": false,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [
+          "detection.raw.notes"
+        ],
+        "has_required_evidence": false
+      }
+    },
+    {
+      "id": "CCVE-2025-4077",
+      "name": "ClusterRole grants pods/exec create",
+      "category": "SECURITY",
+      "track": "misconfiguration",
+      "severity_bucket": "critical",
+      "severity_raw": "critical",
+      "source_file": "risks/CCVE-2025-4077.yaml",
+      "references_count": 1,
+      "launch_rule": true,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [
+          "detection.raw.notes"
+        ],
+        "has_required_evidence": false
+      }
+    },
+    {
+      "id": "CCVE-2025-4079",
+      "name": "ClusterRole grants serviceaccounts/token create",
+      "category": "SECURITY",
+      "track": "misconfiguration",
+      "severity_bucket": "critical",
+      "severity_raw": "critical",
+      "source_file": "risks/CCVE-2025-4079.yaml",
+      "references_count": 2,
+      "launch_rule": true,
+      "rationale": {
+        "required_paths": [
+          "references",
+          "detection.raw.notes"
+        ],
+        "missing_paths": [
+          "detection.raw.notes"
+        ],
+        "has_required_evidence": false
+      }
+    }
+  ]
+}

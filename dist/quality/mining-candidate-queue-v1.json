@@ -1,0 +1,272 @@
+{
+  "schema_version": "mining-candidate-queue-v1",
+  "input_schema_version": "github-completed-issues-v1",
+  "policy_schema_version": "mining-candidate-policy-v1",
+  "query_template_schema_version": "mining-query-templates-v1",
+  "summary": {
+    "total_issues": 7,
+    "completed_issues": 6,
+    "scored_candidates": 4,
+    "selected_candidates": 4,
+    "rejected_issues": 3,
+    "min_signal_score": 45,
+    "max_candidates": 25
+  },
+  "query_templates": [
+    {
+      "name": "ingress-autoscaler-targeted",
+      "query": "(repo:kubernetes/ingress-nginx OR repo:kubernetes/autoscaler) is:issue is:closed reason:completed label:\"kind/bug\" comments:>=6",
+      "purpose": "Target ingress and autoscaler production regressions with enough discussion for evidence extraction.",
+      "guardrails": [
+        "Restrict to repos in current execution wave.",
+        "Require kind/bug label to avoid feature requests.",
+        "Exclude duplicates before scoring."
+      ]
+    },
+    {
+      "name": "kubernetes-core-high-signal",
+      "query": "repo:kubernetes/kubernetes is:issue is:closed reason:completed label:\"kind/bug\" comments:>=8 sort:updated-desc",
+      "purpose": "Find high-engagement completed core Kubernetes bugs for deterministic candidate scoring.",
+      "guardrails": [
+        "Require reason:completed so resolved behavior is documented.",
+        "Require comments threshold to avoid low-signal one-off reports.",
+        "Keep sort stable and record query execution date in run notes."
+      ]
+    },
+    {
+      "name": "regression-backport",
+      "query": "is:issue is:closed reason:completed (regression OR backport OR \"fixed in\") comments:>=5",
+      "purpose": "Prioritize issues with clear fix and version evidence useful for CCVE provenance.",
+      "guardrails": [
+        "Require fix-reference text or linked PR evidence in body/comments.",
+        "Prefer issues with explicit affected/fixed version notes.",
+        "Reject candidates without reproducible impact statements."
+      ]
+    },
+    {
+      "name": "security-impact-keyword",
+      "query": "is:issue is:closed reason:completed (\"denial of service\" OR outage OR \"data loss\") comments:>=5",
+      "purpose": "Capture completed issues likely to map to critical impact categories.",
+      "guardrails": [
+        "Use impact keywords only as seed, never as final severity assignment.",
+        "Require human review for category and severity mapping.",
+        "Record source URL and reproduction evidence for promoted candidates."
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "id": "kubernetes/kubernetes#137000",
+      "repo": "kubernetes/kubernetes",
+      "number": 137000,
+      "url": "https://github.com/kubernetes/kubernetes/issues/137000",
+      "title": "API server request path allows denial of service during malformed admission replay",
+      "closed_at": "2026-02-10T09:00:00Z",
+      "state_reason": "completed",
+      "comments": 25,
+      "reactions": 20,
+      "score": 100,
+      "components": {
+        "base_completed": 10,
+        "comments_signal": 16,
+        "reactions_signal": 12,
+        "repro_keyword": 12,
+        "fix_keyword": 10,
+        "impact_keyword": 10,
+        "link_evidence": 6,
+        "linked_pr": 8,
+        "label_signal": 20
+      },
+      "signals": {
+        "labels": [
+          "area/security",
+          "kind/bug",
+          "regression"
+        ],
+        "matched_labels": [
+          "area/security",
+          "kind/bug",
+          "regression"
+        ],
+        "repro_keywords": [
+          "steps to reproduce",
+          "reproducible",
+          "minimal example"
+        ],
+        "fix_keywords": [
+          "workaround",
+          "backport",
+          "merged"
+        ],
+        "impact_keywords": [
+          "data loss",
+          "denial of service"
+        ],
+        "links_in_text": 1,
+        "linked_prs": [
+          "137022",
+          "137055"
+        ]
+      }
+    },
+    {
+      "id": "kubernetes/autoscaler#20045",
+      "repo": "kubernetes/autoscaler",
+      "number": 20045,
+      "url": "https://github.com/kubernetes/autoscaler/issues/20045",
+      "title": "Resource exhaustion when scale-down races node drain",
+      "closed_at": "2026-01-21T16:45:00Z",
+      "state_reason": "completed",
+      "comments": 9,
+      "reactions": 6,
+      "score": 90,
+      "components": {
+        "base_completed": 10,
+        "comments_signal": 8,
+        "reactions_signal": 6,
+        "repro_keyword": 12,
+        "fix_keyword": 10,
+        "impact_keyword": 10,
+        "link_evidence": 6,
+        "linked_pr": 8,
+        "label_signal": 20
+      },
+      "signals": {
+        "labels": [
+          "kind/bug",
+          "regression",
+          "triage/accepted"
+        ],
+        "matched_labels": [
+          "kind/bug",
+          "regression",
+          "triage/accepted"
+        ],
+        "repro_keywords": [
+          "steps to reproduce",
+          "reproduction"
+        ],
+        "fix_keywords": [
+          "fixed in",
+          "workaround"
+        ],
+        "impact_keywords": [
+          "resource exhaustion"
+        ],
+        "links_in_text": 1,
+        "linked_prs": [
+          "20090"
+        ]
+      }
+    },
+    {
+      "id": "kubernetes/kubernetes#135998",
+      "repo": "kubernetes/kubernetes",
+      "number": 135998,
+      "url": "https://github.com/kubernetes/kubernetes/issues/135998",
+      "title": "kubectl apply fails with YAML directive under reproducible conditions",
+      "closed_at": "2026-01-03T08:14:21Z",
+      "state_reason": "completed",
+      "comments": 34,
+      "reactions": 12,
+      "score": 84,
+      "components": {
+        "base_completed": 10,
+        "comments_signal": 16,
+        "reactions_signal": 6,
+        "repro_keyword": 12,
+        "fix_keyword": 10,
+        "impact_keyword": 0,
+        "link_evidence": 6,
+        "linked_pr": 8,
+        "label_signal": 16
+      },
+      "signals": {
+        "labels": [
+          "kind/bug",
+          "triage/accepted"
+        ],
+        "matched_labels": [
+          "kind/bug",
+          "triage/accepted"
+        ],
+        "repro_keywords": [
+          "steps to reproduce",
+          "reproducible",
+          "minimal example"
+        ],
+        "fix_keywords": [
+          "fixed in",
+          "backport"
+        ],
+        "impact_keywords": [],
+        "links_in_text": 1,
+        "linked_prs": [
+          "136100"
+        ]
+      }
+    },
+    {
+      "id": "kubernetes/ingress-nginx#11518",
+      "repo": "kubernetes/ingress-nginx",
+      "number": 11518,
+      "url": "https://github.com/kubernetes/ingress-nginx/issues/11518",
+      "title": "Worker process scaling regression causes CrashLoop on cgroups-v2",
+      "closed_at": "2025-12-20T12:30:00Z",
+      "state_reason": "completed",
+      "comments": 11,
+      "reactions": 4,
+      "score": 66,
+      "components": {
+        "base_completed": 10,
+        "comments_signal": 8,
+        "reactions_signal": 0,
+        "repro_keyword": 12,
+        "fix_keyword": 10,
+        "impact_keyword": 10,
+        "link_evidence": 6,
+        "linked_pr": 0,
+        "label_signal": 10
+      },
+      "signals": {
+        "labels": [
+          "kind/bug"
+        ],
+        "matched_labels": [
+          "kind/bug"
+        ],
+        "repro_keywords": [
+          "minimal example",
+          "reproduction"
+        ],
+        "fix_keywords": [
+          "workaround",
+          "merged"
+        ],
+        "impact_keywords": [
+          "outage",
+          "crashloop"
+        ],
+        "links_in_text": 1,
+        "linked_prs": []
+      }
+    }
+  ],
+  "rejected": [
+    {
+      "id": "kubernetes/autoscaler#20001",
+      "score": 10,
+      "reason": "score_below_min:10"
+    },
+    {
+      "id": "kubernetes/ingress-nginx#12100",
+      "score": 38,
+      "reason": "score_below_min:38"
+    },
+    {
+      "id": "kubernetes/kubernetes#136500",
+      "score": 56,
+      "reason": "state_reason=not_planned"
+    }
+  ]
+}
