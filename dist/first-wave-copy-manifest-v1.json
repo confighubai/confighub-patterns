@@ -1,0 +1,345 @@
+{
+  "category_counts": {
+    "external_mappings": 4,
+    "pattern_builders": 6,
+    "pattern_quality": 13,
+    "pattern_source": 3,
+    "released_bundles": 10,
+    "schema": 3
+  },
+  "generated_at": "2026-03-22T12:50:18+00:00",
+  "item_count": 39,
+  "items": [
+    {
+      "category": "pattern_source",
+      "destination": "patterns/",
+      "exists": true,
+      "match_count": 3513,
+      "samples": [
+        "risks/CCVE-2025-0001.yaml",
+        "risks/CCVE-2025-0002.yaml",
+        "risks/CCVE-2025-0003.yaml",
+        "risks/CCVE-2025-0004.yaml",
+        "risks/CCVE-2025-0005.yaml"
+      ],
+      "source": "risks/*.yaml",
+      "source_type": "glob"
+    },
+    {
+      "category": "pattern_source",
+      "destination": "patterns/archive",
+      "exists": true,
+      "file_count": 7,
+      "samples": [
+        "risks/archive/INDEX-legacy-first-50.md",
+        "risks/archive/ccve-todo-next-steps-9-jan-2026.md",
+        "risks/archive/ccve-cross-cutting.md",
+        "risks/archive/README.md",
+        "risks/archive/CCVE-SUMMARY.md"
+      ],
+      "source": "risks/archive",
+      "source_type": "dir"
+    },
+    {
+      "category": "pattern_source",
+      "destination": "docs/source-risks-README.md",
+      "exists": true,
+      "size_bytes": 6607,
+      "source": "risks/README.md",
+      "source_type": "file"
+    },
+    {
+      "category": "external_mappings",
+      "destination": "mappings/kyverno-ccve-mappings-v1.json",
+      "exists": true,
+      "size_bytes": 465,
+      "source": "risks/kyverno/kyverno-ccve-mappings-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "external_mappings",
+      "destination": "mappings/trivy-ccve-mappings-v1.json",
+      "exists": true,
+      "size_bytes": 212,
+      "source": "risks/trivy/trivy-ccve-mappings-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "external_mappings",
+      "destination": "scripts/build-cross-tool-mapping.py",
+      "exists": true,
+      "size_bytes": 12892,
+      "source": "scripts/build-cross-tool-mapping.py",
+      "source_type": "file"
+    },
+    {
+      "category": "external_mappings",
+      "destination": "quality/cross-tool-mapping-policy-v1.json",
+      "exists": true,
+      "size_bytes": 599,
+      "source": "risks/quality/cross-tool-mapping-policy-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "schema",
+      "destination": "schema/ccve-taxonomy-v1.yaml",
+      "exists": true,
+      "size_bytes": 4102,
+      "source": "risks/schema/ccve-taxonomy-v1.yaml",
+      "source_type": "file"
+    },
+    {
+      "category": "schema",
+      "destination": "schema/risk-catalog-v1.schema.json",
+      "exists": true,
+      "size_bytes": 4903,
+      "source": "risks/schema/risk-catalog-v1.schema.json",
+      "source_type": "file"
+    },
+    {
+      "category": "schema",
+      "destination": "schema/helm-pattern-database-v1.schema.json",
+      "exists": true,
+      "size_bytes": 4554,
+      "source": "risks/schema/helm-pattern-database-v1.schema.json",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_quality",
+      "destination": "quality/launch-rules-v1.json",
+      "exists": true,
+      "size_bytes": 28834,
+      "source": "risks/quality/launch-rules-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_quality",
+      "destination": "quality/promotion-quality-policy-v1.json",
+      "exists": true,
+      "size_bytes": 256,
+      "source": "risks/quality/promotion-quality-policy-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_quality",
+      "destination": "quality/risk-function-link-thresholds-v1.json",
+      "exists": true,
+      "size_bytes": 286,
+      "source": "risks/quality/risk-function-link-thresholds-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_quality",
+      "destination": "quality/severity-calibration-policy-v1.json",
+      "exists": true,
+      "size_bytes": 253,
+      "source": "risks/quality/severity-calibration-policy-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_quality",
+      "destination": "quality/severity-calibration-policy-v2.json",
+      "exists": true,
+      "size_bytes": 535,
+      "source": "risks/quality/severity-calibration-policy-v2.json",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_quality",
+      "destination": "quality/severity-calibration-baseline-v1.json",
+      "exists": true,
+      "size_bytes": 2377,
+      "source": "risks/quality/severity-calibration-baseline-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_quality",
+      "destination": "quality/severity-review-sample-policy-v1.json",
+      "exists": true,
+      "size_bytes": 489,
+      "source": "risks/quality/severity-review-sample-policy-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_quality",
+      "destination": "quality/severity-release-decision-policy-v1.json",
+      "exists": true,
+      "size_bytes": 449,
+      "source": "risks/quality/severity-release-decision-policy-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_quality",
+      "destination": "quality/unresolved-external-findings-input-v1.json",
+      "exists": true,
+      "size_bytes": 1424,
+      "source": "risks/quality/unresolved-external-findings-input-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_quality",
+      "destination": "quality/unresolved-external-findings-policy-v1.json",
+      "exists": true,
+      "size_bytes": 373,
+      "source": "risks/quality/unresolved-external-findings-policy-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_quality",
+      "destination": "quality/mining-candidate-policy-v1.json",
+      "exists": true,
+      "size_bytes": 1161,
+      "source": "risks/quality/mining-candidate-policy-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_quality",
+      "destination": "quality/mining-query-templates-v1.json",
+      "exists": true,
+      "size_bytes": 2164,
+      "source": "risks/quality/mining-query-templates-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_quality",
+      "destination": "quality/pattern-inventory-overrides-v1.json",
+      "exists": true,
+      "size_bytes": 1920,
+      "source": "risks/quality/pattern-inventory-overrides-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_builders",
+      "destination": "scripts/classify-remedies.py",
+      "exists": true,
+      "size_bytes": 12213,
+      "source": "scripts/classify-remedies.py",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_builders",
+      "destination": "scripts/build-risk-function-links.py",
+      "exists": true,
+      "size_bytes": 10894,
+      "source": "scripts/build-risk-function-links.py",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_builders",
+      "destination": "scripts/build-severity-review-sample.py",
+      "exists": true,
+      "size_bytes": 11119,
+      "source": "scripts/build-severity-review-sample.py",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_builders",
+      "destination": "scripts/validate-risk-function-links.py",
+      "exists": true,
+      "size_bytes": 7024,
+      "source": "scripts/validate-risk-function-links.py",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_builders",
+      "destination": "scripts/validate-severity-calibration.py",
+      "exists": true,
+      "size_bytes": 13942,
+      "source": "scripts/validate-severity-calibration.py",
+      "source_type": "file"
+    },
+    {
+      "category": "pattern_builders",
+      "destination": "scripts/validate-severity-release-decision.py",
+      "exists": true,
+      "size_bytes": 7326,
+      "source": "scripts/validate-severity-release-decision.py",
+      "source_type": "file"
+    },
+    {
+      "category": "released_bundles",
+      "destination": "dist/risk-catalog-v1.json",
+      "exists": true,
+      "size_bytes": 9162960,
+      "source": "dist/risk-catalog-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "released_bundles",
+      "destination": "dist/risk-function-links-v1.json",
+      "exists": true,
+      "size_bytes": 87750,
+      "source": "dist/risk-function-links-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "released_bundles",
+      "destination": "dist/helm-pattern-database-v1.json",
+      "exists": true,
+      "size_bytes": 32785,
+      "source": "dist/helm-pattern-database-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "released_bundles",
+      "destination": "dist/quality/cross-tool-mapping-v1.json",
+      "exists": true,
+      "size_bytes": 1554,
+      "source": "dist/quality/cross-tool-mapping-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "released_bundles",
+      "destination": "dist/quality/pattern-inventory-v1.json",
+      "exists": true,
+      "size_bytes": 4043476,
+      "source": "dist/quality/pattern-inventory-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "released_bundles",
+      "destination": "dist/quality/pattern-inventory-summary-v1.json",
+      "exists": true,
+      "size_bytes": 3430,
+      "source": "dist/quality/pattern-inventory-summary-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "released_bundles",
+      "destination": "dist/quality/pattern-queue-report-v1.json",
+      "exists": true,
+      "size_bytes": 854702,
+      "source": "dist/quality/pattern-queue-report-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "released_bundles",
+      "destination": "dist/quality/mining-candidate-queue-v1.json",
+      "exists": true,
+      "size_bytes": 7966,
+      "source": "dist/quality/mining-candidate-queue-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "released_bundles",
+      "destination": "dist/quality/severity-review-sample-v1.json",
+      "exists": true,
+      "size_bytes": 17524,
+      "source": "dist/quality/severity-review-sample-v1.json",
+      "source_type": "file"
+    },
+    {
+      "category": "released_bundles",
+      "destination": "dist/quality/unresolved-external-findings-rollout-v1.json",
+      "exists": true,
+      "size_bytes": 2809,
+      "source": "dist/quality/unresolved-external-findings-rollout-v1.json",
+      "source_type": "file"
+    }
+  ],
+  "missing_count": 0,
+  "missing_sources": [],
+  "schema_version": "first-wave-copy-manifest-v1",
+  "source_repo": "/Users/alexis/Public/github-repos/confighub-scan",
+  "target_repo": "/Users/alexis/Public/github-repos/confighub-patterns"
+}

@@ -4,7 +4,10 @@
 
 As of 2026-03-22:
 - `confighub-patterns` exists locally as the first extraction bootstrap
+- the bootstrap repo is now published at `https://github.com/confighubai/confighub-patterns`
 - repo scope, bundle scope, and directory ownership docs are in place
+- first-wave copy readiness is now machine-checked by
+  `scripts/build-first-wave-copy-manifest.py`
 - no canonical pattern source files have been moved yet
 - `confighub-scan` is still the active authoring home for the corpus
 
@@ -27,6 +30,12 @@ When the move starts for real, the safest first copies are:
 - schema/taxonomy files from `confighub-scan/risks/schema/`
 - pattern-quality inputs from `confighub-scan/risks/quality/`
 - bundle builders and released runtime artifacts
+
+The current readiness artifact is:
+- `dist/first-wave-copy-manifest-v1.json`
+
+At the time this bootstrap was created, the manifest found 39 planned first-wave
+items and 0 missing sources in the sibling `confighub-scan` checkout.
 
 ## Explicit Non-Goals For Bootstrap
 

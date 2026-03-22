@@ -22,11 +22,15 @@ Bootstrap only.
 
 As of 2026-03-22:
 - this repo has been created locally as the first extraction step,
+- the repo is now also pushed to GitHub at `confighubai/confighub-patterns`,
 - no canonical pattern source files have been moved yet,
 - `confighub-scan` remains the active authoring home until the migration
   checklist is executed,
 - the shared bundle contract and migration sequence still live in
   `confighub-scan` planning docs.
+- first-wave readiness is now captured by
+  `scripts/build-first-wave-copy-manifest.py` and
+  `dist/first-wave-copy-manifest-v1.json`
 
 ## Intended Layout
 
