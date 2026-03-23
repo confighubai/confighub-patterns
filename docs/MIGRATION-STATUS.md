@@ -64,6 +64,7 @@ The first seeded implementation slice is now explicit too:
 - 7 seeded frameworks
 - a summary artifact at `dist/control-taxonomy-summary-v1.json`
 - an initial promoted-taxonomy bundle at `dist/control-framework-bundle-v1.json`
+- a framework coverage report at `dist/framework-coverage-report-v1.json`
 - a repo-native release manifest at `dist/bundle-manifest-v1.json`
 - a repo-native validation path via `make validate` and
   `.github/workflows/validate.yml`

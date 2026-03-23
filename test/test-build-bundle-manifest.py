@@ -29,6 +29,7 @@ class BuildBundleManifestTests(unittest.TestCase):
             mapping = root / "dist" / "quality" / "cross-tool-mapping-v1.json"
             control_summary = root / "dist" / "control-taxonomy-summary-v1.json"
             control_bundle = root / "dist" / "control-framework-bundle-v1.json"
+            framework_report = root / "dist" / "framework-coverage-report-v1.json"
             output = root / "dist" / "bundle-manifest-v1.json"
 
             self.write_json(catalog, {"schema_version": "risk-catalog-v1"})
@@ -38,6 +39,7 @@ class BuildBundleManifestTests(unittest.TestCase):
             self.write_json(mapping, {"schema_version": "cross-tool-mapping-v1"})
             self.write_json(control_summary, {"schema_version": "control-taxonomy-summary-v1"})
             self.write_json(control_bundle, {"schema_version": "control-framework-bundle-v1"})
+            self.write_json(framework_report, {"schema_version": "framework-coverage-report-v1"})
 
             result = subprocess.run(
                 [
@@ -57,6 +59,8 @@ class BuildBundleManifestTests(unittest.TestCase):
                     str(control_summary),
                     "--control-framework-bundle",
                     str(control_bundle),
+                    "--framework-coverage-report",
+                    str(framework_report),
                     "--output",
                     str(output),
                 ],
@@ -72,6 +76,7 @@ class BuildBundleManifestTests(unittest.TestCase):
             self.assertIn("trivy-ccve-mappings", names)
             self.assertIn("control-taxonomy-summary", names)
             self.assertIn("control-framework-bundle", names)
+            self.assertIn("framework-coverage-report", names)
 
             check_result = subprocess.run(
                 [
@@ -91,6 +96,8 @@ class BuildBundleManifestTests(unittest.TestCase):
                     str(control_summary),
                     "--control-framework-bundle",
                     str(control_bundle),
+                    "--framework-coverage-report",
+                    str(framework_report),
                     "--output",
                     str(output),
                     "--check",

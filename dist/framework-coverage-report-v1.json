@@ -1,0 +1,525 @@
+{
+  "cross_family_framework_ids": [
+    "FRM-PLATFORM-0001"
+  ],
+  "framework_count": 7,
+  "frameworks": [
+    {
+      "control_count": 3,
+      "control_families": [
+        "cluster-hardening"
+      ],
+      "control_ids": [
+        "CTRL-CLUSTER-0001",
+        "CTRL-CLUSTER-0002",
+        "CTRL-CLUSTER-0003"
+      ],
+      "detection_modes": [
+        "native_rule",
+        "sdk_worker"
+      ],
+      "family": "cluster-hardening",
+      "id": "FRM-CLUSTER-0001",
+      "maturity": "seeded",
+      "name": "Cluster hardening",
+      "pattern_coverage_count": 20,
+      "pattern_ids": [
+        "CCVE-2025-0039",
+        "CCVE-2025-0207",
+        "CCVE-2025-0228",
+        "CCVE-2025-0275",
+        "CCVE-2025-0368",
+        "CCVE-2025-0724",
+        "CCVE-2025-0921",
+        "CCVE-2025-1133",
+        "CCVE-2025-1164",
+        "CCVE-2025-1165",
+        "CCVE-2025-1262",
+        "CCVE-2025-1264",
+        "CCVE-2025-1821",
+        "CCVE-2025-1824",
+        "CCVE-2025-2472",
+        "CCVE-2025-2478",
+        "CCVE-2025-2605",
+        "CCVE-2025-2638",
+        "CCVE-2025-3737",
+        "CCVE-2025-3763"
+      ],
+      "platforms": [
+        "kubernetes",
+        "control-plane"
+      ],
+      "severity_counts": {
+        "critical": 3
+      },
+      "slug": "cluster-hardening",
+      "supported_consumers": [
+        "ai",
+        "cli",
+        "confighub",
+        "cub_scout",
+        "sdk"
+      ],
+      "supported_surfaces": [
+        "connected_validation",
+        "live_state",
+        "static"
+      ],
+      "tags": [
+        "cluster",
+        "hardening",
+        "pod-security",
+        "tls",
+        "admission"
+      ]
+    },
+    {
+      "control_count": 5,
+      "control_families": [
+        "gitops-operators"
+      ],
+      "control_ids": [
+        "CTRL-GITOPS-0001",
+        "CTRL-GITOPS-0002",
+        "CTRL-GITOPS-0003",
+        "CTRL-GITOPS-0004",
+        "CTRL-GITOPS-0005"
+      ],
+      "detection_modes": [
+        "derived_comparison",
+        "native_rule"
+      ],
+      "family": "gitops-operators",
+      "id": "FRM-GITOPS-0001",
+      "maturity": "seeded",
+      "name": "GitOps operators",
+      "pattern_coverage_count": 25,
+      "pattern_ids": [
+        "CCVE-2025-0004",
+        "CCVE-2025-0005",
+        "CCVE-2025-0006",
+        "CCVE-2025-0007",
+        "CCVE-2025-0013",
+        "CCVE-2025-0127",
+        "CCVE-2025-0128",
+        "CCVE-2025-0129",
+        "CCVE-2025-0156",
+        "CCVE-2025-0166",
+        "CCVE-2025-0168",
+        "CCVE-2025-0169",
+        "CCVE-2025-0665",
+        "CCVE-2025-0666",
+        "CCVE-2025-0667",
+        "CCVE-2025-0672",
+        "CCVE-2025-2563",
+        "CCVE-2025-2565",
+        "CCVE-2025-2567",
+        "CCVE-2025-2599",
+        "CCVE-2025-2603",
+        "CCVE-2025-3720",
+        "CCVE-2025-3724",
+        "CCVE-2025-5001",
+        "CCVE-2025-5002"
+      ],
+      "platforms": [
+        "argocd",
+        "flux",
+        "kubernetes"
+      ],
+      "severity_counts": {
+        "critical": 1,
+        "high": 4
+      },
+      "slug": "gitops-operators",
+      "supported_consumers": [
+        "ai",
+        "cli",
+        "confighub",
+        "cub_scout",
+        "sdk"
+      ],
+      "supported_surfaces": [
+        "live_state",
+        "repo_vs_live",
+        "static"
+      ],
+      "tags": [
+        "gitops",
+        "operators",
+        "reconciliation",
+        "intent-vs-live"
+      ]
+    },
+    {
+      "control_count": 3,
+      "control_families": [
+        "network-exposure"
+      ],
+      "control_ids": [
+        "CTRL-NET-0001",
+        "CTRL-NET-0002",
+        "CTRL-NET-0003"
+      ],
+      "detection_modes": [
+        "native_rule"
+      ],
+      "family": "network-exposure",
+      "id": "FRM-NET-0001",
+      "maturity": "seeded",
+      "name": "Network exposure",
+      "pattern_coverage_count": 19,
+      "pattern_ids": [
+        "CCVE-2025-0032",
+        "CCVE-2025-0063",
+        "CCVE-2025-0690",
+        "CCVE-2025-0772",
+        "CCVE-2025-0773",
+        "CCVE-2025-0894",
+        "CCVE-2025-0895",
+        "CCVE-2025-0916",
+        "CCVE-2025-1116",
+        "CCVE-2025-1125",
+        "CCVE-2025-1601",
+        "CCVE-2025-2155",
+        "CCVE-2025-2156",
+        "CCVE-2025-2790",
+        "CCVE-2025-3167",
+        "CCVE-2025-3201",
+        "CCVE-2025-3202",
+        "CCVE-2025-3206",
+        "CCVE-2025-3208"
+      ],
+      "platforms": [
+        "kubernetes",
+        "ingress",
+        "networkpolicy"
+      ],
+      "severity_counts": {
+        "critical": 2,
+        "high": 1
+      },
+      "slug": "network-exposure",
+      "supported_consumers": [
+        "ai",
+        "cli",
+        "confighub",
+        "cub_scout",
+        "sdk"
+      ],
+      "supported_surfaces": [
+        "live_state",
+        "static"
+      ],
+      "tags": [
+        "network",
+        "ingress",
+        "tls",
+        "exposure"
+      ]
+    },
+    {
+      "control_count": 11,
+      "control_families": [
+        "cluster-hardening",
+        "gitops-operators",
+        "network-exposure",
+        "rbac-and-identity",
+        "secrets-and-credentials",
+        "workload-hardening"
+      ],
+      "control_ids": [
+        "CTRL-GITOPS-0003",
+        "CTRL-GITOPS-0005",
+        "CTRL-WORKLOAD-0001",
+        "CTRL-WORKLOAD-0002",
+        "CTRL-RBAC-0001",
+        "CTRL-RBAC-0002",
+        "CTRL-NET-0001",
+        "CTRL-NET-0002",
+        "CTRL-SECRETS-0002",
+        "CTRL-CLUSTER-0001",
+        "CTRL-CLUSTER-0003"
+      ],
+      "detection_modes": [
+        "derived_comparison",
+        "native_rule",
+        "sdk_worker"
+      ],
+      "family": "platform-best",
+      "id": "FRM-PLATFORM-0001",
+      "maturity": "seeded",
+      "name": "Platform best",
+      "pattern_coverage_count": 61,
+      "pattern_ids": [
+        "CCVE-2025-0032",
+        "CCVE-2025-0039",
+        "CCVE-2025-0063",
+        "CCVE-2025-0127",
+        "CCVE-2025-0128",
+        "CCVE-2025-0168",
+        "CCVE-2025-0229",
+        "CCVE-2025-0368",
+        "CCVE-2025-0593",
+        "CCVE-2025-0665",
+        "CCVE-2025-0666",
+        "CCVE-2025-0667",
+        "CCVE-2025-0672",
+        "CCVE-2025-0690",
+        "CCVE-2025-0724",
+        "CCVE-2025-0772",
+        "CCVE-2025-0773",
+        "CCVE-2025-0921",
+        "CCVE-2025-1116",
+        "CCVE-2025-1125",
+        "CCVE-2025-1137",
+        "CCVE-2025-1262",
+        "CCVE-2025-1264",
+        "CCVE-2025-1821",
+        "CCVE-2025-1824",
+        "CCVE-2025-2432",
+        "CCVE-2025-2543",
+        "CCVE-2025-2544",
+        "CCVE-2025-2599",
+        "CCVE-2025-2603",
+        "CCVE-2025-2605",
+        "CCVE-2025-2638",
+        "CCVE-2025-2790",
+        "CCVE-2025-3153",
+        "CCVE-2025-3167",
+        "CCVE-2025-3201",
+        "CCVE-2025-3202",
+        "CCVE-2025-3206",
+        "CCVE-2025-3208",
+        "CCVE-2025-3279",
+        "CCVE-2025-3508",
+        "CCVE-2025-3720",
+        "CCVE-2025-3727",
+        "CCVE-2025-3728",
+        "CCVE-2025-3729",
+        "CCVE-2025-3733",
+        "CCVE-2025-3734",
+        "CCVE-2025-3735",
+        "CCVE-2025-3736",
+        "CCVE-2025-3737",
+        "CCVE-2025-3746",
+        "CCVE-2025-3752",
+        "CCVE-2025-3758",
+        "CCVE-2025-3763",
+        "CCVE-2025-4075",
+        "CCVE-2025-4076",
+        "CCVE-2025-4077",
+        "CCVE-2025-4078",
+        "CCVE-2025-4079",
+        "CCVE-2025-4080",
+        "CCVE-2025-4081"
+      ],
+      "platforms": [
+        "kubernetes",
+        "argocd",
+        "flux",
+        "helm"
+      ],
+      "severity_counts": {
+        "critical": 6,
+        "high": 4,
+        "warning": 1
+      },
+      "slug": "platform-best",
+      "supported_consumers": [
+        "ai",
+        "cli",
+        "confighub",
+        "cub_scout",
+        "sdk"
+      ],
+      "supported_surfaces": [
+        "connected_validation",
+        "live_state",
+        "repo_vs_live",
+        "static"
+      ],
+      "tags": [
+        "platform",
+        "baseline",
+        "operator",
+        "gitops",
+        "intent-vs-live"
+      ]
+    },
+    {
+      "control_count": 2,
+      "control_families": [
+        "rbac-and-identity"
+      ],
+      "control_ids": [
+        "CTRL-RBAC-0001",
+        "CTRL-RBAC-0002"
+      ],
+      "detection_modes": [
+        "native_rule"
+      ],
+      "family": "rbac-and-identity",
+      "id": "FRM-RBAC-0001",
+      "maturity": "seeded",
+      "name": "RBAC and identity",
+      "pattern_coverage_count": 13,
+      "pattern_ids": [
+        "CCVE-2025-1137",
+        "CCVE-2025-2432",
+        "CCVE-2025-3153",
+        "CCVE-2025-3746",
+        "CCVE-2025-3752",
+        "CCVE-2025-3758",
+        "CCVE-2025-4075",
+        "CCVE-2025-4076",
+        "CCVE-2025-4077",
+        "CCVE-2025-4078",
+        "CCVE-2025-4079",
+        "CCVE-2025-4080",
+        "CCVE-2025-4081"
+      ],
+      "platforms": [
+        "kubernetes",
+        "rbac"
+      ],
+      "severity_counts": {
+        "critical": 1,
+        "high": 1
+      },
+      "slug": "rbac-and-identity",
+      "supported_consumers": [
+        "ai",
+        "cli",
+        "confighub",
+        "cub_scout",
+        "sdk"
+      ],
+      "supported_surfaces": [
+        "live_state",
+        "static"
+      ],
+      "tags": [
+        "rbac",
+        "identity",
+        "service-account",
+        "privilege-escalation"
+      ]
+    },
+    {
+      "control_count": 2,
+      "control_families": [
+        "secrets-and-credentials"
+      ],
+      "control_ids": [
+        "CTRL-SECRETS-0001",
+        "CTRL-SECRETS-0002"
+      ],
+      "detection_modes": [
+        "native_rule"
+      ],
+      "family": "secrets-and-credentials",
+      "id": "FRM-SECRETS-0001",
+      "maturity": "seeded",
+      "name": "Secrets and credentials",
+      "pattern_coverage_count": 16,
+      "pattern_ids": [
+        "CCVE-2025-0067",
+        "CCVE-2025-0068",
+        "CCVE-2025-0124",
+        "CCVE-2025-0125",
+        "CCVE-2025-0229",
+        "CCVE-2025-0296",
+        "CCVE-2025-0297",
+        "CCVE-2025-0480",
+        "CCVE-2025-0481",
+        "CCVE-2025-0593",
+        "CCVE-2025-2543",
+        "CCVE-2025-2544",
+        "CCVE-2025-2654",
+        "CCVE-2025-2676",
+        "CCVE-2025-3279",
+        "CCVE-2025-3508"
+      ],
+      "platforms": [
+        "kubernetes",
+        "externalsecrets",
+        "vault"
+      ],
+      "severity_counts": {
+        "critical": 2
+      },
+      "slug": "secrets-and-credentials",
+      "supported_consumers": [
+        "ai",
+        "cli",
+        "confighub",
+        "cub_scout",
+        "sdk"
+      ],
+      "supported_surfaces": [
+        "live_state",
+        "static"
+      ],
+      "tags": [
+        "secrets",
+        "credentials",
+        "external-secrets",
+        "exposure"
+      ]
+    },
+    {
+      "control_count": 2,
+      "control_families": [
+        "workload-hardening"
+      ],
+      "control_ids": [
+        "CTRL-WORKLOAD-0001",
+        "CTRL-WORKLOAD-0002"
+      ],
+      "detection_modes": [
+        "native_rule"
+      ],
+      "family": "workload-hardening",
+      "id": "FRM-WORKLOAD-0001",
+      "maturity": "seeded",
+      "name": "Workload hardening",
+      "pattern_coverage_count": 7,
+      "pattern_ids": [
+        "CCVE-2025-3727",
+        "CCVE-2025-3728",
+        "CCVE-2025-3729",
+        "CCVE-2025-3733",
+        "CCVE-2025-3734",
+        "CCVE-2025-3735",
+        "CCVE-2025-3736"
+      ],
+      "platforms": [
+        "kubernetes",
+        "helm"
+      ],
+      "severity_counts": {
+        "critical": 1,
+        "warning": 1
+      },
+      "slug": "workload-hardening",
+      "supported_consumers": [
+        "ai",
+        "cli",
+        "confighub",
+        "cub_scout"
+      ],
+      "supported_surfaces": [
+        "static"
+      ],
+      "tags": [
+        "workload",
+        "hardening",
+        "baseline",
+        "ci"
+      ]
+    }
+  ],
+  "generated_at": "2026-03-23T14:23:28+00:00",
+  "schema_version": "framework-coverage-report-v1",
+  "source_bundle": "/Users/alexis/Public/github-repos/confighub-patterns/dist/control-framework-bundle-v1.json"
+}
