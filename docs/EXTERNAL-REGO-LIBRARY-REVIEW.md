@@ -6,6 +6,18 @@ libraries that organize content as frameworks, controls, and executable rules.
 Primary comparison target reviewed in March 2026:
 - `kubescape/regolibrary`
 
+Observed structure in the March 23, 2026 checkout:
+- 16 frameworks
+- 302 controls
+- 2391 rules
+- category skew led by Control plane, Workload, Access control, and Network
+
+Observed product-shape signal:
+- strong breadth in generic control-plane and CIS-style checks
+- meaningful workload, RBAC, secrets, and exposure coverage
+- very little GitOps/operator-specific depth in the public control library
+  surface
+
 ## What Is Worth Borrowing
 
 ### 1. Clear promoted taxonomy
@@ -34,7 +46,18 @@ That maps well to the control-definition shape we already adopted, especially
 for supported surfaces, consumers, evidence expectations, and remediation
 safety.
 
-### 3. Frameworks as views, not the source of truth
+### 3. Curated baseline frameworks
+
+The strongest framework idea is not standards-only packaging. The useful part
+is curated operator-facing baseline views like:
+- broad platform best-practice bundles
+- workload-focused bundles
+- security posture bundles
+
+That is a good fit for our own `frameworks/` layer, especially for a
+cross-family `platform-best` view and future GitOps/operator workflow bundles.
+
+### 4. Frameworks as views, not the source of truth
 
 Frameworks are useful when they stay lightweight and opinionated:
 - platform views
@@ -78,6 +101,16 @@ A control library alone does not solve:
 
 We should keep one canonical evidence model across those surfaces.
 
+### 4. Do not chase broad control-plane parity as the near-term goal
+
+The external library is rich in:
+- kube-bench-style control-plane flag and file-permission checks
+- cloud-provider hardening variants
+- generic CIS-aligned posture breadth
+
+That is useful as a backlog reference, but it is not where we should try to
+differentiate first.
+
 ## Concrete Takeaways For This Repo
 
 ### Adopt now
@@ -93,6 +126,29 @@ We should keep one canonical evidence model across those surfaces.
 - network and exposure baseline controls
 - secrets and credential hygiene controls
 - cluster and node hardening controls
+- platform-best framework views that combine the strongest promoted controls
+
+### Candidate ideas worth importing into our backlog
+
+- policy-control presence and admission baseline controls
+  - examples: "at least one active policy mechanism", Pod Security Admission
+    posture, safe exception surfaces for hostPath/hostPort/capabilities
+- service-account and secret-access hygiene
+  - default service account usage, token mounting, and broad secret read access
+- service exposure coverage beyond Ingress
+  - gateway-style exposure and controller-specific public surface risks
+- external secret management posture
+  - using external secret stores as a promoted baseline, not just a catalog note
+
+### Gaps that reinforce our product wedge
+
+The external library had very little public control coverage for:
+- Flux `GitRepository`, `Kustomization`, and `HelmRelease` baselines
+- Argo CD `ApplicationSet` generator safety and reconcile-path reasoning
+- intent-vs-live comparison as a first-class workflow concept
+
+That reinforces the decision to make GitOps/operator-specific depth a primary
+long-term edge for this repo family.
 
 ### Use external libraries as idea sources, not authorities
 

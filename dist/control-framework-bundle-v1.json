@@ -2493,11 +2493,12 @@
       ]
     }
   ],
-  "framework_count": 6,
+  "framework_count": 7,
   "framework_ids": [
     "FRM-CLUSTER-0001",
     "FRM-GITOPS-0001",
     "FRM-NET-0001",
+    "FRM-PLATFORM-0001",
     "FRM-RBAC-0001",
     "FRM-SECRETS-0001",
     "FRM-WORKLOAD-0001"
@@ -2685,6 +2686,126 @@
     },
     {
       "control_ids": [
+        "CTRL-GITOPS-0003",
+        "CTRL-GITOPS-0005",
+        "CTRL-WORKLOAD-0001",
+        "CTRL-WORKLOAD-0002",
+        "CTRL-RBAC-0001",
+        "CTRL-RBAC-0002",
+        "CTRL-NET-0001",
+        "CTRL-NET-0002",
+        "CTRL-SECRETS-0002",
+        "CTRL-CLUSTER-0001",
+        "CTRL-CLUSTER-0003"
+      ],
+      "controls": [
+        {
+          "family": "gitops-operators",
+          "id": "CTRL-GITOPS-0003",
+          "name": "Argo CD sync policy baseline",
+          "severity": "high",
+          "slug": "argocd-sync-policy-baseline"
+        },
+        {
+          "family": "gitops-operators",
+          "id": "CTRL-GITOPS-0005",
+          "name": "Flux intent and reconcile baseline",
+          "severity": "high",
+          "slug": "flux-intent-and-reconcile-baseline"
+        },
+        {
+          "family": "workload-hardening",
+          "id": "CTRL-WORKLOAD-0001",
+          "name": "Workload security context baseline",
+          "severity": "critical",
+          "slug": "workload-security-context-baseline"
+        },
+        {
+          "family": "workload-hardening",
+          "id": "CTRL-WORKLOAD-0002",
+          "name": "Workload resource governance baseline",
+          "severity": "warning",
+          "slug": "workload-resource-governance-baseline"
+        },
+        {
+          "family": "rbac-and-identity",
+          "id": "CTRL-RBAC-0001",
+          "name": "RBAC privilege boundary baseline",
+          "severity": "critical",
+          "slug": "rbac-privilege-boundary-baseline"
+        },
+        {
+          "family": "rbac-and-identity",
+          "id": "CTRL-RBAC-0002",
+          "name": "Service account identity baseline",
+          "severity": "high",
+          "slug": "service-account-identity-baseline"
+        },
+        {
+          "family": "network-exposure",
+          "id": "CTRL-NET-0001",
+          "name": "NetworkPolicy connectivity baseline",
+          "severity": "high",
+          "slug": "network-policy-connectivity-baseline"
+        },
+        {
+          "family": "network-exposure",
+          "id": "CTRL-NET-0002",
+          "name": "Ingress class and TLS baseline",
+          "severity": "critical",
+          "slug": "ingress-class-and-tls-baseline"
+        },
+        {
+          "family": "secrets-and-credentials",
+          "id": "CTRL-SECRETS-0002",
+          "name": "Secret handling and exposure baseline",
+          "severity": "critical",
+          "slug": "secret-handling-and-exposure-baseline"
+        },
+        {
+          "family": "cluster-hardening",
+          "id": "CTRL-CLUSTER-0001",
+          "name": "Pod security and hostPath baseline",
+          "severity": "critical",
+          "slug": "pod-security-and-hostpath-baseline"
+        },
+        {
+          "family": "cluster-hardening",
+          "id": "CTRL-CLUSTER-0003",
+          "name": "Admission webhook availability baseline",
+          "severity": "critical",
+          "slug": "admission-webhook-availability-baseline"
+        }
+      ],
+      "description": "This framework curates the highest-value promoted controls across GitOps, workload hardening, identity, exposure, secrets, and cluster safety. It is meant to answer \"what good looks like\" for platform teams who want a focused operational baseline instead of a broad compliance checklist.\n",
+      "family": "platform-best",
+      "id": "FRM-PLATFORM-0001",
+      "maturity": "seeded",
+      "name": "Platform best",
+      "outcomes": [
+        "Give platform teams one baseline view that crosses family boundaries instead of forcing them to assemble controls manually.",
+        "Keep GitOps health, workload safety, identity posture, network exposure, secret hygiene, and admission safeguards in one operator-facing bundle.",
+        "Provide a practical \"good configuration\" starter surface for future explanations, scorecards, and AI-assisted triage."
+      ],
+      "platforms": [
+        "kubernetes",
+        "argocd",
+        "flux",
+        "helm"
+      ],
+      "slug": "platform-best",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/frameworks/platform-best.yaml",
+      "summary": "Opinionated cross-family baseline for running GitOps-managed Kubernetes platforms with safer defaults.",
+      "tags": [
+        "platform",
+        "baseline",
+        "operator",
+        "gitops",
+        "intent-vs-live"
+      ]
+    },
+    {
+      "control_ids": [
         "CTRL-RBAC-0001",
         "CTRL-RBAC-0002"
       ],
@@ -2820,7 +2941,7 @@
       ]
     }
   ],
-  "generated_at": "2026-03-23T13:34:00+00:00",
+  "generated_at": "2026-03-23T13:53:59+00:00",
   "pattern_coverage_count": 100,
   "pattern_ids": [
     "CCVE-2025-0004",

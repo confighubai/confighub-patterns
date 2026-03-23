@@ -802,11 +802,12 @@
     "secrets-and-credentials": 2,
     "workload-hardening": 2
   },
-  "framework_count": 6,
+  "framework_count": 7,
   "framework_ids": [
     "FRM-CLUSTER-0001",
     "FRM-GITOPS-0001",
     "FRM-NET-0001",
+    "FRM-PLATFORM-0001",
     "FRM-RBAC-0001",
     "FRM-SECRETS-0001",
     "FRM-WORKLOAD-0001"
@@ -902,6 +903,44 @@
     },
     {
       "control_ids": [
+        "CTRL-GITOPS-0003",
+        "CTRL-GITOPS-0005",
+        "CTRL-WORKLOAD-0001",
+        "CTRL-WORKLOAD-0002",
+        "CTRL-RBAC-0001",
+        "CTRL-RBAC-0002",
+        "CTRL-NET-0001",
+        "CTRL-NET-0002",
+        "CTRL-SECRETS-0002",
+        "CTRL-CLUSTER-0001",
+        "CTRL-CLUSTER-0003"
+      ],
+      "family": "platform-best",
+      "id": "FRM-PLATFORM-0001",
+      "maturity": "seeded",
+      "outcomes": [
+        "Give platform teams one baseline view that crosses family boundaries instead of forcing them to assemble controls manually.",
+        "Keep GitOps health, workload safety, identity posture, network exposure, secret hygiene, and admission safeguards in one operator-facing bundle.",
+        "Provide a practical \"good configuration\" starter surface for future explanations, scorecards, and AI-assisted triage."
+      ],
+      "path": "frameworks/platform-best.yaml",
+      "platforms": [
+        "kubernetes",
+        "argocd",
+        "flux",
+        "helm"
+      ],
+      "slug": "platform-best",
+      "tags": [
+        "platform",
+        "baseline",
+        "operator",
+        "gitops",
+        "intent-vs-live"
+      ]
+    },
+    {
+      "control_ids": [
         "CTRL-RBAC-0001",
         "CTRL-RBAC-0002"
       ],
@@ -980,7 +1019,7 @@
       ]
     }
   ],
-  "generated_at": "2026-03-23T13:33:59+00:00",
+  "generated_at": "2026-03-23T13:51:04+00:00",
   "pattern_coverage_count": 100,
   "pattern_ids": [
     "CCVE-2025-0004",
