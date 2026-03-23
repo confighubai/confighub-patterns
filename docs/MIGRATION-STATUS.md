@@ -42,8 +42,10 @@ At the time this bootstrap was created, the manifest found 39 planned first-wave
 items and 0 missing sources in the sibling `confighub-scan` checkout.
 
 Current copy state:
-- all 39 planned first-wave items are copied into `confighub-patterns` and
-  match source bytes
+- all 39 planned first-wave items are copied into `confighub-patterns`
+- the first-wave copy manifest now records both `copied_matching` and
+  `copied_drifted` states, reflecting intentional repo-native evolution after
+  bootstrap
 - the raw pattern corpus, archive, pattern-facing builders, released bundle
   artifacts, mappings, schemas, and policy inputs are all now present locally
 - this is still a non-destructive copy wave; `confighub-scan` remains the
@@ -58,11 +60,13 @@ The target taxonomy is now explicit:
 - `frameworks/` for grouped views over controls
 
 The first seeded implementation slice is now explicit too:
-- 4 seeded controls
-- 2 seeded frameworks
+- 17 seeded controls
+- 6 seeded frameworks
 - a summary artifact at `dist/control-taxonomy-summary-v1.json`
 - an initial promoted-taxonomy bundle at `dist/control-framework-bundle-v1.json`
 - a repo-native release manifest at `dist/bundle-manifest-v1.json`
+- a repo-native validation path via `make validate` and
+  `.github/workflows/validate.yml`
 
 ## Explicit Non-Goals For Bootstrap
 

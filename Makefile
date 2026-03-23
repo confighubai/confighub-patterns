@@ -1,0 +1,32 @@
+FIRST_WAVE_SOURCE_REPO ?= ../confighub-scan
+
+.PHONY: test-python validate-copy-manifest validate-control-taxonomy validate-control-framework-bundle validate-bundle-manifest validate-cross-tool-mapping validate
+
+test-python:
+	python3 -m unittest \
+		test/test-build-bundle-manifest.py \
+		test/test-build-control-taxonomy-summary.py \
+		test/test-build-control-framework-bundle.py
+
+validate-copy-manifest:
+	python3 scripts/build-first-wave-copy-manifest.py --source-repo "$(FIRST_WAVE_SOURCE_REPO)" --check
+
+validate-control-taxonomy:
+	python3 scripts/build-control-taxonomy-summary.py --check
+
+validate-control-framework-bundle:
+	python3 scripts/build-control-framework-bundle.py --check
+
+validate-bundle-manifest:
+	python3 scripts/build-bundle-manifest.py --check
+
+validate-cross-tool-mapping:
+	python3 scripts/build-cross-tool-mapping.py --check
+
+validate:
+	$(MAKE) test-python
+	$(MAKE) validate-copy-manifest FIRST_WAVE_SOURCE_REPO="$(FIRST_WAVE_SOURCE_REPO)"
+	$(MAKE) validate-control-taxonomy
+	$(MAKE) validate-control-framework-bundle
+	$(MAKE) validate-bundle-manifest
+	$(MAKE) validate-cross-tool-mapping

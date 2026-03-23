@@ -8,9 +8,10 @@
     "schema": 3
   },
   "copy_status_counts": {
-    "copied_matching": 39
+    "copied_drifted": 8,
+    "copied_matching": 31
   },
-  "generated_at": "2026-03-22T22:47:06+00:00",
+  "generated_at": "2026-03-23T13:36:41+00:00",
   "item_count": 39,
   "items": [
     {
@@ -60,7 +61,7 @@
     },
     {
       "category": "pattern_source",
-      "copy_status": "copied_matching",
+      "copy_status": "copied_drifted",
       "destination": "docs/source-risks-README.md",
       "exists": true,
       "size_bytes": 6607,
@@ -69,7 +70,7 @@
       "source_type": "file",
       "target": "docs/source-risks-README.md",
       "target_exists": true,
-      "target_sha256": "a62e716adb53c73200caa19684c6d1dda357aa026f7b07d0a559308eeca81de0"
+      "target_sha256": "7be4a1880589a0e87abb0d87d7e54cfca22e51691c3d053a1b89c393cf3582d7"
     },
     {
       "category": "external_mappings",
@@ -99,7 +100,7 @@
     },
     {
       "category": "external_mappings",
-      "copy_status": "copied_matching",
+      "copy_status": "copied_drifted",
       "destination": "scripts/build-cross-tool-mapping.py",
       "exists": true,
       "size_bytes": 12892,
@@ -108,11 +109,11 @@
       "source_type": "file",
       "target": "scripts/build-cross-tool-mapping.py",
       "target_exists": true,
-      "target_sha256": "0db8210594f302da1d1ae7138c6a0db4164e80e15e213203b544b914893ab7ea"
+      "target_sha256": "d1c7efd4cbe1c6915a496fdb619b478dfcab0f8a10c8e99d9427b2ac1d09c433"
     },
     {
       "category": "external_mappings",
-      "copy_status": "copied_matching",
+      "copy_status": "copied_drifted",
       "destination": "quality/cross-tool-mapping-policy-v1.json",
       "exists": true,
       "size_bytes": 599,
@@ -121,7 +122,7 @@
       "source_type": "file",
       "target": "quality/cross-tool-mapping-policy-v1.json",
       "target_exists": true,
-      "target_sha256": "19d01f389fa40f756cb18ed06698b2b5d3764fd150302b73b78d0476ed03bfdb"
+      "target_sha256": "13c02fc05a555e2ffd329b1e9d8d30737305c889b971d81d62b3cf0fb6835708"
     },
     {
       "category": "schema",
@@ -359,7 +360,7 @@
     },
     {
       "category": "pattern_builders",
-      "copy_status": "copied_matching",
+      "copy_status": "copied_drifted",
       "destination": "scripts/build-severity-review-sample.py",
       "exists": true,
       "size_bytes": 11119,
@@ -368,11 +369,11 @@
       "source_type": "file",
       "target": "scripts/build-severity-review-sample.py",
       "target_exists": true,
-      "target_sha256": "9f7d9c6700c9bb18d12b102a0b2d2f634f066baf1d0322668cdf8fe9d56beb5d"
+      "target_sha256": "85ac58eae30200c466422b240ccd123935e7a7b33c0ed9dca9d3faacb38bbc27"
     },
     {
       "category": "pattern_builders",
-      "copy_status": "copied_matching",
+      "copy_status": "copied_drifted",
       "destination": "scripts/validate-risk-function-links.py",
       "exists": true,
       "size_bytes": 7024,
@@ -381,11 +382,11 @@
       "source_type": "file",
       "target": "scripts/validate-risk-function-links.py",
       "target_exists": true,
-      "target_sha256": "ef43c4e8593b7fd1876f97cc09598f2f2f1124b1dbbbec702f247a0914de0b06"
+      "target_sha256": "898dee724d21b8f44732bd4045fa384ce83e1f022a42ae9c586f690e5fef2cec"
     },
     {
       "category": "pattern_builders",
-      "copy_status": "copied_matching",
+      "copy_status": "copied_drifted",
       "destination": "scripts/validate-severity-calibration.py",
       "exists": true,
       "size_bytes": 13942,
@@ -394,11 +395,11 @@
       "source_type": "file",
       "target": "scripts/validate-severity-calibration.py",
       "target_exists": true,
-      "target_sha256": "d49b7929f31692dc5ee350f8af389efaf43e26ea6911beba5b3a05a8b5a7ef7d"
+      "target_sha256": "feff86267faec694ef00da37e92f84789dbb828e89f639db845efc030187a6d8"
     },
     {
       "category": "pattern_builders",
-      "copy_status": "copied_matching",
+      "copy_status": "copied_drifted",
       "destination": "scripts/validate-severity-release-decision.py",
       "exists": true,
       "size_bytes": 7326,
@@ -407,7 +408,7 @@
       "source_type": "file",
       "target": "scripts/validate-severity-release-decision.py",
       "target_exists": true,
-      "target_sha256": "b80c62285fae616496fa3275621ff1ed65b5a3d1c6c267dc05daede814eb9177"
+      "target_sha256": "18cf51586fdbd5d83851492c73c0c3e73feb53bde3934a28cfb471e33523ee7e"
     },
     {
       "category": "released_bundles",
@@ -450,7 +451,7 @@
     },
     {
       "category": "released_bundles",
-      "copy_status": "copied_matching",
+      "copy_status": "copied_drifted",
       "destination": "dist/quality/cross-tool-mapping-v1.json",
       "exists": true,
       "size_bytes": 1554,
@@ -459,7 +460,7 @@
       "source_type": "file",
       "target": "dist/quality/cross-tool-mapping-v1.json",
       "target_exists": true,
-      "target_sha256": "28b6730c689b42adf97167780384eaf2b541e5f52066334fffecd3b4aa02c7f7"
+      "target_sha256": "8c3a97b1406e13dd390f31adfb4e167de7bfb427d2fb0dd25d08d31ff1d0c758"
     },
     {
       "category": "released_bundles",

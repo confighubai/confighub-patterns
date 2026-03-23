@@ -1,0 +1,32 @@
+name: Validate
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'codex/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout confighub-patterns
+        uses: actions/checkout@v4
+
+      - name: Checkout confighub-scan source
+        uses: actions/checkout@v4
+        with:
+          repository: confighubai/confighub-scan
+          path: confighub-scan-source
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: python3 -m pip install --upgrade pip pyyaml
+
+      - name: Run repo-native validation
+        run: make validate FIRST_WAVE_SOURCE_REPO=confighub-scan-source
