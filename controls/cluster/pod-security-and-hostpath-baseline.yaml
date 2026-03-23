@@ -1,0 +1,57 @@
+schema_version: control-definition-v1
+id: CTRL-CLUSTER-0001
+slug: pod-security-and-hostpath-baseline
+name: Pod security and hostPath baseline
+family: cluster-hardening
+summary: Detect namespace and workload defaults that weaken pod security boundaries or reintroduce host filesystem access.
+description: >
+  This control groups the first deterministic cluster-hardening checks around
+  Pod Security posture: missing namespace enforcement labels, unsafe hostPath
+  usage, and edge cases that undermine expected pod security restrictions.
+maturity: seeded
+severity: critical
+supported_surfaces:
+  - static
+  - live_state
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - sdk
+  - ai
+detection_modes:
+  - native_rule
+resource_kinds:
+  - Namespace
+  - Deployment
+  - PersistentVolume
+pattern_ids:
+  - CCVE-2025-0724
+  - CCVE-2025-0921
+  - CCVE-2025-3737
+  - CCVE-2025-3763
+tags:
+  - cluster
+  - pod-security
+  - hostpath
+  - namespace
+  - baseline
+remediation:
+  strategy: config_fix
+  safety_class: review_required
+  guidance:
+    - Enforce Pod Security Standards labels at the namespace boundary by default.
+    - Treat hostPath mounts as reviewed exceptions rather than normal workload configuration.
+    - Validate pod security policy and admission behavior with real manifests, not only policy intent.
+evidence_expectations:
+  intent_signals:
+    - namespace pod-security labels
+    - volume.hostPath
+    - security admission configuration
+  live_signals:
+    - workloads running with host filesystem access
+    - admission behavior diverging from expected pod-security posture
+  corroborating_sources:
+    - kubectl get namespace -o yaml
+    - kubectl get deployment,pv -o yaml
+    - admission event output

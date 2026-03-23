@@ -62,6 +62,10 @@ Candidate control themes:
 - service account token misuse
 - external secret storage posture
 
+Seeded controls now in `controls/secrets/`:
+- `external-secret-store-baseline`
+- `secret-handling-and-exposure-baseline`
+
 ## 5. GitOps And Operator Reliability
 
 Candidate control themes:
@@ -89,6 +93,11 @@ Candidate control themes:
 - kubelet hardening
 - control-plane endpoint exposure
 - host hardening posture
+
+Seeded controls now in `controls/cluster/`:
+- `pod-security-and-hostpath-baseline`
+- `control-plane-certificate-baseline`
+- `admission-webhook-availability-baseline`
 
 ## 7. Framework Candidates
 

@@ -1,0 +1,28 @@
+schema_version: framework-definition-v1
+id: FRM-CLUSTER-0001
+slug: cluster-hardening
+name: Cluster hardening
+family: cluster-hardening
+summary: Curated controls for pod security boundaries, control-plane certificates, and admission reliability.
+description: >
+  This framework groups the first promoted controls that describe secure and
+  resilient cluster defaults. It is aimed at platform teams who need a stable
+  view over cluster-hardening posture rather than isolated upgrade bugs.
+maturity: seeded
+control_ids:
+  - CTRL-CLUSTER-0001
+  - CTRL-CLUSTER-0002
+  - CTRL-CLUSTER-0003
+platforms:
+  - kubernetes
+  - control-plane
+tags:
+  - cluster
+  - hardening
+  - pod-security
+  - tls
+  - admission
+outcomes:
+  - Surface the first stable cluster-hardening controls in one operator-facing bundle.
+  - Keep pod security boundaries, control-plane certificates, and admission reliability visible together.
+  - Provide a clean starting point for future API server, scheduler, and kubelet hardening controls.

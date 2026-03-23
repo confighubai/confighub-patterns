@@ -1,6 +1,9 @@
 {
-  "control_count": 12,
+  "control_count": 17,
   "control_ids": [
+    "CTRL-CLUSTER-0001",
+    "CTRL-CLUSTER-0002",
+    "CTRL-CLUSTER-0003",
     "CTRL-GITOPS-0001",
     "CTRL-GITOPS-0002",
     "CTRL-GITOPS-0003",
@@ -11,10 +14,467 @@
     "CTRL-NET-0003",
     "CTRL-RBAC-0001",
     "CTRL-RBAC-0002",
+    "CTRL-SECRETS-0001",
+    "CTRL-SECRETS-0002",
     "CTRL-WORKLOAD-0001",
     "CTRL-WORKLOAD-0002"
   ],
   "controls": [
+    {
+      "description": "This control groups the first deterministic cluster-hardening checks around Pod Security posture: missing namespace enforcement labels, unsafe hostPath usage, and edge cases that undermine expected pod security restrictions.\n",
+      "detection_modes": [
+        "native_rule"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "kubectl get namespace -o yaml",
+          "kubectl get deployment,pv -o yaml",
+          "admission event output"
+        ],
+        "intent_signals": [
+          "namespace pod-security labels",
+          "volume.hostPath",
+          "security admission configuration"
+        ],
+        "live_signals": [
+          "workloads running with host filesystem access",
+          "admission behavior diverging from expected pod-security posture"
+        ]
+      },
+      "family": "cluster-hardening",
+      "id": "CTRL-CLUSTER-0001",
+      "maturity": "seeded",
+      "name": "Pod security and hostPath baseline",
+      "pattern_refs": [
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-0724",
+          "name": "hostPath PV bypasses Pod Security Policy restrictions",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-0921",
+          "name": "Pod Security Admission rejects lowercase capability \"all\"",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "SECURITY",
+          "confidence": "high",
+          "id": "CCVE-2025-3737",
+          "name": "Deployment mounts hostPath volume",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "deployment",
+            "security",
+            "volumes",
+            "hostpath",
+            "static-scan",
+            "pre-deploy"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "SECURITY",
+          "confidence": "high",
+          "id": "CCVE-2025-3763",
+          "name": "Namespace lacks Pod Security Standards enforcement labels",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [
+            "namespace",
+            "security",
+            "pod-security-standards",
+            "static-scan",
+            "pre-deploy"
+          ],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Enforce Pod Security Standards labels at the namespace boundary by default.",
+          "Treat hostPath mounts as reviewed exceptions rather than normal workload configuration.",
+          "Validate pod security policy and admission behavior with real manifests, not only policy intent."
+        ],
+        "safety_class": "review_required",
+        "strategy": "config_fix"
+      },
+      "resource_kinds": [
+        "Namespace",
+        "Deployment",
+        "PersistentVolume"
+      ],
+      "severity": "critical",
+      "slug": "pod-security-and-hostpath-baseline",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/cluster/pod-security-and-hostpath-baseline.yaml",
+      "summary": "Detect namespace and workload defaults that weaken pod security boundaries or reintroduce host filesystem access.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "cluster",
+        "pod-security",
+        "hostpath",
+        "namespace",
+        "baseline"
+      ]
+    },
+    {
+      "description": "This control groups the certificate lifecycle and TLS configuration failures that operators need surfaced before they become node outages or cluster-wide trust failures: kubelet rotation problems, weak kubelet TLS posture, expired API server certificates, and broken reloading of rotated client certs.\n",
+      "detection_modes": [
+        "native_rule"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "kubelet logs",
+          "API server logs",
+          "certificate expiry inspection"
+        ],
+        "intent_signals": [
+          "kubelet TLS configuration",
+          "certificate rotation settings",
+          "control-plane certificate lifecycle config"
+        ],
+        "live_signals": [
+          "expired or stale certs",
+          "node or control-plane disruption after rotation"
+        ]
+      },
+      "family": "cluster-hardening",
+      "id": "CTRL-CLUSTER-0002",
+      "maturity": "seeded",
+      "name": "Control plane certificate baseline",
+      "pattern_refs": [
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-0207",
+          "name": "Kubernetes API server loopback certificate expires after 1 year",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-0228",
+          "name": "Kubernetes kubelet certificate rotation failures cause service disruption",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-0275",
+          "name": "kubelet certificate rotation fails silently",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-1133",
+          "name": "Kubelet accepts weak TLS ciphersuites by default",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-1164",
+          "name": "Kubelet uses wrong certificate on startup after rotation",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-1165",
+          "name": "API server does not reload rotated kubelet client certificate",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2472",
+          "name": "kubelet TLS bootstrap certificate not valid for node hostname",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2478",
+          "name": "apiserver-etcd-client certificate expired breaks cluster",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Monitor certificate rotation and expiry as part of cluster health, not only during upgrades.",
+          "Prefer explicit, modern TLS posture for kubelet and control-plane components.",
+          "Validate both issuance and reload behavior when rotating kubelet or API server certificates."
+        ],
+        "safety_class": "review_required",
+        "strategy": "diagnose_then_fix"
+      },
+      "resource_kinds": [
+        "Node",
+        "KubeletConfiguration",
+        "APIServer"
+      ],
+      "severity": "critical",
+      "slug": "control-plane-certificate-baseline",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/cluster/control-plane-certificate-baseline.yaml",
+      "summary": "Detect certificate rotation and TLS posture failures that quietly degrade kubelet and control-plane trust.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "cluster",
+        "kubelet",
+        "apiserver",
+        "tls",
+        "certificates",
+        "baseline"
+      ]
+    },
+    {
+      "description": "This control packages the admission-webhook reliability failures that have cluster-wide blast radius: webhooks unreachable from the API server, timeout behavior that ignores expected failure policy, misleading network errors, and webhook failures that block reconciliation or garbage collection.\n",
+      "detection_modes": [
+        "native_rule",
+        "sdk_worker"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "kubectl get validatingwebhookconfiguration,mutatingwebhookconfiguration -o yaml",
+          "API server logs",
+          "controller reconciliation errors"
+        ],
+        "intent_signals": [
+          "webhook timeoutSeconds",
+          "failurePolicy",
+          "clientConfig and service references"
+        ],
+        "live_signals": [
+          "API server unable to reach webhook",
+          "reconciliation or garbage collection blocked by webhook failures"
+        ]
+      },
+      "family": "cluster-hardening",
+      "id": "CTRL-CLUSTER-0003",
+      "maturity": "seeded",
+      "name": "Admission webhook availability baseline",
+      "pattern_refs": [
+        {
+          "category": "DEPEND",
+          "confidence": "medium",
+          "id": "CCVE-2025-0039",
+          "name": "Webhook not reachable from API server",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "webhook",
+            "api-server",
+            "networking",
+            "eks",
+            "cni",
+            "connectivity"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-0368",
+          "name": "Admission webhook timeout ignores failurePolicy setting",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-1262",
+          "name": "Admission webhook timeout fails despite failurePolicy Ignore",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-1264",
+          "name": "Admission webhooks affected by dead TCP connections",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-1821",
+          "name": "Admission webhook global timeout exceeded with failurePolicy Ignore",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-1824",
+          "name": "Admission webhook returns misleading 400 error on network failures",
+          "severity": {
+            "bucket": "warning",
+            "raw": "medium"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "APPLY",
+          "confidence": "high",
+          "id": "CCVE-2025-2605",
+          "name": "Webhook admission errors block reconciliation indefinitely",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "ORPHAN",
+          "confidence": "high",
+          "id": "CCVE-2025-2638",
+          "name": "Garbage collection blocked by admission webhook",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Treat admission webhook reachability and timeout posture as control-plane reliability concerns, not only policy concerns.",
+          "Validate failurePolicy expectations with real network-failure tests before relying on them in production.",
+          "Watch for webhook-induced reconciliation and garbage-collection blockage after upgrades or certificate changes."
+        ],
+        "safety_class": "review_required",
+        "strategy": "diagnose_then_fix"
+      },
+      "resource_kinds": [
+        "ValidatingWebhookConfiguration",
+        "MutatingWebhookConfiguration",
+        "APIServer"
+      ],
+      "severity": "critical",
+      "slug": "admission-webhook-availability-baseline",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/cluster/admission-webhook-availability-baseline.yaml",
+      "summary": "Detect webhook posture that turns admission into a reliability hazard or blocks reconciliation indefinitely.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "live_state",
+        "connected_validation"
+      ],
+      "tags": [
+        "cluster",
+        "admission",
+        "webhook",
+        "availability",
+        "reconciliation",
+        "baseline"
+      ]
+    },
     {
       "description": "This control groups the core Argo CD Application health and sync failures that operators actually triage during broken rollouts. It is meant to support both live-state detection and higher-level intent-vs-live reasoning.\n",
       "detection_modes": [
@@ -1459,6 +1919,344 @@
       ]
     },
     {
+      "description": "This control groups the high-signal external secret management failures that operators actually need surfaced together: auth validation problems, deleted SecretStore references, broken refresh semantics, TLS verification failures, and secrets that never get recreated after external deletion.\n",
+      "detection_modes": [
+        "native_rule"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "kubectl get externalsecret,secretstore,clustersecretstore -o yaml",
+          "external-secrets controller logs",
+          "provider auth and TLS diagnostics"
+        ],
+        "intent_signals": [
+          "spec.secretStoreRef",
+          "spec.refreshInterval",
+          "provider TLS and auth configuration"
+        ],
+        "live_signals": [
+          "status.conditions",
+          "target Secret missing or stale after external change"
+        ]
+      },
+      "family": "secrets-and-credentials",
+      "id": "CTRL-SECRETS-0001",
+      "maturity": "seeded",
+      "name": "External secret store baseline",
+      "pattern_refs": [
+        {
+          "category": "DEPEND",
+          "confidence": "high",
+          "id": "CCVE-2025-0067",
+          "name": "External Secrets store authentication validation failure",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "DRIFT",
+          "confidence": "high",
+          "id": "CCVE-2025-0068",
+          "name": "External Secrets silent sync failure - Secret not created",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "medium",
+          "id": "CCVE-2025-0124",
+          "name": "ExternalSecret refresh interval too aggressive causing rate limits",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "ORPHAN",
+          "confidence": "high",
+          "id": "CCVE-2025-0125",
+          "name": "ExternalSecret referencing deleted SecretStore",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-0296",
+          "name": "External Secrets sync fails silently on provider error",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-0297",
+          "name": "External Secrets refreshInterval zero disables refresh",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-0480",
+          "name": "external-secrets sync fails silently",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-0481",
+          "name": "external-secrets refreshInterval zero disables sync",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2654",
+          "name": "TLS certificate verification failure for SecretStore connections",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-2676",
+          "name": "Secrets not regenerated when deleted externally",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Validate SecretStore authentication and TLS trust before debugging downstream missing secrets.",
+          "Use non-zero refresh intervals and verify external deletion or rotation paths are exercised safely.",
+          "Treat silent sync failures as platform incidents, not low-priority drift."
+        ],
+        "safety_class": "review_required",
+        "strategy": "diagnose_then_fix"
+      },
+      "resource_kinds": [
+        "ExternalSecret",
+        "SecretStore",
+        "ClusterSecretStore"
+      ],
+      "severity": "critical",
+      "slug": "external-secret-store-baseline",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/secrets/external-secret-store-baseline.yaml",
+      "summary": "Detect ExternalSecret and SecretStore posture that quietly breaks sync, trust, or secret regeneration.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "secrets",
+        "externalsecret",
+        "secretstore",
+        "sync",
+        "credentials",
+        "baseline"
+      ]
+    },
+    {
+      "description": "This control focuses on the operator-facing secret hygiene failures that make credentials easy to leak: secrets stored in ConfigMaps, overly permissive credential files, plaintext logging, and cleartext password material embedded in generated configs.\n",
+      "detection_modes": [
+        "native_rule"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "kubectl get secret,configmap -o yaml",
+          "rendered config inspection",
+          "workload logs"
+        ],
+        "intent_signals": [
+          "Secret vs ConfigMap placement",
+          "credential file mode configuration",
+          "logging or rendered config values carrying credential material"
+        ],
+        "live_signals": [
+          "mounted credential files readable too broadly",
+          "cleartext credentials visible in generated config or logs"
+        ]
+      },
+      "family": "secrets-and-credentials",
+      "id": "CTRL-SECRETS-0002",
+      "maturity": "seeded",
+      "name": "Secret handling and exposure baseline",
+      "pattern_refs": [
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-0229",
+          "name": "Kubernetes ConfigMap/Secret mount permissions world-readable by default",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "unknown",
+          "id": "CCVE-2025-0593",
+          "name": "Loki S3 credentials exposed in ConfigMap instead of Secret",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2543",
+          "name": "Credential files have overly permissive access",
+          "severity": {
+            "bucket": "warning",
+            "raw": "medium"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2544",
+          "name": "Azure credentials logged in plaintext with JSON format",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-3279",
+          "name": "Vector Helm chart leaks AWS credentials in ConfigMap",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "vector",
+            "aws",
+            "credentials",
+            "security",
+            "configmap",
+            "secret",
+            "leak"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-3508",
+          "name": "MetalLB BGP password stored in clear text in FRR configuration",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "metallb",
+            "BGP",
+            "security",
+            "password",
+            "cleartext",
+            "FRR"
+          ],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Keep credential material in Secrets or external stores, not ConfigMaps or generated plaintext configs.",
+          "Lock down credential file permissions and remove plaintext credential logging paths.",
+          "Treat cleartext passwords and credential leaks as security issues even when the workload still functions."
+        ],
+        "safety_class": "review_required",
+        "strategy": "config_fix"
+      },
+      "resource_kinds": [
+        "Secret",
+        "ConfigMap",
+        "Deployment",
+        "Service"
+      ],
+      "severity": "critical",
+      "slug": "secret-handling-and-exposure-baseline",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/secrets/secret-handling-and-exposure-baseline.yaml",
+      "summary": "Detect credential handling patterns that expose secrets through ConfigMaps, permissive file access, or plaintext logs.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "secrets",
+        "credentials",
+        "configmap",
+        "plaintext",
+        "file-permissions",
+        "baseline"
+      ]
+    },
+    {
       "description": "This control packages the first high-signal workload hardening checks that should be visible to operators as one baseline: privilege, host namespace access, root execution, privilege escalation, immutable filesystem posture, and capability dropping.\n",
       "detection_modes": [
         "native_rule"
@@ -1695,14 +2493,70 @@
       ]
     }
   ],
-  "framework_count": 4,
+  "framework_count": 6,
   "framework_ids": [
+    "FRM-CLUSTER-0001",
     "FRM-GITOPS-0001",
     "FRM-NET-0001",
     "FRM-RBAC-0001",
+    "FRM-SECRETS-0001",
     "FRM-WORKLOAD-0001"
   ],
   "frameworks": [
+    {
+      "control_ids": [
+        "CTRL-CLUSTER-0001",
+        "CTRL-CLUSTER-0002",
+        "CTRL-CLUSTER-0003"
+      ],
+      "controls": [
+        {
+          "family": "cluster-hardening",
+          "id": "CTRL-CLUSTER-0001",
+          "name": "Pod security and hostPath baseline",
+          "severity": "critical",
+          "slug": "pod-security-and-hostpath-baseline"
+        },
+        {
+          "family": "cluster-hardening",
+          "id": "CTRL-CLUSTER-0002",
+          "name": "Control plane certificate baseline",
+          "severity": "critical",
+          "slug": "control-plane-certificate-baseline"
+        },
+        {
+          "family": "cluster-hardening",
+          "id": "CTRL-CLUSTER-0003",
+          "name": "Admission webhook availability baseline",
+          "severity": "critical",
+          "slug": "admission-webhook-availability-baseline"
+        }
+      ],
+      "description": "This framework groups the first promoted controls that describe secure and resilient cluster defaults. It is aimed at platform teams who need a stable view over cluster-hardening posture rather than isolated upgrade bugs.\n",
+      "family": "cluster-hardening",
+      "id": "FRM-CLUSTER-0001",
+      "maturity": "seeded",
+      "name": "Cluster hardening",
+      "outcomes": [
+        "Surface the first stable cluster-hardening controls in one operator-facing bundle.",
+        "Keep pod security boundaries, control-plane certificates, and admission reliability visible together.",
+        "Provide a clean starting point for future API server, scheduler, and kubelet hardening controls."
+      ],
+      "platforms": [
+        "kubernetes",
+        "control-plane"
+      ],
+      "slug": "cluster-hardening",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/frameworks/cluster-hardening.yaml",
+      "summary": "Curated controls for pod security boundaries, control-plane certificates, and admission reliability.",
+      "tags": [
+        "cluster",
+        "hardening",
+        "pod-security",
+        "tls",
+        "admission"
+      ]
+    },
     {
       "control_ids": [
         "CTRL-GITOPS-0001",
@@ -1876,6 +2730,52 @@
     },
     {
       "control_ids": [
+        "CTRL-SECRETS-0001",
+        "CTRL-SECRETS-0002"
+      ],
+      "controls": [
+        {
+          "family": "secrets-and-credentials",
+          "id": "CTRL-SECRETS-0001",
+          "name": "External secret store baseline",
+          "severity": "critical",
+          "slug": "external-secret-store-baseline"
+        },
+        {
+          "family": "secrets-and-credentials",
+          "id": "CTRL-SECRETS-0002",
+          "name": "Secret handling and exposure baseline",
+          "severity": "critical",
+          "slug": "secret-handling-and-exposure-baseline"
+        }
+      ],
+      "description": "This framework groups the first promoted secret-management controls for Kubernetes operators. It is intended to keep secret sync, storage, and exposure problems visible as one stable workflow surface instead of scattered product-specific findings.\n",
+      "family": "secrets-and-credentials",
+      "id": "FRM-SECRETS-0001",
+      "maturity": "seeded",
+      "name": "Secrets and credentials",
+      "outcomes": [
+        "Surface external secret sync and trust failures in one operator-facing bundle.",
+        "Make credential exposure and unsafe secret handling visible as first-class controls.",
+        "Provide a stable framework surface for future secret rotation and identity-integrated controls."
+      ],
+      "platforms": [
+        "kubernetes",
+        "externalsecrets",
+        "vault"
+      ],
+      "slug": "secrets-and-credentials",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/frameworks/secrets-and-credentials.yaml",
+      "summary": "Curated controls for secret lifecycle, external secret sync, and credential exposure posture.",
+      "tags": [
+        "secrets",
+        "credentials",
+        "external-secrets",
+        "exposure"
+      ]
+    },
+    {
+      "control_ids": [
         "CTRL-WORKLOAD-0001",
         "CTRL-WORKLOAD-0002"
       ],
@@ -1920,8 +2820,8 @@
       ]
     }
   ],
-  "generated_at": "2026-03-23T13:13:27+00:00",
-  "pattern_coverage_count": 64,
+  "generated_at": "2026-03-23T13:34:00+00:00",
+  "pattern_coverage_count": 100,
   "pattern_ids": [
     "CCVE-2025-0004",
     "CCVE-2025-0005",
@@ -1929,7 +2829,12 @@
     "CCVE-2025-0007",
     "CCVE-2025-0013",
     "CCVE-2025-0032",
+    "CCVE-2025-0039",
     "CCVE-2025-0063",
+    "CCVE-2025-0067",
+    "CCVE-2025-0068",
+    "CCVE-2025-0124",
+    "CCVE-2025-0125",
     "CCVE-2025-0127",
     "CCVE-2025-0128",
     "CCVE-2025-0129",
@@ -1937,28 +2842,55 @@
     "CCVE-2025-0166",
     "CCVE-2025-0168",
     "CCVE-2025-0169",
+    "CCVE-2025-0207",
+    "CCVE-2025-0228",
+    "CCVE-2025-0229",
+    "CCVE-2025-0275",
+    "CCVE-2025-0296",
+    "CCVE-2025-0297",
+    "CCVE-2025-0368",
+    "CCVE-2025-0480",
+    "CCVE-2025-0481",
+    "CCVE-2025-0593",
     "CCVE-2025-0665",
     "CCVE-2025-0666",
     "CCVE-2025-0667",
     "CCVE-2025-0672",
     "CCVE-2025-0690",
+    "CCVE-2025-0724",
     "CCVE-2025-0772",
     "CCVE-2025-0773",
     "CCVE-2025-0894",
     "CCVE-2025-0895",
     "CCVE-2025-0916",
+    "CCVE-2025-0921",
     "CCVE-2025-1116",
     "CCVE-2025-1125",
+    "CCVE-2025-1133",
     "CCVE-2025-1137",
+    "CCVE-2025-1164",
+    "CCVE-2025-1165",
+    "CCVE-2025-1262",
+    "CCVE-2025-1264",
     "CCVE-2025-1601",
+    "CCVE-2025-1821",
+    "CCVE-2025-1824",
     "CCVE-2025-2155",
     "CCVE-2025-2156",
     "CCVE-2025-2432",
+    "CCVE-2025-2472",
+    "CCVE-2025-2478",
+    "CCVE-2025-2543",
+    "CCVE-2025-2544",
     "CCVE-2025-2563",
     "CCVE-2025-2565",
     "CCVE-2025-2567",
     "CCVE-2025-2599",
     "CCVE-2025-2603",
+    "CCVE-2025-2605",
+    "CCVE-2025-2638",
+    "CCVE-2025-2654",
+    "CCVE-2025-2676",
     "CCVE-2025-2790",
     "CCVE-2025-3153",
     "CCVE-2025-3167",
@@ -1966,6 +2898,8 @@
     "CCVE-2025-3202",
     "CCVE-2025-3206",
     "CCVE-2025-3208",
+    "CCVE-2025-3279",
+    "CCVE-2025-3508",
     "CCVE-2025-3720",
     "CCVE-2025-3724",
     "CCVE-2025-3727",
@@ -1975,9 +2909,11 @@
     "CCVE-2025-3734",
     "CCVE-2025-3735",
     "CCVE-2025-3736",
+    "CCVE-2025-3737",
     "CCVE-2025-3746",
     "CCVE-2025-3752",
     "CCVE-2025-3758",
+    "CCVE-2025-3763",
     "CCVE-2025-4075",
     "CCVE-2025-4076",
     "CCVE-2025-4077",

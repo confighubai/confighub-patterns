@@ -1,0 +1,63 @@
+schema_version: control-definition-v1
+id: CTRL-CLUSTER-0002
+slug: control-plane-certificate-baseline
+name: Control plane certificate baseline
+family: cluster-hardening
+summary: Detect certificate rotation and TLS posture failures that quietly degrade kubelet and control-plane trust.
+description: >
+  This control groups the certificate lifecycle and TLS configuration failures
+  that operators need surfaced before they become node outages or cluster-wide
+  trust failures: kubelet rotation problems, weak kubelet TLS posture, expired
+  API server certificates, and broken reloading of rotated client certs.
+maturity: seeded
+severity: critical
+supported_surfaces:
+  - static
+  - live_state
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - sdk
+  - ai
+detection_modes:
+  - native_rule
+resource_kinds:
+  - Node
+  - KubeletConfiguration
+  - APIServer
+pattern_ids:
+  - CCVE-2025-0207
+  - CCVE-2025-0228
+  - CCVE-2025-0275
+  - CCVE-2025-1133
+  - CCVE-2025-1164
+  - CCVE-2025-1165
+  - CCVE-2025-2472
+  - CCVE-2025-2478
+tags:
+  - cluster
+  - kubelet
+  - apiserver
+  - tls
+  - certificates
+  - baseline
+remediation:
+  strategy: diagnose_then_fix
+  safety_class: review_required
+  guidance:
+    - Monitor certificate rotation and expiry as part of cluster health, not only during upgrades.
+    - Prefer explicit, modern TLS posture for kubelet and control-plane components.
+    - Validate both issuance and reload behavior when rotating kubelet or API server certificates.
+evidence_expectations:
+  intent_signals:
+    - kubelet TLS configuration
+    - certificate rotation settings
+    - control-plane certificate lifecycle config
+  live_signals:
+    - expired or stale certs
+    - node or control-plane disruption after rotation
+  corroborating_sources:
+    - kubelet logs
+    - API server logs
+    - certificate expiry inspection
