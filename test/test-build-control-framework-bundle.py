@@ -43,6 +43,8 @@ class BuildControlFrameworkBundleTests(unittest.TestCase):
             self.assertEqual(bundle["framework_count"], 1)
             self.assertEqual(bundle["pattern_coverage_count"], 2)
             self.assertEqual(bundle["controls"][0]["pattern_refs"][0]["name"], "Application sync failed")
+            self.assertEqual(bundle["controls"][0]["example_refs"][0]["repo"], "confighub-scan")
+            self.assertEqual(bundle["controls"][0]["example_refs"][0]["path"], "examples/gitops-good-baselines/argocd-application-good.yaml")
             self.assertEqual(bundle["frameworks"][0]["controls"][0]["name"], "Sample GitOps control")
 
     def test_missing_catalog_pattern_fails(self) -> None:

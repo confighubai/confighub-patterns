@@ -106,6 +106,7 @@ def normalize_control_doc(path: Path, summary_row: dict[str, Any], pattern_index
         "detection_modes": doc.get("detection_modes", []),
         "resource_kinds": doc.get("resource_kinds", []),
         "tags": doc.get("tags", []),
+        "example_refs": doc.get("example_refs", []),
         "source_path": str(path),
         "remediation": {
             "strategy": remediation.get("strategy"),

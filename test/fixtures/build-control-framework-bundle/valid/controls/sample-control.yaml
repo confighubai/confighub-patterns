@@ -21,6 +21,10 @@ pattern_ids:
 tags:
   - gitops
   - sample
+example_refs:
+  - repo: confighub-scan
+    path: examples/gitops-good-baselines/argocd-application-good.yaml
+    purpose: Sample baseline reference for bundle testing.
 remediation:
   strategy: diagnose_then_fix
   safety_class: diagnose_only
