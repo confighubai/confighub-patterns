@@ -70,6 +70,7 @@ See also:
 - `docs/TAXONOMY.md`
 - `docs/PRODUCT-THESIS.md`
 - `docs/CANDIDATE-CONTROL-FAMILIES.md`
+- `docs/EXTERNAL-REGO-LIBRARY-REVIEW.md`
 - `dist/control-taxonomy-summary-v1.json`
 - `dist/control-framework-bundle-v1.json`
 - `dist/bundle-manifest-v1.json`

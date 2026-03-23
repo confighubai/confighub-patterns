@@ -12,6 +12,9 @@ maturity: seeded
 control_ids:
   - CTRL-GITOPS-0001
   - CTRL-GITOPS-0002
+  - CTRL-GITOPS-0003
+  - CTRL-GITOPS-0004
+  - CTRL-GITOPS-0005
 platforms:
   - argocd
   - flux
@@ -24,4 +27,6 @@ tags:
 outcomes:
   - Surface the highest-signal GitOps health failures in one operator-facing bundle.
   - Encourage intent-vs-live comparison instead of treating every failure as the same class of problem.
+  - Make healthy Argo CD and Flux configuration defaults visible as promoted controls, not just scattered pattern IDs.
+  - Keep multi-application generator and reconcile-path safety in the same framework as live health failures.
   - Provide a stable framework surface before the full pattern corpus is promoted into controls.

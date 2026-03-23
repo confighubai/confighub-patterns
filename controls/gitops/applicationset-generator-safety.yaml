@@ -1,0 +1,57 @@
+schema_version: control-definition-v1
+id: CTRL-GITOPS-0004
+slug: applicationset-generator-safety
+name: Argo CD ApplicationSet generator safety
+family: gitops-operators
+summary: Catch ApplicationSet generator and templating choices that create broad or surprising rollout behavior.
+description: >
+  This control covers the ApplicationSet-specific failure modes that operators
+  often discover only after many applications are affected at once. It is meant
+  to promote safer generator composition, retry behavior, and templating
+  discipline for multi-app rollouts.
+maturity: seeded
+severity: high
+supported_surfaces:
+  - static
+  - live_state
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - sdk
+  - ai
+detection_modes:
+  - native_rule
+resource_kinds:
+  - ApplicationSet
+pattern_ids:
+  - CCVE-2025-0129
+  - CCVE-2025-2563
+  - CCVE-2025-2565
+  - CCVE-2025-2567
+  - CCVE-2025-3724
+tags:
+  - argocd
+  - applicationset
+  - generator
+  - templating
+  - rollout-safety
+remediation:
+  strategy: manual_review
+  safety_class: review_required
+  guidance:
+    - Prefer simpler generator combinations when broad rollout scope or template merge behavior is hard to reason about.
+    - Validate generator output and retry semantics before relying on progressive sync or multi-source templates.
+    - Treat ApplicationSet template changes as high-blast-radius changes and test them against representative app sets first.
+evidence_expectations:
+  intent_signals:
+    - spec.generators
+    - spec.template
+    - spec.strategy
+  live_signals:
+    - controller errors creating or updating generated Applications
+    - generated Applications diverging from intended template output
+  corroborating_sources:
+    - kubectl get applicationset -o yaml
+    - applicationset-controller logs
+    - rendered generator preview or dry-run output

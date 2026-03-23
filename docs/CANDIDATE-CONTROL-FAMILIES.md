@@ -64,6 +64,13 @@ Candidate control themes:
 - source readiness failures
 - reconcile-path problems that only appear in live state
 
+Seeded controls now in `controls/gitops/`:
+- `argocd-application-reconciliation-health`
+- `argocd-sync-policy-baseline`
+- `applicationset-generator-safety`
+- `flux-reconciliation-reliability`
+- `flux-intent-and-reconcile-baseline`
+
 ## 6. Cluster And Node Hardening
 
 Candidate control themes:

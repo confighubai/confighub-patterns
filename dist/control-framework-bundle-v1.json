@@ -1,8 +1,11 @@
 {
-  "control_count": 4,
+  "control_count": 7,
   "control_ids": [
     "CTRL-GITOPS-0001",
     "CTRL-GITOPS-0002",
+    "CTRL-GITOPS-0003",
+    "CTRL-GITOPS-0004",
+    "CTRL-GITOPS-0005",
     "CTRL-WORKLOAD-0001",
     "CTRL-WORKLOAD-0002"
   ],
@@ -255,6 +258,385 @@
       ]
     },
     {
+      "description": "This control focuses on the high-value Argo CD configuration choices that determine whether drift is corrected or silently allowed to accumulate. It is intended to answer \"what does good look like?\" for Application sync policy, prune behavior, and self-heal posture before teams debug broken syncs in production.\n",
+      "detection_modes": [
+        "native_rule",
+        "derived_comparison"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "argocd app get",
+          "argocd app diff",
+          "kubectl get application -o yaml"
+        ],
+        "intent_signals": [
+          "spec.syncPolicy.automated",
+          "spec.syncPolicy.automated.prune",
+          "spec.syncPolicy.automated.selfHeal"
+        ],
+        "live_signals": [
+          "status.sync.status",
+          "orphaned or undeleted resources after Git removal"
+        ]
+      },
+      "family": "gitops-operators",
+      "id": "CTRL-GITOPS-0003",
+      "maturity": "seeded",
+      "name": "Argo CD sync policy baseline",
+      "pattern_refs": [
+        {
+          "category": "CONFIG",
+          "confidence": "medium",
+          "id": "CCVE-2025-0128",
+          "name": "Argo CD Application with automated sync but no prune",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "ORPHAN",
+          "confidence": "high",
+          "id": "CCVE-2025-2599",
+          "name": "ArgoCD 3.x not deleting resources when app removed from Git",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-3720",
+          "name": "ArgoCD Application has auto-sync and self-heal disabled",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Prefer automated sync with explicit prune posture for applications expected to converge continuously.",
+          "Enable self-heal deliberately when the platform expects Argo CD to correct manual drift.",
+          "Verify prune expectations against live orphan behavior before changing sync policy defaults on shared applications."
+        ],
+        "safety_class": "review_required",
+        "strategy": "config_fix"
+      },
+      "resource_kinds": [
+        "Application"
+      ],
+      "severity": "high",
+      "slug": "argocd-sync-policy-baseline",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/gitops/argocd-sync-policy-baseline.yaml",
+      "summary": "Promote the Argo CD sync-policy defaults that keep desired state and live state converged.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state",
+        "repo_vs_live"
+      ],
+      "tags": [
+        "argocd",
+        "gitops",
+        "sync-policy",
+        "prune",
+        "self-heal",
+        "baseline"
+      ]
+    },
+    {
+      "description": "This control covers the ApplicationSet-specific failure modes that operators often discover only after many applications are affected at once. It is meant to promote safer generator composition, retry behavior, and templating discipline for multi-app rollouts.\n",
+      "detection_modes": [
+        "native_rule"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "kubectl get applicationset -o yaml",
+          "applicationset-controller logs",
+          "rendered generator preview or dry-run output"
+        ],
+        "intent_signals": [
+          "spec.generators",
+          "spec.template",
+          "spec.strategy"
+        ],
+        "live_signals": [
+          "controller errors creating or updating generated Applications",
+          "generated Applications diverging from intended template output"
+        ]
+      },
+      "family": "gitops-operators",
+      "id": "CTRL-GITOPS-0004",
+      "maturity": "seeded",
+      "name": "Argo CD ApplicationSet generator safety",
+      "pattern_refs": [
+        {
+          "category": "CONFIG",
+          "confidence": "medium",
+          "id": "CCVE-2025-0129",
+          "name": "Argo CD ApplicationSet with incorrect template merge behavior",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2563",
+          "name": "ApplicationSet controller CrashLoopBackOff with helm.valuesObject and list generator",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2565",
+          "name": "ApplicationSet GitLab generator fails with pathsExist filter",
+          "severity": {
+            "bucket": "warning",
+            "raw": "medium"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2567",
+          "name": "ApplicationSet progressive sync ignores retry limit configuration",
+          "severity": {
+            "bucket": "warning",
+            "raw": "medium"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "medium",
+          "id": "CCVE-2025-3724",
+          "name": "ArgoCD ApplicationSet uses complex mixed generators",
+          "severity": {
+            "bucket": "info",
+            "raw": "info"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Prefer simpler generator combinations when broad rollout scope or template merge behavior is hard to reason about.",
+          "Validate generator output and retry semantics before relying on progressive sync or multi-source templates.",
+          "Treat ApplicationSet template changes as high-blast-radius changes and test them against representative app sets first."
+        ],
+        "safety_class": "review_required",
+        "strategy": "manual_review"
+      },
+      "resource_kinds": [
+        "ApplicationSet"
+      ],
+      "severity": "high",
+      "slug": "applicationset-generator-safety",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/gitops/applicationset-generator-safety.yaml",
+      "summary": "Catch ApplicationSet generator and templating choices that create broad or surprising rollout behavior.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "argocd",
+        "applicationset",
+        "generator",
+        "templating",
+        "rollout-safety"
+      ]
+    },
+    {
+      "description": "This control groups the static and live-state signals that make Flux reconciliations reliable in practice: timeouts, dependency graphs, source freshness, interval configuration, and prune behavior. It is the \"good Flux config\" baseline that should inform both repo review and live-cluster triage.\n",
+      "detection_modes": [
+        "native_rule",
+        "derived_comparison"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "flux get all",
+          "source-controller logs",
+          "kustomize-controller logs",
+          "helm-controller logs"
+        ],
+        "intent_signals": [
+          "spec.interval",
+          "spec.timeout",
+          "spec.dependsOn",
+          "spec.prune",
+          "spec.sourceRef"
+        ],
+        "live_signals": [
+          "status.conditions",
+          "Ready Unknown or stalled reconciliation",
+          "stale source revision or unexpected retained resources"
+        ]
+      },
+      "family": "gitops-operators",
+      "id": "CTRL-GITOPS-0005",
+      "maturity": "seeded",
+      "name": "Flux intent and reconcile baseline",
+      "pattern_refs": [
+        {
+          "category": "CONFIG",
+          "confidence": "medium",
+          "id": "CCVE-2025-0127",
+          "name": "Flux HelmRelease missing timeout causing indefinite hangs",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "ORPHAN",
+          "confidence": "high",
+          "id": "CCVE-2025-0168",
+          "name": "Flux prune fails when entire directory deleted from Git",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-0665",
+          "name": "HelmRelease interval zero disables continuous reconciliation",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "DRIFT",
+          "confidence": "high",
+          "id": "CCVE-2025-0666",
+          "name": "Kustomization sourceRef to suspended source uses stale revision",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "DEPEND",
+          "confidence": "high",
+          "id": "CCVE-2025-0667",
+          "name": "HelmRelease circular dependsOn not identified as root cause",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-0672",
+          "name": "HelmRelease timeout too short for reliable deployments",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "SOURCE",
+          "confidence": "high",
+          "id": "CCVE-2025-2603",
+          "name": "Kustomization not pruning deleted resources from Git",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Set timeout and interval values deliberately so Flux continues reconciling and fails fast enough to debug.",
+          "Keep dependency graphs acyclic and verify source references do not point at suspended or stale inputs.",
+          "Treat prune-related changes as potentially destructive and confirm expected live deletions before rollout."
+        ],
+        "safety_class": "review_required",
+        "strategy": "config_fix"
+      },
+      "resource_kinds": [
+        "GitRepository",
+        "HelmRelease",
+        "Kustomization"
+      ],
+      "severity": "high",
+      "slug": "flux-intent-and-reconcile-baseline",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/gitops/flux-intent-and-reconcile-baseline.yaml",
+      "summary": "Define the key Flux config defaults that prevent reconcile stalls, stale source usage, and drift after Git changes.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state",
+        "repo_vs_live"
+      ],
+      "tags": [
+        "flux",
+        "helmrelease",
+        "kustomization",
+        "gitrepository",
+        "prune",
+        "baseline",
+        "reconciliation"
+      ]
+    },
+    {
       "description": "This control packages the first high-signal workload hardening checks that should be visible to operators as one baseline: privilege, host namespace access, root execution, privilege escalation, immutable filesystem posture, and capability dropping.\n",
       "detection_modes": [
         "native_rule"
@@ -500,7 +882,10 @@
     {
       "control_ids": [
         "CTRL-GITOPS-0001",
-        "CTRL-GITOPS-0002"
+        "CTRL-GITOPS-0002",
+        "CTRL-GITOPS-0003",
+        "CTRL-GITOPS-0004",
+        "CTRL-GITOPS-0005"
       ],
       "controls": [
         {
@@ -516,6 +901,27 @@
           "name": "Flux reconciliation reliability",
           "severity": "high",
           "slug": "flux-reconciliation-reliability"
+        },
+        {
+          "family": "gitops-operators",
+          "id": "CTRL-GITOPS-0003",
+          "name": "Argo CD sync policy baseline",
+          "severity": "high",
+          "slug": "argocd-sync-policy-baseline"
+        },
+        {
+          "family": "gitops-operators",
+          "id": "CTRL-GITOPS-0004",
+          "name": "Argo CD ApplicationSet generator safety",
+          "severity": "high",
+          "slug": "applicationset-generator-safety"
+        },
+        {
+          "family": "gitops-operators",
+          "id": "CTRL-GITOPS-0005",
+          "name": "Flux intent and reconcile baseline",
+          "severity": "high",
+          "slug": "flux-intent-and-reconcile-baseline"
         }
       ],
       "description": "This framework groups the first operator-facing controls for Argo CD and Flux. It is aimed at teams who need to distinguish desired-state defects from rollout and reconciliation failures.\n",
@@ -526,6 +932,8 @@
       "outcomes": [
         "Surface the highest-signal GitOps health failures in one operator-facing bundle.",
         "Encourage intent-vs-live comparison instead of treating every failure as the same class of problem.",
+        "Make healthy Argo CD and Flux configuration defaults visible as promoted controls, not just scattered pattern IDs.",
+        "Keep multi-application generator and reconcile-path safety in the same framework as live health failures.",
         "Provide a stable framework surface before the full pattern corpus is promoted into controls."
       ],
       "platforms": [
@@ -589,17 +997,32 @@
       ]
     }
   ],
-  "generated_at": "2026-03-22T22:49:59+00:00",
-  "pattern_coverage_count": 17,
+  "generated_at": "2026-03-23T12:58:03+00:00",
+  "pattern_coverage_count": 32,
   "pattern_ids": [
     "CCVE-2025-0004",
     "CCVE-2025-0005",
     "CCVE-2025-0006",
     "CCVE-2025-0007",
     "CCVE-2025-0013",
+    "CCVE-2025-0127",
+    "CCVE-2025-0128",
+    "CCVE-2025-0129",
     "CCVE-2025-0156",
     "CCVE-2025-0166",
+    "CCVE-2025-0168",
     "CCVE-2025-0169",
+    "CCVE-2025-0665",
+    "CCVE-2025-0666",
+    "CCVE-2025-0667",
+    "CCVE-2025-0672",
+    "CCVE-2025-2563",
+    "CCVE-2025-2565",
+    "CCVE-2025-2567",
+    "CCVE-2025-2599",
+    "CCVE-2025-2603",
+    "CCVE-2025-3720",
+    "CCVE-2025-3724",
     "CCVE-2025-3727",
     "CCVE-2025-3728",
     "CCVE-2025-3729",
