@@ -1,11 +1,16 @@
 {
-  "control_count": 7,
+  "control_count": 12,
   "control_ids": [
     "CTRL-GITOPS-0001",
     "CTRL-GITOPS-0002",
     "CTRL-GITOPS-0003",
     "CTRL-GITOPS-0004",
     "CTRL-GITOPS-0005",
+    "CTRL-NET-0001",
+    "CTRL-NET-0002",
+    "CTRL-NET-0003",
+    "CTRL-RBAC-0001",
+    "CTRL-RBAC-0002",
     "CTRL-WORKLOAD-0001",
     "CTRL-WORKLOAD-0002"
   ],
@@ -637,6 +642,823 @@
       ]
     },
     {
+      "description": "This control groups the deterministic NetworkPolicy failures that operators repeatedly trip over in real clusters: controllers blocked by policy, readiness traffic denied, and policy objects that no longer select any pods. It is intended as a baseline for \"tighten traffic without breaking the platform.\"\n",
+      "detection_modes": [
+        "native_rule"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "kubectl describe networkpolicy",
+          "controller logs",
+          "probe or connectivity test output"
+        ],
+        "intent_signals": [
+          "spec.podSelector",
+          "spec.ingress",
+          "spec.egress",
+          "spec.policyTypes"
+        ],
+        "live_signals": [
+          "selected pods missing or unexpected traffic failures",
+          "readiness probe failures caused by policy"
+        ]
+      },
+      "family": "network-exposure",
+      "id": "CTRL-NET-0001",
+      "maturity": "seeded",
+      "name": "NetworkPolicy connectivity baseline",
+      "pattern_refs": [
+        {
+          "category": "ORPHAN",
+          "confidence": "high",
+          "id": "CCVE-2025-0690",
+          "name": "Dangling NetworkPolicy (no matching pods)",
+          "severity": {
+            "bucket": "info",
+            "raw": "low"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-0772",
+          "name": "NetworkPolicy blocks ALB ingress traffic",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-0773",
+          "name": "NetworkPolicy blocks nginx-ingress-controller",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-1116",
+          "name": "Egress NetworkPolicy blocks readiness probe",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-1125",
+          "name": "Egress NetworkPolicy blocks kubelet readiness probe",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Start with default-deny intent, then explicitly allow ingress-controller and readiness paths that the platform needs.",
+          "Remove or repair NetworkPolicy objects that no longer match real workloads.",
+          "Validate policy changes against live traffic paths before rollout, especially for ingress and health probes."
+        ],
+        "safety_class": "review_required",
+        "strategy": "diagnose_then_fix"
+      },
+      "resource_kinds": [
+        "NetworkPolicy",
+        "Ingress"
+      ],
+      "severity": "high",
+      "slug": "network-policy-connectivity-baseline",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/network/network-policy-connectivity-baseline.yaml",
+      "summary": "Detect NetworkPolicy posture that unintentionally breaks ingress, readiness, or leaves stale policy objects behind.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "networkpolicy",
+        "ingress",
+        "readiness",
+        "connectivity",
+        "baseline"
+      ]
+    },
+    {
+      "description": "This control packages the high-signal Ingress configuration checks that determine whether traffic actually lands on the intended controller with the intended TLS posture. It is designed to answer the operator question \"is this ingress configured in a sane, routable, HTTPS-first way?\"\n",
+      "detection_modes": [
+        "native_rule"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "kubectl get ingress,ingressclass -o yaml",
+          "ingress controller logs",
+          "TLS handshake or browser/curl verification"
+        ],
+        "intent_signals": [
+          "spec.ingressClassName",
+          "metadata.annotations",
+          "spec.tls"
+        ],
+        "live_signals": [
+          "controller ignoring or rejecting Ingress objects",
+          "fake or temporary certificates served"
+        ]
+      },
+      "family": "network-exposure",
+      "id": "CTRL-NET-0002",
+      "maturity": "seeded",
+      "name": "Ingress class and TLS baseline",
+      "pattern_refs": [
+        {
+          "category": "DEPEND",
+          "confidence": "high",
+          "id": "CCVE-2025-0032",
+          "name": "TLS certificate secret not found",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "tls-certificate",
+            "secret",
+            "https",
+            "certificate-error"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "DEPEND",
+          "confidence": "high",
+          "id": "CCVE-2025-0063",
+          "name": "NGINX Ingress serving fake certificate - TLS secret not found",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2790",
+          "name": "Ingress cannot disable HTTP access",
+          "severity": {
+            "bucket": "warning",
+            "raw": "medium"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-3167",
+          "name": "Ingress TLS secret cannot reference other namespaces",
+          "severity": {
+            "bucket": "warning",
+            "raw": "medium"
+          },
+          "tags": [
+            "ingress",
+            "tls",
+            "secrets",
+            "cross-namespace",
+            "certificates",
+            "sig-network",
+            "2019"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "DEPEND",
+          "confidence": "high",
+          "id": "CCVE-2025-3201",
+          "name": "IngressClass not found when Ingress specifies ingressClassName",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "ingressclass",
+            "ingress",
+            "networking",
+            "controller",
+            "missing-resource",
+            "dependency"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-3202",
+          "name": "Multiple default IngressClass conflict blocks Ingress creation",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "ingressclass",
+            "default-class",
+            "admission-controller",
+            "conflict",
+            "configuration"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-3206",
+          "name": "Ingress stuck without matching IngressClass - silently ignored",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "ingressclass",
+            "silent-failure",
+            "stuck",
+            "no-events",
+            "troubleshooting"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-3208",
+          "name": "IngressClass controller string mismatch causes controller to ignore class",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "ingressclass",
+            "controller",
+            "mismatch",
+            "nginx",
+            "configuration"
+          ],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Ensure every Ingress resolves to one intended IngressClass and one working controller string.",
+          "Treat missing TLS secrets and silent class mismatches as deployment blockers, not low-priority hygiene issues.",
+          "Prefer an explicit HTTPS-first stance when exposing applications through Ingress."
+        ],
+        "safety_class": "review_required",
+        "strategy": "config_fix"
+      },
+      "resource_kinds": [
+        "Ingress",
+        "IngressClass",
+        "Secret"
+      ],
+      "severity": "critical",
+      "slug": "ingress-class-and-tls-baseline",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/network/ingress-class-and-tls-baseline.yaml",
+      "summary": "Detect Ingress defaults that leave HTTP exposed, break class resolution, or fail TLS secret wiring.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "ingress",
+        "ingressclass",
+        "tls",
+        "http-exposure",
+        "baseline"
+      ]
+    },
+    {
+      "description": "This control captures the annotation-driven ingress-nginx risks that move beyond simple misrouting into direct security exposure. It is meant to keep annotation flexibility from becoming an unreviewed code-injection path.\n",
+      "detection_modes": [
+        "native_rule"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "ingress-nginx controller logs",
+          "rendered nginx config",
+          "security advisory references"
+        ],
+        "intent_signals": [
+          "metadata.annotations"
+        ],
+        "live_signals": [
+          "controller accepting risky annotations",
+          "unexpected config generation or route behavior"
+        ]
+      },
+      "family": "network-exposure",
+      "id": "CTRL-NET-0003",
+      "maturity": "seeded",
+      "name": "Ingress annotation safety",
+      "pattern_refs": [
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-0894",
+          "name": "Ingress nginx configuration-snippet annotation injection vulnerability",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-0895",
+          "name": "Ingress nginx permanent-redirect annotation code injection",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-0916",
+          "name": "Ingress-nginx annotation validation bypass",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-1601",
+          "name": "Ingress-nginx annotation validation bypass vulnerability (CVE-2024-7646)",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-2155",
+          "name": "Ingress nginx annotation injection vulnerability",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "ingress",
+            "security",
+            "cve",
+            "injection",
+            "k8s-2023"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-2156",
+          "name": "Ingress nginx permanent-redirect annotation injection",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "ingress",
+            "security",
+            "cve",
+            "injection",
+            "k8s-2023"
+          ],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Restrict dangerous ingress-nginx annotations and review any snippet-like configuration as code execution risk.",
+          "Treat annotation validation bypasses as controller-security issues, not just routing bugs.",
+          "Prefer safer controller features or curated config surfaces over arbitrary annotation snippets."
+        ],
+        "safety_class": "review_required",
+        "strategy": "manual_review"
+      },
+      "resource_kinds": [
+        "Ingress"
+      ],
+      "severity": "critical",
+      "slug": "ingress-annotation-safety",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/network/ingress-annotation-safety.yaml",
+      "summary": "Detect dangerous ingress-nginx annotation usage and validation bypass conditions that turn Ingress into an injection surface.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "ingress",
+        "ingress-nginx",
+        "annotations",
+        "injection",
+        "security"
+      ]
+    },
+    {
+      "description": "This control groups the RBAC permissions and bindings that most often create immediate privilege-escalation or credential-extraction paths: nodes/proxy, pods/exec, secrets read, service account token minting, CSR approval, and wildcard resource access. It is intended as the operator-facing baseline for \"do not grant this broadly\" RBAC posture.\n",
+      "detection_modes": [
+        "native_rule"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "kubectl get clusterrole -o yaml",
+          "kubectl get clusterrolebinding -o yaml",
+          "rbac review output"
+        ],
+        "intent_signals": [
+          "rules[].resources",
+          "rules[].verbs",
+          "subjects[]"
+        ],
+        "live_signals": [
+          "bound subjects with high-risk permissions in active cluster RBAC objects"
+        ]
+      },
+      "family": "rbac-and-identity",
+      "id": "CTRL-RBAC-0001",
+      "maturity": "seeded",
+      "name": "RBAC privilege boundary baseline",
+      "pattern_refs": [
+        {
+          "category": "SECURITY",
+          "confidence": "high",
+          "id": "CCVE-2025-4075",
+          "name": "ClusterRole grants nodes/proxy enabling Kubelet API RCE",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "security",
+            "rbac",
+            "nodes-proxy",
+            "kubelet",
+            "privilege-escalation",
+            "rce",
+            "kubernetes"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "SECURITY",
+          "confidence": "high",
+          "id": "CCVE-2025-4076",
+          "name": "ClusterRoleBinding binds nodes/proxy ClusterRole to subjects",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "security",
+            "rbac",
+            "nodes-proxy",
+            "kubelet",
+            "privilege-escalation",
+            "cross-resource",
+            "kubernetes"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "SECURITY",
+          "confidence": "high",
+          "id": "CCVE-2025-4077",
+          "name": "ClusterRole grants pods/exec create",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "security",
+            "rbac",
+            "pods-exec",
+            "privilege-escalation"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "SECURITY",
+          "confidence": "high",
+          "id": "CCVE-2025-4078",
+          "name": "ClusterRole grants secrets read permissions",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "security",
+            "rbac",
+            "secrets",
+            "credential-exfiltration"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "SECURITY",
+          "confidence": "high",
+          "id": "CCVE-2025-4079",
+          "name": "ClusterRole grants serviceaccounts/token create",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "security",
+            "rbac",
+            "serviceaccount-token",
+            "privilege-escalation"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "SECURITY",
+          "confidence": "high",
+          "id": "CCVE-2025-4080",
+          "name": "ClusterRole grants CSR approval update permissions",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "security",
+            "rbac",
+            "csr-approval",
+            "certificate-issuance"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "SECURITY",
+          "confidence": "high",
+          "id": "CCVE-2025-4081",
+          "name": "ClusterRole uses wildcard resources with broad verbs",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "security",
+            "rbac",
+            "wildcard",
+            "least-privilege"
+          ],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Remove or narrow broad ClusterRole permissions before adding compensating controls.",
+          "Treat nodes/proxy, pods/exec, secrets read, serviceaccounts/token create, and wildcard resource access as exceptional permissions requiring explicit review.",
+          "Review every subject bound to high-risk ClusterRoles, not just the role content itself."
+        ],
+        "safety_class": "review_required",
+        "strategy": "manual_review"
+      },
+      "resource_kinds": [
+        "ClusterRole",
+        "ClusterRoleBinding"
+      ],
+      "severity": "critical",
+      "slug": "rbac-privilege-boundary-baseline",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/rbac/rbac-privilege-boundary-baseline.yaml",
+      "summary": "Detect the highest-risk RBAC permissions that turn broad access into direct cluster compromise paths.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "rbac",
+        "privilege-escalation",
+        "kubelet",
+        "secrets",
+        "service-account",
+        "baseline"
+      ]
+    },
+    {
+      "description": "This control focuses on the identity-side RBAC mistakes that are easy to miss in reviews: broken RoleBinding scope assumptions and unnecessary automounted service account credentials on workloads that do not need them. It is meant to make service-account identity exposure visible before it turns into lateral movement or confusing auth failures.\n",
+      "detection_modes": [
+        "native_rule"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "kubectl get rolebinding -o yaml",
+          "kubectl get deployment,statefulset,daemonset -o yaml",
+          "mounted token or projected volume inspection"
+        ],
+        "intent_signals": [
+          "roleRef",
+          "subjects[]",
+          "spec.template.spec.automountServiceAccountToken"
+        ],
+        "live_signals": [
+          "effective RoleBinding scope in cluster",
+          "running workloads with unnecessary service account tokens mounted"
+        ]
+      },
+      "family": "rbac-and-identity",
+      "id": "CTRL-RBAC-0002",
+      "maturity": "seeded",
+      "name": "Service account identity baseline",
+      "pattern_refs": [
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-1137",
+          "name": "RoleBinding to non-existent ClusterRole enables privilege escalation",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2432",
+          "name": "RoleBinding to non-existent ClusterRole creates security risk",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-3153",
+          "name": "RoleBinding with ClusterRole does not restrict to namespace",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "rbac",
+            "rolebinding",
+            "clusterrole",
+            "namespace",
+            "security",
+            "sig-auth",
+            "2019"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "SECURITY",
+          "confidence": "high",
+          "id": "CCVE-2025-3746",
+          "name": "Deployment does not disable automountServiceAccountToken",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [
+            "deployment",
+            "security",
+            "service-account",
+            "static-scan",
+            "pre-deploy"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "SECURITY",
+          "confidence": "high",
+          "id": "CCVE-2025-3752",
+          "name": "StatefulSet does not disable automountServiceAccountToken",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [
+            "statefulset",
+            "security",
+            "service-account",
+            "static-scan",
+            "pre-deploy"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "SECURITY",
+          "confidence": "high",
+          "id": "CCVE-2025-3758",
+          "name": "DaemonSet does not disable automountServiceAccountToken",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [
+            "daemonset",
+            "security",
+            "service-account",
+            "static-scan",
+            "pre-deploy"
+          ],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Make RoleBinding scope explicit and avoid bindings whose real privilege boundary is ambiguous or missing.",
+          "Disable automountServiceAccountToken by default on workloads that do not need Kubernetes API credentials.",
+          "Review service account intent together with bound roles so identity exposure and permission scope are evaluated together."
+        ],
+        "safety_class": "review_required",
+        "strategy": "config_fix"
+      },
+      "resource_kinds": [
+        "RoleBinding",
+        "Deployment",
+        "StatefulSet",
+        "DaemonSet"
+      ],
+      "severity": "high",
+      "slug": "service-account-identity-baseline",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/rbac/service-account-identity-baseline.yaml",
+      "summary": "Detect RoleBinding and workload identity defaults that quietly widen effective service account access.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "rbac",
+        "service-account",
+        "automount",
+        "identity",
+        "baseline"
+      ]
+    },
+    {
       "description": "This control packages the first high-signal workload hardening checks that should be visible to operators as one baseline: privilege, host namespace access, root execution, privilege escalation, immutable filesystem posture, and capability dropping.\n",
       "detection_modes": [
         "native_rule"
@@ -873,9 +1695,11 @@
       ]
     }
   ],
-  "framework_count": 2,
+  "framework_count": 4,
   "framework_ids": [
     "FRM-GITOPS-0001",
+    "FRM-NET-0001",
+    "FRM-RBAC-0001",
     "FRM-WORKLOAD-0001"
   ],
   "frameworks": [
@@ -953,6 +1777,105 @@
     },
     {
       "control_ids": [
+        "CTRL-NET-0001",
+        "CTRL-NET-0002",
+        "CTRL-NET-0003"
+      ],
+      "controls": [
+        {
+          "family": "network-exposure",
+          "id": "CTRL-NET-0001",
+          "name": "NetworkPolicy connectivity baseline",
+          "severity": "high",
+          "slug": "network-policy-connectivity-baseline"
+        },
+        {
+          "family": "network-exposure",
+          "id": "CTRL-NET-0002",
+          "name": "Ingress class and TLS baseline",
+          "severity": "critical",
+          "slug": "ingress-class-and-tls-baseline"
+        },
+        {
+          "family": "network-exposure",
+          "id": "CTRL-NET-0003",
+          "name": "Ingress annotation safety",
+          "severity": "critical",
+          "slug": "ingress-annotation-safety"
+        }
+      ],
+      "description": "This framework groups the first promoted controls for network-facing Kubernetes configuration. It is intended to help teams reason about safe exposure, controller selection, TLS posture, and policy-driven connectivity in one place.\n",
+      "family": "network-exposure",
+      "id": "FRM-NET-0001",
+      "maturity": "seeded",
+      "name": "Network exposure",
+      "outcomes": [
+        "Make safe service exposure and policy-driven connectivity visible as one stable framework view.",
+        "Separate ingress and NetworkPolicy baseline posture from the broader exploratory pattern corpus.",
+        "Provide a clean starting point for future Gateway API and service-exposure promoted controls."
+      ],
+      "platforms": [
+        "kubernetes",
+        "ingress",
+        "networkpolicy"
+      ],
+      "slug": "network-exposure",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/frameworks/network-exposure.yaml",
+      "summary": "Curated controls for ingress, TLS, and NetworkPolicy posture that keep services reachable without overexposure.",
+      "tags": [
+        "network",
+        "ingress",
+        "tls",
+        "exposure"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTRL-RBAC-0001",
+        "CTRL-RBAC-0002"
+      ],
+      "controls": [
+        {
+          "family": "rbac-and-identity",
+          "id": "CTRL-RBAC-0001",
+          "name": "RBAC privilege boundary baseline",
+          "severity": "critical",
+          "slug": "rbac-privilege-boundary-baseline"
+        },
+        {
+          "family": "rbac-and-identity",
+          "id": "CTRL-RBAC-0002",
+          "name": "Service account identity baseline",
+          "severity": "high",
+          "slug": "service-account-identity-baseline"
+        }
+      ],
+      "description": "This framework groups the first promoted identity and authorization controls for Kubernetes operators. It is aimed at teams who need a stable baseline for privilege boundaries and service-account exposure, not just one-off RBAC findings.\n",
+      "family": "rbac-and-identity",
+      "id": "FRM-RBAC-0001",
+      "maturity": "seeded",
+      "name": "RBAC and identity",
+      "outcomes": [
+        "Surface the highest-risk RBAC permissions and bindings in one operator-facing bundle.",
+        "Make service-account token exposure part of identity posture, not an afterthought.",
+        "Provide a stable framework view for future identity and auth-related promoted controls."
+      ],
+      "platforms": [
+        "kubernetes",
+        "rbac"
+      ],
+      "slug": "rbac-and-identity",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/frameworks/rbac-and-identity.yaml",
+      "summary": "Curated controls for dangerous Kubernetes permissions, binding scope mistakes, and service-account identity exposure.",
+      "tags": [
+        "rbac",
+        "identity",
+        "service-account",
+        "privilege-escalation"
+      ]
+    },
+    {
+      "control_ids": [
         "CTRL-WORKLOAD-0001",
         "CTRL-WORKLOAD-0002"
       ],
@@ -997,14 +1920,16 @@
       ]
     }
   ],
-  "generated_at": "2026-03-23T12:58:03+00:00",
-  "pattern_coverage_count": 32,
+  "generated_at": "2026-03-23T13:13:27+00:00",
+  "pattern_coverage_count": 64,
   "pattern_ids": [
     "CCVE-2025-0004",
     "CCVE-2025-0005",
     "CCVE-2025-0006",
     "CCVE-2025-0007",
     "CCVE-2025-0013",
+    "CCVE-2025-0032",
+    "CCVE-2025-0063",
     "CCVE-2025-0127",
     "CCVE-2025-0128",
     "CCVE-2025-0129",
@@ -1016,11 +1941,31 @@
     "CCVE-2025-0666",
     "CCVE-2025-0667",
     "CCVE-2025-0672",
+    "CCVE-2025-0690",
+    "CCVE-2025-0772",
+    "CCVE-2025-0773",
+    "CCVE-2025-0894",
+    "CCVE-2025-0895",
+    "CCVE-2025-0916",
+    "CCVE-2025-1116",
+    "CCVE-2025-1125",
+    "CCVE-2025-1137",
+    "CCVE-2025-1601",
+    "CCVE-2025-2155",
+    "CCVE-2025-2156",
+    "CCVE-2025-2432",
     "CCVE-2025-2563",
     "CCVE-2025-2565",
     "CCVE-2025-2567",
     "CCVE-2025-2599",
     "CCVE-2025-2603",
+    "CCVE-2025-2790",
+    "CCVE-2025-3153",
+    "CCVE-2025-3167",
+    "CCVE-2025-3201",
+    "CCVE-2025-3202",
+    "CCVE-2025-3206",
+    "CCVE-2025-3208",
     "CCVE-2025-3720",
     "CCVE-2025-3724",
     "CCVE-2025-3727",
@@ -1030,6 +1975,16 @@
     "CCVE-2025-3734",
     "CCVE-2025-3735",
     "CCVE-2025-3736",
+    "CCVE-2025-3746",
+    "CCVE-2025-3752",
+    "CCVE-2025-3758",
+    "CCVE-2025-4075",
+    "CCVE-2025-4076",
+    "CCVE-2025-4077",
+    "CCVE-2025-4078",
+    "CCVE-2025-4079",
+    "CCVE-2025-4080",
+    "CCVE-2025-4081",
     "CCVE-2025-5001",
     "CCVE-2025-5002"
   ],

@@ -1,0 +1,60 @@
+schema_version: control-definition-v1
+id: CTRL-NET-0001
+slug: network-policy-connectivity-baseline
+name: NetworkPolicy connectivity baseline
+family: network-exposure
+summary: Detect NetworkPolicy posture that unintentionally breaks ingress, readiness, or leaves stale policy objects behind.
+description: >
+  This control groups the deterministic NetworkPolicy failures that operators
+  repeatedly trip over in real clusters: controllers blocked by policy,
+  readiness traffic denied, and policy objects that no longer select any pods.
+  It is intended as a baseline for "tighten traffic without breaking the
+  platform."
+maturity: seeded
+severity: high
+supported_surfaces:
+  - static
+  - live_state
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - sdk
+  - ai
+detection_modes:
+  - native_rule
+resource_kinds:
+  - NetworkPolicy
+  - Ingress
+pattern_ids:
+  - CCVE-2025-0690
+  - CCVE-2025-0772
+  - CCVE-2025-0773
+  - CCVE-2025-1116
+  - CCVE-2025-1125
+tags:
+  - networkpolicy
+  - ingress
+  - readiness
+  - connectivity
+  - baseline
+remediation:
+  strategy: diagnose_then_fix
+  safety_class: review_required
+  guidance:
+    - Start with default-deny intent, then explicitly allow ingress-controller and readiness paths that the platform needs.
+    - Remove or repair NetworkPolicy objects that no longer match real workloads.
+    - Validate policy changes against live traffic paths before rollout, especially for ingress and health probes.
+evidence_expectations:
+  intent_signals:
+    - spec.podSelector
+    - spec.ingress
+    - spec.egress
+    - spec.policyTypes
+  live_signals:
+    - selected pods missing or unexpected traffic failures
+    - readiness probe failures caused by policy
+  corroborating_sources:
+    - kubectl describe networkpolicy
+    - controller logs
+    - probe or connectivity test output

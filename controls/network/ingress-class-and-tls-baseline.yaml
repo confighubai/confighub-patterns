@@ -1,0 +1,62 @@
+schema_version: control-definition-v1
+id: CTRL-NET-0002
+slug: ingress-class-and-tls-baseline
+name: Ingress class and TLS baseline
+family: network-exposure
+summary: Detect Ingress defaults that leave HTTP exposed, break class resolution, or fail TLS secret wiring.
+description: >
+  This control packages the high-signal Ingress configuration checks that
+  determine whether traffic actually lands on the intended controller with the
+  intended TLS posture. It is designed to answer the operator question "is this
+  ingress configured in a sane, routable, HTTPS-first way?"
+maturity: seeded
+severity: critical
+supported_surfaces:
+  - static
+  - live_state
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - sdk
+  - ai
+detection_modes:
+  - native_rule
+resource_kinds:
+  - Ingress
+  - IngressClass
+  - Secret
+pattern_ids:
+  - CCVE-2025-0032
+  - CCVE-2025-0063
+  - CCVE-2025-2790
+  - CCVE-2025-3167
+  - CCVE-2025-3201
+  - CCVE-2025-3202
+  - CCVE-2025-3206
+  - CCVE-2025-3208
+tags:
+  - ingress
+  - ingressclass
+  - tls
+  - http-exposure
+  - baseline
+remediation:
+  strategy: config_fix
+  safety_class: review_required
+  guidance:
+    - Ensure every Ingress resolves to one intended IngressClass and one working controller string.
+    - Treat missing TLS secrets and silent class mismatches as deployment blockers, not low-priority hygiene issues.
+    - Prefer an explicit HTTPS-first stance when exposing applications through Ingress.
+evidence_expectations:
+  intent_signals:
+    - spec.ingressClassName
+    - metadata.annotations
+    - spec.tls
+  live_signals:
+    - controller ignoring or rejecting Ingress objects
+    - fake or temporary certificates served
+  corroborating_sources:
+    - kubectl get ingress,ingressclass -o yaml
+    - ingress controller logs
+    - TLS handshake or browser/curl verification
