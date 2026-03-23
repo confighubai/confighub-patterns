@@ -13,6 +13,7 @@ control_ids:
   - CTRL-CLUSTER-0001
   - CTRL-CLUSTER-0002
   - CTRL-CLUSTER-0003
+  - CTRL-CLUSTER-0004
 platforms:
   - kubernetes
   - control-plane
@@ -24,5 +25,5 @@ tags:
   - admission
 outcomes:
   - Surface the first stable cluster-hardening controls in one operator-facing bundle.
-  - Keep pod security boundaries, control-plane certificates, and admission reliability visible together.
+  - Keep pod security boundaries, control-plane certificates, admission reliability, and policy-control migration visible together.
   - Provide a clean starting point for future API server, scheduler, and kubelet hardening controls.

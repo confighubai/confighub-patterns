@@ -1,16 +1,17 @@
 {
   "consumer_counts": {
-    "ai": 17,
-    "cli": 17,
-    "confighub": 17,
-    "cub_scout": 17,
-    "sdk": 13
+    "ai": 18,
+    "cli": 18,
+    "confighub": 18,
+    "cub_scout": 18,
+    "sdk": 14
   },
-  "control_count": 17,
+  "control_count": 18,
   "control_ids": [
     "CTRL-CLUSTER-0001",
     "CTRL-CLUSTER-0002",
     "CTRL-CLUSTER-0003",
+    "CTRL-CLUSTER-0004",
     "CTRL-GITOPS-0001",
     "CTRL-GITOPS-0002",
     "CTRL-GITOPS-0003",
@@ -165,6 +166,50 @@
         "availability",
         "reconciliation",
         "baseline"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule"
+      ],
+      "family": "cluster-hardening",
+      "id": "CTRL-CLUSTER-0004",
+      "maturity": "seeded",
+      "path": "controls/cluster/policy-control-migration-baseline.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0197",
+        "CCVE-2025-1015",
+        "CCVE-2025-2949"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "diagnose_then_fix",
+      "resource_kinds": [
+        "PodSecurityPolicy",
+        "ValidatingAdmissionPolicy",
+        "ValidatingAdmissionPolicyBinding",
+        "Constraint"
+      ],
+      "severity": "high",
+      "slug": "policy-control-migration-baseline",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "cluster",
+        "policy",
+        "admission",
+        "migration",
+        "vap",
+        "gatekeeper"
       ]
     },
     {
@@ -791,11 +836,11 @@
   ],
   "detection_mode_counts": {
     "derived_comparison": 4,
-    "native_rule": 17,
+    "native_rule": 18,
     "sdk_worker": 1
   },
   "family_counts": {
-    "cluster-hardening": 3,
+    "cluster-hardening": 4,
     "gitops-operators": 5,
     "network-exposure": 3,
     "rbac-and-identity": 2,
@@ -817,14 +862,15 @@
       "control_ids": [
         "CTRL-CLUSTER-0001",
         "CTRL-CLUSTER-0002",
-        "CTRL-CLUSTER-0003"
+        "CTRL-CLUSTER-0003",
+        "CTRL-CLUSTER-0004"
       ],
       "family": "cluster-hardening",
       "id": "FRM-CLUSTER-0001",
       "maturity": "seeded",
       "outcomes": [
         "Surface the first stable cluster-hardening controls in one operator-facing bundle.",
-        "Keep pod security boundaries, control-plane certificates, and admission reliability visible together.",
+        "Keep pod security boundaries, control-plane certificates, admission reliability, and policy-control migration visible together.",
         "Provide a clean starting point for future API server, scheduler, and kubelet hardening controls."
       ],
       "path": "frameworks/cluster-hardening.yaml",
@@ -1019,8 +1065,8 @@
       ]
     }
   ],
-  "generated_at": "2026-03-23T13:51:04+00:00",
-  "pattern_coverage_count": 100,
+  "generated_at": "2026-03-23T14:37:27+00:00",
+  "pattern_coverage_count": 103,
   "pattern_ids": [
     "CCVE-2025-0004",
     "CCVE-2025-0005",
@@ -1041,6 +1087,7 @@
     "CCVE-2025-0166",
     "CCVE-2025-0168",
     "CCVE-2025-0169",
+    "CCVE-2025-0197",
     "CCVE-2025-0207",
     "CCVE-2025-0228",
     "CCVE-2025-0229",
@@ -1063,6 +1110,7 @@
     "CCVE-2025-0895",
     "CCVE-2025-0916",
     "CCVE-2025-0921",
+    "CCVE-2025-1015",
     "CCVE-2025-1116",
     "CCVE-2025-1125",
     "CCVE-2025-1133",
@@ -1091,6 +1139,7 @@
     "CCVE-2025-2654",
     "CCVE-2025-2676",
     "CCVE-2025-2790",
+    "CCVE-2025-2949",
     "CCVE-2025-3153",
     "CCVE-2025-3167",
     "CCVE-2025-3201",
@@ -1129,8 +1178,8 @@
   "source_pattern_repo": "/Users/alexis/Public/github-repos/confighub-scan",
   "surface_counts": {
     "connected_validation": 1,
-    "live_state": 15,
+    "live_state": 16,
     "repo_vs_live": 4,
-    "static": 15
+    "static": 16
   }
 }

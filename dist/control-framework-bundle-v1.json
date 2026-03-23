@@ -1,9 +1,10 @@
 {
-  "control_count": 17,
+  "control_count": 18,
   "control_ids": [
     "CTRL-CLUSTER-0001",
     "CTRL-CLUSTER-0002",
     "CTRL-CLUSTER-0003",
+    "CTRL-CLUSTER-0004",
     "CTRL-GITOPS-0001",
     "CTRL-GITOPS-0002",
     "CTRL-GITOPS-0003",
@@ -473,6 +474,116 @@
         "availability",
         "reconciliation",
         "baseline"
+      ]
+    },
+    {
+      "description": "This control groups the highest-signal cluster policy migration failures we already detect natively: PodSecurityPolicy still present past its safe lifecycle, ValidatingAdmissionPolicy targets that can destabilize the control plane, and Gatekeeper-generated policy bindings that continue enforcing after the source constraint has been removed.\n",
+      "detection_modes": [
+        "native_rule"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "kubectl get psp",
+          "kubectl get validatingadmissionpolicy,validatingadmissionpolicybinding -o yaml",
+          "kubectl get constraints --all-namespaces -o name"
+        ],
+        "intent_signals": [
+          "PodSecurityPolicy resources still present",
+          "ValidatingAdmissionPolicy definitions referencing CRDs",
+          "constraint and policy binding ownership metadata"
+        ],
+        "live_signals": [
+          "kube-controller-manager instability from policy definitions",
+          "orphaned policy bindings continuing to enforce",
+          "cluster policy state diverging from intended migration target"
+        ]
+      },
+      "family": "cluster-hardening",
+      "id": "CTRL-CLUSTER-0004",
+      "maturity": "seeded",
+      "name": "Policy-control migration baseline",
+      "pattern_refs": [
+        {
+          "category": "APPLY",
+          "confidence": "high",
+          "id": "CCVE-2025-0197",
+          "name": "Kubernetes ValidatingAdmissionPolicy crashes controller-manager with additionalProperties",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-1015",
+          "name": "PodSecurityPolicy deprecated in 1.21 removed in 1.25",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "DRIFT",
+          "confidence": "high",
+          "id": "CCVE-2025-2949",
+          "name": "Gatekeeper VAPB not removed on constraint deletion",
+          "severity": {
+            "bucket": "warning",
+            "raw": "medium"
+          },
+          "tags": [
+            "gatekeeper",
+            "vapb",
+            "cleanup",
+            "orphan",
+            "constraint",
+            "deletion"
+          ],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Remove PodSecurityPolicy dependencies before Kubernetes version upgrades force the migration for you.",
+          "Validate policy-control rollout paths with real cluster state so deprecated, orphaned, or crashing policy resources do not silently become the enforcement path.",
+          "Clean up stale ValidatingAdmissionPolicyBinding resources when constraints are removed, and verify policy ownership boundaries after upgrades."
+        ],
+        "safety_class": "review_required",
+        "strategy": "diagnose_then_fix"
+      },
+      "resource_kinds": [
+        "PodSecurityPolicy",
+        "ValidatingAdmissionPolicy",
+        "ValidatingAdmissionPolicyBinding",
+        "Constraint"
+      ],
+      "severity": "high",
+      "slug": "policy-control-migration-baseline",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/cluster/policy-control-migration-baseline.yaml",
+      "summary": "Detect policy-control posture that is deprecated, partially migrated, or still enforcing stale bindings.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "cluster",
+        "policy",
+        "admission",
+        "migration",
+        "vap",
+        "gatekeeper"
       ]
     },
     {
@@ -2508,7 +2619,8 @@
       "control_ids": [
         "CTRL-CLUSTER-0001",
         "CTRL-CLUSTER-0002",
-        "CTRL-CLUSTER-0003"
+        "CTRL-CLUSTER-0003",
+        "CTRL-CLUSTER-0004"
       ],
       "controls": [
         {
@@ -2531,6 +2643,13 @@
           "name": "Admission webhook availability baseline",
           "severity": "critical",
           "slug": "admission-webhook-availability-baseline"
+        },
+        {
+          "family": "cluster-hardening",
+          "id": "CTRL-CLUSTER-0004",
+          "name": "Policy-control migration baseline",
+          "severity": "high",
+          "slug": "policy-control-migration-baseline"
         }
       ],
       "description": "This framework groups the first promoted controls that describe secure and resilient cluster defaults. It is aimed at platform teams who need a stable view over cluster-hardening posture rather than isolated upgrade bugs.\n",
@@ -2540,7 +2659,7 @@
       "name": "Cluster hardening",
       "outcomes": [
         "Surface the first stable cluster-hardening controls in one operator-facing bundle.",
-        "Keep pod security boundaries, control-plane certificates, and admission reliability visible together.",
+        "Keep pod security boundaries, control-plane certificates, admission reliability, and policy-control migration visible together.",
         "Provide a clean starting point for future API server, scheduler, and kubelet hardening controls."
       ],
       "platforms": [
@@ -2941,8 +3060,8 @@
       ]
     }
   ],
-  "generated_at": "2026-03-23T13:53:59+00:00",
-  "pattern_coverage_count": 100,
+  "generated_at": "2026-03-23T14:37:35+00:00",
+  "pattern_coverage_count": 103,
   "pattern_ids": [
     "CCVE-2025-0004",
     "CCVE-2025-0005",
@@ -2963,6 +3082,7 @@
     "CCVE-2025-0166",
     "CCVE-2025-0168",
     "CCVE-2025-0169",
+    "CCVE-2025-0197",
     "CCVE-2025-0207",
     "CCVE-2025-0228",
     "CCVE-2025-0229",
@@ -2985,6 +3105,7 @@
     "CCVE-2025-0895",
     "CCVE-2025-0916",
     "CCVE-2025-0921",
+    "CCVE-2025-1015",
     "CCVE-2025-1116",
     "CCVE-2025-1125",
     "CCVE-2025-1133",
@@ -3013,6 +3134,7 @@
     "CCVE-2025-2654",
     "CCVE-2025-2676",
     "CCVE-2025-2790",
+    "CCVE-2025-2949",
     "CCVE-2025-3153",
     "CCVE-2025-3167",
     "CCVE-2025-3201",

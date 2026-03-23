@@ -1,0 +1,61 @@
+schema_version: control-definition-v1
+id: CTRL-CLUSTER-0004
+slug: policy-control-migration-baseline
+name: Policy-control migration baseline
+family: cluster-hardening
+summary: Detect policy-control posture that is deprecated, partially migrated, or still enforcing stale bindings.
+description: >
+  This control groups the highest-signal cluster policy migration failures we
+  already detect natively: PodSecurityPolicy still present past its safe
+  lifecycle, ValidatingAdmissionPolicy targets that can destabilize the control
+  plane, and Gatekeeper-generated policy bindings that continue enforcing after
+  the source constraint has been removed.
+maturity: seeded
+severity: high
+supported_surfaces:
+  - static
+  - live_state
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - sdk
+  - ai
+detection_modes:
+  - native_rule
+resource_kinds:
+  - PodSecurityPolicy
+  - ValidatingAdmissionPolicy
+  - ValidatingAdmissionPolicyBinding
+  - Constraint
+pattern_ids:
+  - CCVE-2025-0197
+  - CCVE-2025-1015
+  - CCVE-2025-2949
+tags:
+  - cluster
+  - policy
+  - admission
+  - migration
+  - vap
+  - gatekeeper
+remediation:
+  strategy: diagnose_then_fix
+  safety_class: review_required
+  guidance:
+    - Remove PodSecurityPolicy dependencies before Kubernetes version upgrades force the migration for you.
+    - Validate policy-control rollout paths with real cluster state so deprecated, orphaned, or crashing policy resources do not silently become the enforcement path.
+    - Clean up stale ValidatingAdmissionPolicyBinding resources when constraints are removed, and verify policy ownership boundaries after upgrades.
+evidence_expectations:
+  intent_signals:
+    - PodSecurityPolicy resources still present
+    - ValidatingAdmissionPolicy definitions referencing CRDs
+    - constraint and policy binding ownership metadata
+  live_signals:
+    - kube-controller-manager instability from policy definitions
+    - orphaned policy bindings continuing to enforce
+    - cluster policy state diverging from intended migration target
+  corroborating_sources:
+    - kubectl get psp
+    - kubectl get validatingadmissionpolicy,validatingadmissionpolicybinding -o yaml
+    - kubectl get constraints --all-namespaces -o name

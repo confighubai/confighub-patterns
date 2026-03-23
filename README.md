@@ -47,7 +47,7 @@ As of 2026-03-22:
 - the repo-native release manifest now exists at `dist/bundle-manifest-v1.json`
 - the release manifest now advertises Kyverno and Trivy mapping files as
   first-class runtime bundle assets
-- the promoted taxonomy now includes 17 controls, 7 frameworks, and 100 covered
+- the promoted taxonomy now includes 18 controls, 7 frameworks, and 103 covered
   pattern IDs
 - the repo now has native validation plumbing via `make validate` and
   `.github/workflows/validate.yml`
