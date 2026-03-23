@@ -1,0 +1,29 @@
+schema_version: framework-definition-v1
+id: FRM-NET-0001
+slug: network-exposure
+name: Network exposure
+family: network-exposure
+summary: Curated controls for ingress, TLS, and NetworkPolicy posture that keep services reachable without overexposure.
+description: >
+  This framework groups the first promoted controls for network-facing
+  Kubernetes configuration. It is intended to help teams reason about safe
+  exposure, controller selection, TLS posture, and policy-driven connectivity in
+  one place.
+maturity: seeded
+control_ids:
+  - CTRL-NET-0001
+  - CTRL-NET-0002
+  - CTRL-NET-0003
+platforms:
+  - kubernetes
+  - ingress
+  - networkpolicy
+tags:
+  - network
+  - ingress
+  - tls
+  - exposure
+outcomes:
+  - Make safe service exposure and policy-driven connectivity visible as one stable framework view.
+  - Separate ingress and NetworkPolicy baseline posture from the broader exploratory pattern corpus.
+  - Provide a clean starting point for future Gateway API and service-exposure promoted controls.

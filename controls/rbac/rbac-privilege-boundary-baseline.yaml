@@ -1,0 +1,61 @@
+schema_version: control-definition-v1
+id: CTRL-RBAC-0001
+slug: rbac-privilege-boundary-baseline
+name: RBAC privilege boundary baseline
+family: rbac-and-identity
+summary: Detect the highest-risk RBAC permissions that turn broad access into direct cluster compromise paths.
+description: >
+  This control groups the RBAC permissions and bindings that most often create
+  immediate privilege-escalation or credential-extraction paths: nodes/proxy,
+  pods/exec, secrets read, service account token minting, CSR approval, and
+  wildcard resource access. It is intended as the operator-facing baseline for
+  "do not grant this broadly" RBAC posture.
+maturity: seeded
+severity: critical
+supported_surfaces:
+  - static
+  - live_state
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - sdk
+  - ai
+detection_modes:
+  - native_rule
+resource_kinds:
+  - ClusterRole
+  - ClusterRoleBinding
+pattern_ids:
+  - CCVE-2025-4075
+  - CCVE-2025-4076
+  - CCVE-2025-4077
+  - CCVE-2025-4078
+  - CCVE-2025-4079
+  - CCVE-2025-4080
+  - CCVE-2025-4081
+tags:
+  - rbac
+  - privilege-escalation
+  - kubelet
+  - secrets
+  - service-account
+  - baseline
+remediation:
+  strategy: manual_review
+  safety_class: review_required
+  guidance:
+    - Remove or narrow broad ClusterRole permissions before adding compensating controls.
+    - Treat nodes/proxy, pods/exec, secrets read, serviceaccounts/token create, and wildcard resource access as exceptional permissions requiring explicit review.
+    - Review every subject bound to high-risk ClusterRoles, not just the role content itself.
+evidence_expectations:
+  intent_signals:
+    - rules[].resources
+    - rules[].verbs
+    - subjects[]
+  live_signals:
+    - bound subjects with high-risk permissions in active cluster RBAC objects
+  corroborating_sources:
+    - kubectl get clusterrole -o yaml
+    - kubectl get clusterrolebinding -o yaml
+    - rbac review output

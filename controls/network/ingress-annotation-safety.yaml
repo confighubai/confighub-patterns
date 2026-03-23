@@ -1,0 +1,55 @@
+schema_version: control-definition-v1
+id: CTRL-NET-0003
+slug: ingress-annotation-safety
+name: Ingress annotation safety
+family: network-exposure
+summary: Detect dangerous ingress-nginx annotation usage and validation bypass conditions that turn Ingress into an injection surface.
+description: >
+  This control captures the annotation-driven ingress-nginx risks that move
+  beyond simple misrouting into direct security exposure. It is meant to keep
+  annotation flexibility from becoming an unreviewed code-injection path.
+maturity: seeded
+severity: critical
+supported_surfaces:
+  - static
+  - live_state
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - sdk
+  - ai
+detection_modes:
+  - native_rule
+resource_kinds:
+  - Ingress
+pattern_ids:
+  - CCVE-2025-0894
+  - CCVE-2025-0895
+  - CCVE-2025-0916
+  - CCVE-2025-1601
+  - CCVE-2025-2155
+  - CCVE-2025-2156
+tags:
+  - ingress
+  - ingress-nginx
+  - annotations
+  - injection
+  - security
+remediation:
+  strategy: manual_review
+  safety_class: review_required
+  guidance:
+    - Restrict dangerous ingress-nginx annotations and review any snippet-like configuration as code execution risk.
+    - Treat annotation validation bypasses as controller-security issues, not just routing bugs.
+    - Prefer safer controller features or curated config surfaces over arbitrary annotation snippets.
+evidence_expectations:
+  intent_signals:
+    - metadata.annotations
+  live_signals:
+    - controller accepting risky annotations
+    - unexpected config generation or route behavior
+  corroborating_sources:
+    - ingress-nginx controller logs
+    - rendered nginx config
+    - security advisory references

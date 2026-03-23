@@ -1,0 +1,27 @@
+schema_version: framework-definition-v1
+id: FRM-RBAC-0001
+slug: rbac-and-identity
+name: RBAC and identity
+family: rbac-and-identity
+summary: Curated controls for dangerous Kubernetes permissions, binding scope mistakes, and service-account identity exposure.
+description: >
+  This framework groups the first promoted identity and authorization controls
+  for Kubernetes operators. It is aimed at teams who need a stable baseline for
+  privilege boundaries and service-account exposure, not just one-off RBAC
+  findings.
+maturity: seeded
+control_ids:
+  - CTRL-RBAC-0001
+  - CTRL-RBAC-0002
+platforms:
+  - kubernetes
+  - rbac
+tags:
+  - rbac
+  - identity
+  - service-account
+  - privilege-escalation
+outcomes:
+  - Surface the highest-risk RBAC permissions and bindings in one operator-facing bundle.
+  - Make service-account token exposure part of identity posture, not an afterthought.
+  - Provide a stable framework view for future identity and auth-related promoted controls.

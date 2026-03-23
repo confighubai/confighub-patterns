@@ -1,18 +1,23 @@
 {
   "consumer_counts": {
-    "ai": 7,
-    "cli": 7,
-    "confighub": 7,
-    "cub_scout": 7,
-    "sdk": 3
+    "ai": 12,
+    "cli": 12,
+    "confighub": 12,
+    "cub_scout": 12,
+    "sdk": 8
   },
-  "control_count": 7,
+  "control_count": 12,
   "control_ids": [
     "CTRL-GITOPS-0001",
     "CTRL-GITOPS-0002",
     "CTRL-GITOPS-0003",
     "CTRL-GITOPS-0004",
     "CTRL-GITOPS-0005",
+    "CTRL-NET-0001",
+    "CTRL-NET-0002",
+    "CTRL-NET-0003",
+    "CTRL-RBAC-0001",
+    "CTRL-RBAC-0002",
     "CTRL-WORKLOAD-0001",
     "CTRL-WORKLOAD-0002"
   ],
@@ -243,6 +248,231 @@
       "detection_modes": [
         "native_rule"
       ],
+      "family": "network-exposure",
+      "id": "CTRL-NET-0001",
+      "maturity": "seeded",
+      "path": "controls/network/network-policy-connectivity-baseline.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0690",
+        "CCVE-2025-0772",
+        "CCVE-2025-0773",
+        "CCVE-2025-1116",
+        "CCVE-2025-1125"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "diagnose_then_fix",
+      "resource_kinds": [
+        "NetworkPolicy",
+        "Ingress"
+      ],
+      "severity": "high",
+      "slug": "network-policy-connectivity-baseline",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "networkpolicy",
+        "ingress",
+        "readiness",
+        "connectivity",
+        "baseline"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule"
+      ],
+      "family": "network-exposure",
+      "id": "CTRL-NET-0002",
+      "maturity": "seeded",
+      "path": "controls/network/ingress-class-and-tls-baseline.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0032",
+        "CCVE-2025-0063",
+        "CCVE-2025-2790",
+        "CCVE-2025-3167",
+        "CCVE-2025-3201",
+        "CCVE-2025-3202",
+        "CCVE-2025-3206",
+        "CCVE-2025-3208"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "config_fix",
+      "resource_kinds": [
+        "Ingress",
+        "IngressClass",
+        "Secret"
+      ],
+      "severity": "critical",
+      "slug": "ingress-class-and-tls-baseline",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "ingress",
+        "ingressclass",
+        "tls",
+        "http-exposure",
+        "baseline"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule"
+      ],
+      "family": "network-exposure",
+      "id": "CTRL-NET-0003",
+      "maturity": "seeded",
+      "path": "controls/network/ingress-annotation-safety.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0894",
+        "CCVE-2025-0895",
+        "CCVE-2025-0916",
+        "CCVE-2025-1601",
+        "CCVE-2025-2155",
+        "CCVE-2025-2156"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "manual_review",
+      "resource_kinds": [
+        "Ingress"
+      ],
+      "severity": "critical",
+      "slug": "ingress-annotation-safety",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "ingress",
+        "ingress-nginx",
+        "annotations",
+        "injection",
+        "security"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule"
+      ],
+      "family": "rbac-and-identity",
+      "id": "CTRL-RBAC-0001",
+      "maturity": "seeded",
+      "path": "controls/rbac/rbac-privilege-boundary-baseline.yaml",
+      "pattern_ids": [
+        "CCVE-2025-4075",
+        "CCVE-2025-4076",
+        "CCVE-2025-4077",
+        "CCVE-2025-4078",
+        "CCVE-2025-4079",
+        "CCVE-2025-4080",
+        "CCVE-2025-4081"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "manual_review",
+      "resource_kinds": [
+        "ClusterRole",
+        "ClusterRoleBinding"
+      ],
+      "severity": "critical",
+      "slug": "rbac-privilege-boundary-baseline",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "rbac",
+        "privilege-escalation",
+        "kubelet",
+        "secrets",
+        "service-account",
+        "baseline"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule"
+      ],
+      "family": "rbac-and-identity",
+      "id": "CTRL-RBAC-0002",
+      "maturity": "seeded",
+      "path": "controls/rbac/service-account-identity-baseline.yaml",
+      "pattern_ids": [
+        "CCVE-2025-1137",
+        "CCVE-2025-2432",
+        "CCVE-2025-3153",
+        "CCVE-2025-3746",
+        "CCVE-2025-3752",
+        "CCVE-2025-3758"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "config_fix",
+      "resource_kinds": [
+        "RoleBinding",
+        "Deployment",
+        "StatefulSet",
+        "DaemonSet"
+      ],
+      "severity": "high",
+      "slug": "service-account-identity-baseline",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "rbac",
+        "service-account",
+        "automount",
+        "identity",
+        "baseline"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule"
+      ],
       "family": "workload-hardening",
       "id": "CTRL-WORKLOAD-0001",
       "maturity": "seeded",
@@ -319,15 +549,19 @@
   ],
   "detection_mode_counts": {
     "derived_comparison": 4,
-    "native_rule": 7
+    "native_rule": 12
   },
   "family_counts": {
     "gitops-operators": 5,
+    "network-exposure": 3,
+    "rbac-and-identity": 2,
     "workload-hardening": 2
   },
-  "framework_count": 2,
+  "framework_count": 4,
   "framework_ids": [
     "FRM-GITOPS-0001",
+    "FRM-NET-0001",
+    "FRM-RBAC-0001",
     "FRM-WORKLOAD-0001"
   ],
   "frameworks": [
@@ -365,6 +599,60 @@
     },
     {
       "control_ids": [
+        "CTRL-NET-0001",
+        "CTRL-NET-0002",
+        "CTRL-NET-0003"
+      ],
+      "family": "network-exposure",
+      "id": "FRM-NET-0001",
+      "maturity": "seeded",
+      "outcomes": [
+        "Make safe service exposure and policy-driven connectivity visible as one stable framework view.",
+        "Separate ingress and NetworkPolicy baseline posture from the broader exploratory pattern corpus.",
+        "Provide a clean starting point for future Gateway API and service-exposure promoted controls."
+      ],
+      "path": "frameworks/network-exposure.yaml",
+      "platforms": [
+        "kubernetes",
+        "ingress",
+        "networkpolicy"
+      ],
+      "slug": "network-exposure",
+      "tags": [
+        "network",
+        "ingress",
+        "tls",
+        "exposure"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTRL-RBAC-0001",
+        "CTRL-RBAC-0002"
+      ],
+      "family": "rbac-and-identity",
+      "id": "FRM-RBAC-0001",
+      "maturity": "seeded",
+      "outcomes": [
+        "Surface the highest-risk RBAC permissions and bindings in one operator-facing bundle.",
+        "Make service-account token exposure part of identity posture, not an afterthought.",
+        "Provide a stable framework view for future identity and auth-related promoted controls."
+      ],
+      "path": "frameworks/rbac-and-identity.yaml",
+      "platforms": [
+        "kubernetes",
+        "rbac"
+      ],
+      "slug": "rbac-and-identity",
+      "tags": [
+        "rbac",
+        "identity",
+        "service-account",
+        "privilege-escalation"
+      ]
+    },
+    {
+      "control_ids": [
         "CTRL-WORKLOAD-0001",
         "CTRL-WORKLOAD-0002"
       ],
@@ -390,14 +678,16 @@
       ]
     }
   ],
-  "generated_at": "2026-03-23T12:58:03+00:00",
-  "pattern_coverage_count": 32,
+  "generated_at": "2026-03-23T13:13:27+00:00",
+  "pattern_coverage_count": 64,
   "pattern_ids": [
     "CCVE-2025-0004",
     "CCVE-2025-0005",
     "CCVE-2025-0006",
     "CCVE-2025-0007",
     "CCVE-2025-0013",
+    "CCVE-2025-0032",
+    "CCVE-2025-0063",
     "CCVE-2025-0127",
     "CCVE-2025-0128",
     "CCVE-2025-0129",
@@ -409,11 +699,31 @@
     "CCVE-2025-0666",
     "CCVE-2025-0667",
     "CCVE-2025-0672",
+    "CCVE-2025-0690",
+    "CCVE-2025-0772",
+    "CCVE-2025-0773",
+    "CCVE-2025-0894",
+    "CCVE-2025-0895",
+    "CCVE-2025-0916",
+    "CCVE-2025-1116",
+    "CCVE-2025-1125",
+    "CCVE-2025-1137",
+    "CCVE-2025-1601",
+    "CCVE-2025-2155",
+    "CCVE-2025-2156",
+    "CCVE-2025-2432",
     "CCVE-2025-2563",
     "CCVE-2025-2565",
     "CCVE-2025-2567",
     "CCVE-2025-2599",
     "CCVE-2025-2603",
+    "CCVE-2025-2790",
+    "CCVE-2025-3153",
+    "CCVE-2025-3167",
+    "CCVE-2025-3201",
+    "CCVE-2025-3202",
+    "CCVE-2025-3206",
+    "CCVE-2025-3208",
     "CCVE-2025-3720",
     "CCVE-2025-3724",
     "CCVE-2025-3727",
@@ -423,6 +733,16 @@
     "CCVE-2025-3734",
     "CCVE-2025-3735",
     "CCVE-2025-3736",
+    "CCVE-2025-3746",
+    "CCVE-2025-3752",
+    "CCVE-2025-3758",
+    "CCVE-2025-4075",
+    "CCVE-2025-4076",
+    "CCVE-2025-4077",
+    "CCVE-2025-4078",
+    "CCVE-2025-4079",
+    "CCVE-2025-4080",
+    "CCVE-2025-4081",
     "CCVE-2025-5001",
     "CCVE-2025-5002"
   ],
@@ -431,8 +751,8 @@
   "schema_version": "control-taxonomy-summary-v1",
   "source_pattern_repo": "/Users/alexis/Public/github-repos/confighub-scan",
   "surface_counts": {
-    "live_state": 5,
+    "live_state": 10,
     "repo_vs_live": 4,
-    "static": 6
+    "static": 11
   }
 }

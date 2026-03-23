@@ -34,6 +34,10 @@ Candidate control themes:
 - pod exec access
 - impersonate, bind, and escalate privileges
 
+Seeded controls now in `controls/rbac/`:
+- `rbac-privilege-boundary-baseline`
+- `service-account-identity-baseline`
+
 ## 3. Network And Exposure Baseline
 
 Candidate control themes:
@@ -43,6 +47,11 @@ Candidate control themes:
 - exposed sensitive interfaces
 - host network exposure
 - unnecessary east-west communication
+
+Seeded controls now in `controls/network/`:
+- `network-policy-connectivity-baseline`
+- `ingress-class-and-tls-baseline`
+- `ingress-annotation-safety`
 
 ## 4. Secrets And Credential Hygiene
 
