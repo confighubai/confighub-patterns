@@ -34,7 +34,8 @@ As of 2026-03-22:
   `scripts/build-first-wave-copy-manifest.py` and
   `dist/first-wave-copy-manifest-v1.json`
 - the full first-wave copy set is now present:
-  - all 39 planned items are present in `confighub-patterns` and byte-for-byte matched
+  - all 39 planned items are present in `confighub-patterns`
+  - the copy manifest now tracks both `copied_matching` and `copied_drifted` states as repo-native files intentionally evolve
   - the raw pattern corpus and archive are copied locally
   - `confighub-scan` still remains the active write home until consumer cutover
 - the first seeded controls and frameworks now live in this repo and validate
@@ -44,6 +45,10 @@ As of 2026-03-22:
 - the repo-native release manifest now exists at `dist/bundle-manifest-v1.json`
 - the release manifest now advertises Kyverno and Trivy mapping files as
   first-class runtime bundle assets
+- the promoted taxonomy now includes 17 controls, 6 frameworks, and 100 covered
+  pattern IDs
+- the repo now has native validation plumbing via `make validate` and
+  `.github/workflows/validate.yml`
 
 ## Intended Layout
 
@@ -86,6 +91,21 @@ The expected interaction model is:
 The initial shared cache contract is:
 - `~/.confighub/pattern-bundles/current/`
 - compatibility path: `~/.confighub/risk-catalog-v1.json`
+
+## Validation
+
+Local validation now runs natively in this repo:
+
+```bash
+make validate
+```
+
+If the sibling `confighub-scan` checkout is not at `../confighub-scan`, point the
+copy-manifest check at it explicitly:
+
+```bash
+make validate FIRST_WAVE_SOURCE_REPO=/path/to/confighub-scan
+```
 
 ## Current References
 
