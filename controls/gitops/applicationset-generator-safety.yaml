@@ -36,6 +36,10 @@ tags:
   - generator
   - templating
   - rollout-safety
+example_refs:
+  - repo: confighub-scan
+    path: examples/gitops-good-baselines/argocd-applicationset-good.yaml
+    purpose: Focused list-generator baseline with bounded rollout scope and explicit sync posture.
 remediation:
   strategy: manual_review
   safety_class: review_required

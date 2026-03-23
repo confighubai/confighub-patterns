@@ -37,6 +37,13 @@ tags:
   - helmrelease
   - kustomization
   - reconciliation
+example_refs:
+  - repo: confighub-scan
+    path: examples/gitops-good-baselines/flux-gitrepository-kustomization-good.yaml
+    purpose: Healthy source and kustomization baseline used to contrast stalled or cyclic reconciliation cases.
+  - repo: confighub-scan
+    path: examples/gitops-good-baselines/flux-helmrelease-good.yaml
+    purpose: Healthy HelmRelease baseline used to explain timeout and Ready-state failures without secret or chart drift noise.
 remediation:
   strategy: diagnose_then_fix
   safety_class: review_required

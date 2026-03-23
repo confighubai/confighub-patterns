@@ -38,6 +38,10 @@ tags:
   - prune
   - self-heal
   - baseline
+example_refs:
+  - repo: confighub-scan
+    path: examples/gitops-good-baselines/argocd-application-good.yaml
+    purpose: Recommended Argo Application sync-policy baseline with explicit prune, self-heal, and bounded retry.
 remediation:
   strategy: config_fix
   safety_class: review_required

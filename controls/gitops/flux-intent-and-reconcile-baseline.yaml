@@ -44,6 +44,13 @@ tags:
   - prune
   - baseline
   - reconciliation
+example_refs:
+  - repo: confighub-scan
+    path: examples/gitops-good-baselines/flux-gitrepository-kustomization-good.yaml
+    purpose: Baseline GitRepository and Kustomization pair with explicit source freshness, timeout, retry, wait, and prune posture.
+  - repo: confighub-scan
+    path: examples/gitops-good-baselines/flux-helmrelease-good.yaml
+    purpose: Baseline HelmRelease with explicit timing, remediation retries, and values wiring.
 remediation:
   strategy: config_fix
   safety_class: review_required

@@ -36,6 +36,10 @@ tags:
   - reconciliation
   - live-state
   - operator
+example_refs:
+  - repo: confighub-scan
+    path: examples/gitops-good-baselines/argocd-application-good.yaml
+    purpose: Healthy single-application Argo baseline for intent-vs-live comparison and operator explainers.
 remediation:
   strategy: diagnose_then_fix
   safety_class: diagnose_only
