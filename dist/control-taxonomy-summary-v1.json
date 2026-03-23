@@ -1,13 +1,16 @@
 {
   "consumer_counts": {
-    "ai": 12,
-    "cli": 12,
-    "confighub": 12,
-    "cub_scout": 12,
-    "sdk": 8
+    "ai": 17,
+    "cli": 17,
+    "confighub": 17,
+    "cub_scout": 17,
+    "sdk": 13
   },
-  "control_count": 12,
+  "control_count": 17,
   "control_ids": [
+    "CTRL-CLUSTER-0001",
+    "CTRL-CLUSTER-0002",
+    "CTRL-CLUSTER-0003",
     "CTRL-GITOPS-0001",
     "CTRL-GITOPS-0002",
     "CTRL-GITOPS-0003",
@@ -18,10 +21,152 @@
     "CTRL-NET-0003",
     "CTRL-RBAC-0001",
     "CTRL-RBAC-0002",
+    "CTRL-SECRETS-0001",
+    "CTRL-SECRETS-0002",
     "CTRL-WORKLOAD-0001",
     "CTRL-WORKLOAD-0002"
   ],
   "controls": [
+    {
+      "detection_modes": [
+        "native_rule"
+      ],
+      "family": "cluster-hardening",
+      "id": "CTRL-CLUSTER-0001",
+      "maturity": "seeded",
+      "path": "controls/cluster/pod-security-and-hostpath-baseline.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0724",
+        "CCVE-2025-0921",
+        "CCVE-2025-3737",
+        "CCVE-2025-3763"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "config_fix",
+      "resource_kinds": [
+        "Namespace",
+        "Deployment",
+        "PersistentVolume"
+      ],
+      "severity": "critical",
+      "slug": "pod-security-and-hostpath-baseline",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "cluster",
+        "pod-security",
+        "hostpath",
+        "namespace",
+        "baseline"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule"
+      ],
+      "family": "cluster-hardening",
+      "id": "CTRL-CLUSTER-0002",
+      "maturity": "seeded",
+      "path": "controls/cluster/control-plane-certificate-baseline.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0207",
+        "CCVE-2025-0228",
+        "CCVE-2025-0275",
+        "CCVE-2025-1133",
+        "CCVE-2025-1164",
+        "CCVE-2025-1165",
+        "CCVE-2025-2472",
+        "CCVE-2025-2478"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "diagnose_then_fix",
+      "resource_kinds": [
+        "Node",
+        "KubeletConfiguration",
+        "APIServer"
+      ],
+      "severity": "critical",
+      "slug": "control-plane-certificate-baseline",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "cluster",
+        "kubelet",
+        "apiserver",
+        "tls",
+        "certificates",
+        "baseline"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule",
+        "sdk_worker"
+      ],
+      "family": "cluster-hardening",
+      "id": "CTRL-CLUSTER-0003",
+      "maturity": "seeded",
+      "path": "controls/cluster/admission-webhook-availability-baseline.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0039",
+        "CCVE-2025-0368",
+        "CCVE-2025-1262",
+        "CCVE-2025-1264",
+        "CCVE-2025-1821",
+        "CCVE-2025-1824",
+        "CCVE-2025-2605",
+        "CCVE-2025-2638"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "diagnose_then_fix",
+      "resource_kinds": [
+        "ValidatingWebhookConfiguration",
+        "MutatingWebhookConfiguration",
+        "APIServer"
+      ],
+      "severity": "critical",
+      "slug": "admission-webhook-availability-baseline",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "live_state",
+        "connected_validation"
+      ],
+      "tags": [
+        "cluster",
+        "admission",
+        "webhook",
+        "availability",
+        "reconciliation",
+        "baseline"
+      ]
+    },
     {
       "detection_modes": [
         "native_rule",
@@ -473,6 +618,103 @@
       "detection_modes": [
         "native_rule"
       ],
+      "family": "secrets-and-credentials",
+      "id": "CTRL-SECRETS-0001",
+      "maturity": "seeded",
+      "path": "controls/secrets/external-secret-store-baseline.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0067",
+        "CCVE-2025-0068",
+        "CCVE-2025-0124",
+        "CCVE-2025-0125",
+        "CCVE-2025-0296",
+        "CCVE-2025-0297",
+        "CCVE-2025-0480",
+        "CCVE-2025-0481",
+        "CCVE-2025-2654",
+        "CCVE-2025-2676"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "diagnose_then_fix",
+      "resource_kinds": [
+        "ExternalSecret",
+        "SecretStore",
+        "ClusterSecretStore"
+      ],
+      "severity": "critical",
+      "slug": "external-secret-store-baseline",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "secrets",
+        "externalsecret",
+        "secretstore",
+        "sync",
+        "credentials",
+        "baseline"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule"
+      ],
+      "family": "secrets-and-credentials",
+      "id": "CTRL-SECRETS-0002",
+      "maturity": "seeded",
+      "path": "controls/secrets/secret-handling-and-exposure-baseline.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0229",
+        "CCVE-2025-0593",
+        "CCVE-2025-2543",
+        "CCVE-2025-2544",
+        "CCVE-2025-3279",
+        "CCVE-2025-3508"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "config_fix",
+      "resource_kinds": [
+        "Secret",
+        "ConfigMap",
+        "Deployment",
+        "Service"
+      ],
+      "severity": "critical",
+      "slug": "secret-handling-and-exposure-baseline",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "secrets",
+        "credentials",
+        "configmap",
+        "plaintext",
+        "file-permissions",
+        "baseline"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule"
+      ],
       "family": "workload-hardening",
       "id": "CTRL-WORKLOAD-0001",
       "maturity": "seeded",
@@ -549,22 +791,55 @@
   ],
   "detection_mode_counts": {
     "derived_comparison": 4,
-    "native_rule": 12
+    "native_rule": 17,
+    "sdk_worker": 1
   },
   "family_counts": {
+    "cluster-hardening": 3,
     "gitops-operators": 5,
     "network-exposure": 3,
     "rbac-and-identity": 2,
+    "secrets-and-credentials": 2,
     "workload-hardening": 2
   },
-  "framework_count": 4,
+  "framework_count": 6,
   "framework_ids": [
+    "FRM-CLUSTER-0001",
     "FRM-GITOPS-0001",
     "FRM-NET-0001",
     "FRM-RBAC-0001",
+    "FRM-SECRETS-0001",
     "FRM-WORKLOAD-0001"
   ],
   "frameworks": [
+    {
+      "control_ids": [
+        "CTRL-CLUSTER-0001",
+        "CTRL-CLUSTER-0002",
+        "CTRL-CLUSTER-0003"
+      ],
+      "family": "cluster-hardening",
+      "id": "FRM-CLUSTER-0001",
+      "maturity": "seeded",
+      "outcomes": [
+        "Surface the first stable cluster-hardening controls in one operator-facing bundle.",
+        "Keep pod security boundaries, control-plane certificates, and admission reliability visible together.",
+        "Provide a clean starting point for future API server, scheduler, and kubelet hardening controls."
+      ],
+      "path": "frameworks/cluster-hardening.yaml",
+      "platforms": [
+        "kubernetes",
+        "control-plane"
+      ],
+      "slug": "cluster-hardening",
+      "tags": [
+        "cluster",
+        "hardening",
+        "pod-security",
+        "tls",
+        "admission"
+      ]
+    },
     {
       "control_ids": [
         "CTRL-GITOPS-0001",
@@ -653,6 +928,33 @@
     },
     {
       "control_ids": [
+        "CTRL-SECRETS-0001",
+        "CTRL-SECRETS-0002"
+      ],
+      "family": "secrets-and-credentials",
+      "id": "FRM-SECRETS-0001",
+      "maturity": "seeded",
+      "outcomes": [
+        "Surface external secret sync and trust failures in one operator-facing bundle.",
+        "Make credential exposure and unsafe secret handling visible as first-class controls.",
+        "Provide a stable framework surface for future secret rotation and identity-integrated controls."
+      ],
+      "path": "frameworks/secrets-and-credentials.yaml",
+      "platforms": [
+        "kubernetes",
+        "externalsecrets",
+        "vault"
+      ],
+      "slug": "secrets-and-credentials",
+      "tags": [
+        "secrets",
+        "credentials",
+        "external-secrets",
+        "exposure"
+      ]
+    },
+    {
+      "control_ids": [
         "CTRL-WORKLOAD-0001",
         "CTRL-WORKLOAD-0002"
       ],
@@ -678,8 +980,8 @@
       ]
     }
   ],
-  "generated_at": "2026-03-23T13:13:27+00:00",
-  "pattern_coverage_count": 64,
+  "generated_at": "2026-03-23T13:33:59+00:00",
+  "pattern_coverage_count": 100,
   "pattern_ids": [
     "CCVE-2025-0004",
     "CCVE-2025-0005",
@@ -687,7 +989,12 @@
     "CCVE-2025-0007",
     "CCVE-2025-0013",
     "CCVE-2025-0032",
+    "CCVE-2025-0039",
     "CCVE-2025-0063",
+    "CCVE-2025-0067",
+    "CCVE-2025-0068",
+    "CCVE-2025-0124",
+    "CCVE-2025-0125",
     "CCVE-2025-0127",
     "CCVE-2025-0128",
     "CCVE-2025-0129",
@@ -695,28 +1002,55 @@
     "CCVE-2025-0166",
     "CCVE-2025-0168",
     "CCVE-2025-0169",
+    "CCVE-2025-0207",
+    "CCVE-2025-0228",
+    "CCVE-2025-0229",
+    "CCVE-2025-0275",
+    "CCVE-2025-0296",
+    "CCVE-2025-0297",
+    "CCVE-2025-0368",
+    "CCVE-2025-0480",
+    "CCVE-2025-0481",
+    "CCVE-2025-0593",
     "CCVE-2025-0665",
     "CCVE-2025-0666",
     "CCVE-2025-0667",
     "CCVE-2025-0672",
     "CCVE-2025-0690",
+    "CCVE-2025-0724",
     "CCVE-2025-0772",
     "CCVE-2025-0773",
     "CCVE-2025-0894",
     "CCVE-2025-0895",
     "CCVE-2025-0916",
+    "CCVE-2025-0921",
     "CCVE-2025-1116",
     "CCVE-2025-1125",
+    "CCVE-2025-1133",
     "CCVE-2025-1137",
+    "CCVE-2025-1164",
+    "CCVE-2025-1165",
+    "CCVE-2025-1262",
+    "CCVE-2025-1264",
     "CCVE-2025-1601",
+    "CCVE-2025-1821",
+    "CCVE-2025-1824",
     "CCVE-2025-2155",
     "CCVE-2025-2156",
     "CCVE-2025-2432",
+    "CCVE-2025-2472",
+    "CCVE-2025-2478",
+    "CCVE-2025-2543",
+    "CCVE-2025-2544",
     "CCVE-2025-2563",
     "CCVE-2025-2565",
     "CCVE-2025-2567",
     "CCVE-2025-2599",
     "CCVE-2025-2603",
+    "CCVE-2025-2605",
+    "CCVE-2025-2638",
+    "CCVE-2025-2654",
+    "CCVE-2025-2676",
     "CCVE-2025-2790",
     "CCVE-2025-3153",
     "CCVE-2025-3167",
@@ -724,6 +1058,8 @@
     "CCVE-2025-3202",
     "CCVE-2025-3206",
     "CCVE-2025-3208",
+    "CCVE-2025-3279",
+    "CCVE-2025-3508",
     "CCVE-2025-3720",
     "CCVE-2025-3724",
     "CCVE-2025-3727",
@@ -733,9 +1069,11 @@
     "CCVE-2025-3734",
     "CCVE-2025-3735",
     "CCVE-2025-3736",
+    "CCVE-2025-3737",
     "CCVE-2025-3746",
     "CCVE-2025-3752",
     "CCVE-2025-3758",
+    "CCVE-2025-3763",
     "CCVE-2025-4075",
     "CCVE-2025-4076",
     "CCVE-2025-4077",
@@ -751,8 +1089,9 @@
   "schema_version": "control-taxonomy-summary-v1",
   "source_pattern_repo": "/Users/alexis/Public/github-repos/confighub-scan",
   "surface_counts": {
-    "live_state": 10,
+    "connected_validation": 1,
+    "live_state": 15,
     "repo_vs_live": 4,
-    "static": 11
+    "static": 15
   }
 }

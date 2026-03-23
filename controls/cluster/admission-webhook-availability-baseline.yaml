@@ -1,0 +1,64 @@
+schema_version: control-definition-v1
+id: CTRL-CLUSTER-0003
+slug: admission-webhook-availability-baseline
+name: Admission webhook availability baseline
+family: cluster-hardening
+summary: Detect webhook posture that turns admission into a reliability hazard or blocks reconciliation indefinitely.
+description: >
+  This control packages the admission-webhook reliability failures that have
+  cluster-wide blast radius: webhooks unreachable from the API server, timeout
+  behavior that ignores expected failure policy, misleading network errors, and
+  webhook failures that block reconciliation or garbage collection.
+maturity: seeded
+severity: critical
+supported_surfaces:
+  - live_state
+  - connected_validation
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - sdk
+  - ai
+detection_modes:
+  - native_rule
+  - sdk_worker
+resource_kinds:
+  - ValidatingWebhookConfiguration
+  - MutatingWebhookConfiguration
+  - APIServer
+pattern_ids:
+  - CCVE-2025-0039
+  - CCVE-2025-0368
+  - CCVE-2025-1262
+  - CCVE-2025-1264
+  - CCVE-2025-1821
+  - CCVE-2025-1824
+  - CCVE-2025-2605
+  - CCVE-2025-2638
+tags:
+  - cluster
+  - admission
+  - webhook
+  - availability
+  - reconciliation
+  - baseline
+remediation:
+  strategy: diagnose_then_fix
+  safety_class: review_required
+  guidance:
+    - Treat admission webhook reachability and timeout posture as control-plane reliability concerns, not only policy concerns.
+    - Validate failurePolicy expectations with real network-failure tests before relying on them in production.
+    - Watch for webhook-induced reconciliation and garbage-collection blockage after upgrades or certificate changes.
+evidence_expectations:
+  intent_signals:
+    - webhook timeoutSeconds
+    - failurePolicy
+    - clientConfig and service references
+  live_signals:
+    - API server unable to reach webhook
+    - reconciliation or garbage collection blocked by webhook failures
+  corroborating_sources:
+    - kubectl get validatingwebhookconfiguration,mutatingwebhookconfiguration -o yaml
+    - API server logs
+    - controller reconciliation errors

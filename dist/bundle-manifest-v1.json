@@ -1,6 +1,6 @@
 {
   "schema_version": "bundle-manifest-v1",
-  "published_at": "2026-03-23T13:13:28Z",
+  "published_at": "2026-03-23T13:34:00Z",
   "bundle_version": "dev",
   "source_repo": "confighubai/confighub-patterns",
   "files": [
@@ -56,16 +56,16 @@
       "name": "control-taxonomy-summary",
       "path": "dist/control-taxonomy-summary-v1.json",
       "schema_version": "control-taxonomy-summary-v1",
-      "sha256": "1e47c81b1e70103afc5566299986561ecac48895dc38f4a2d19700270fefd436",
-      "size_bytes": 18841,
+      "sha256": "6046fa22400a7f524572d103f168d5a3cea2cd6ca98e9424b0496bf102cb51e8",
+      "size_bytes": 27395,
       "required": false
     },
     {
       "name": "control-framework-bundle",
       "path": "dist/control-framework-bundle-v1.json",
       "schema_version": "control-framework-bundle-v1",
-      "sha256": "374865e0b9d4efbf0faac03ce2a0157a7127632fc59a77865fef078da1eeea3e",
-      "size_bytes": 63954,
+      "sha256": "d6af84c72c4c8e208705cf49dd5b1088e7caad1b5804347d73295ba57db54de6",
+      "size_bytes": 94342,
       "required": false
     }
   ]
