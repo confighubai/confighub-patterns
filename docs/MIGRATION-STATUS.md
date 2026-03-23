@@ -60,7 +60,7 @@ The target taxonomy is now explicit:
 - `frameworks/` for grouped views over controls
 
 The first seeded implementation slice is now explicit too:
-- 17 seeded controls
+- 18 seeded controls
 - 7 seeded frameworks
 - a summary artifact at `dist/control-taxonomy-summary-v1.json`
 - an initial promoted-taxonomy bundle at `dist/control-framework-bundle-v1.json`
