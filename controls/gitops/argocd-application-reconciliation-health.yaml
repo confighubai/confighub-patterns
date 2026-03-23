@@ -1,0 +1,55 @@
+schema_version: control-definition-v1
+id: CTRL-GITOPS-0001
+slug: argocd-application-reconciliation-health
+name: Argo CD application reconciliation health
+family: gitops-operators
+summary: Detect Application states that indicate failed sync, drift, or degraded reconciliation health.
+description: >
+  This control groups the core Argo CD Application health and sync failures that
+  operators actually triage during broken rollouts. It is meant to support both
+  live-state detection and higher-level intent-vs-live reasoning.
+maturity: seeded
+severity: critical
+supported_surfaces:
+  - live_state
+  - repo_vs_live
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - ai
+detection_modes:
+  - native_rule
+  - derived_comparison
+resource_kinds:
+  - Application
+  - Service
+pattern_ids:
+  - CCVE-2025-0004
+  - CCVE-2025-0005
+  - CCVE-2025-0006
+  - CCVE-2025-0156
+  - CCVE-2025-0169
+tags:
+  - argocd
+  - gitops
+  - reconciliation
+  - live-state
+  - operator
+remediation:
+  strategy: diagnose_then_fix
+  safety_class: diagnose_only
+  guidance:
+    - Inspect sync status, health status, and operation state together before applying a fix.
+    - Correlate controller logs with resource-level errors so we distinguish bad intent from broken rollout execution.
+    - Prefer intent-vs-live comparison when a repo scan is also available.
+evidence_expectations:
+  intent_signals: []
+  live_signals:
+    - status.sync.status
+    - status.health.status
+    - status.operationState.phase
+  corroborating_sources:
+    - argocd app get
+    - argocd-application-controller logs
+    - kubectl describe application

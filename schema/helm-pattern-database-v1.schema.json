@@ -1,0 +1,212 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://confighub.ai/schemas/helm-pattern-database-v1.schema.json",
+  "title": "Helm Pattern Database v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "total_patterns",
+    "total_charts",
+    "patterns_by_chart",
+    "patterns_by_phase",
+    "patterns_by_severity",
+    "patterns_by_category",
+    "entries"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "helm-pattern-database-v1"
+    },
+    "total_patterns": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "total_charts": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "patterns_by_chart": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/name_count"
+      }
+    },
+    "patterns_by_phase": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/name_count"
+      }
+    },
+    "patterns_by_severity": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/name_count"
+      }
+    },
+    "patterns_by_category": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/name_count"
+      }
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/pattern_entry"
+      }
+    }
+  },
+  "definitions": {
+    "name_count": {
+      "type": "object",
+      "required": [
+        "name",
+        "count"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "pattern_entry": {
+      "type": "object",
+      "required": [
+        "id",
+        "chart",
+        "repository",
+        "phase",
+        "category",
+        "severity",
+        "title",
+        "predicate",
+        "impact",
+        "remediation",
+        "evidence",
+        "source_file"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^HELM-[A-Z0-9-]+-[0-9]{4}$"
+        },
+        "chart": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repository": {
+          "type": "string",
+          "minLength": 1
+        },
+        "phase": {
+          "type": "string",
+          "enum": [
+            "pre_render",
+            "post_render"
+          ]
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "security",
+            "reliability",
+            "operability",
+            "upgrade",
+            "compliance",
+            "cost"
+          ]
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "critical",
+            "warning",
+            "info"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "chart_version_selectors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "predicate": {
+          "type": "object",
+          "required": [
+            "type",
+            "expression"
+          ],
+          "properties": {
+            "type": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expression": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "impact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "remediation": {
+          "type": "object",
+          "required": [
+            "summary",
+            "actions"
+          ],
+          "properties": {
+            "summary": {
+              "type": "string",
+              "minLength": 1
+            },
+            "actions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "source_file": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

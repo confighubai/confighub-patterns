@@ -1,0 +1,58 @@
+{
+  "schema_version": "mining-candidate-policy-v1",
+  "min_signal_score": 45,
+  "max_candidates": 25,
+  "required_state_reason": "completed",
+  "comment_bands": {
+    "medium_threshold": 8,
+    "high_threshold": 20,
+    "low_points": 0,
+    "medium_points": 8,
+    "high_points": 16
+  },
+  "reaction_bands": {
+    "medium_threshold": 5,
+    "high_threshold": 15,
+    "low_points": 0,
+    "medium_points": 6,
+    "high_points": 12
+  },
+  "weights": {
+    "base_completed": 10,
+    "repro_keyword": 12,
+    "fix_keyword": 10,
+    "impact_keyword": 10,
+    "link_evidence": 6,
+    "linked_pr": 8
+  },
+  "max_label_points": 20,
+  "label_points": {
+    "area/security": 10,
+    "kind/bug": 10,
+    "priority/critical-urgent": 12,
+    "regression": 8,
+    "triage/accepted": 6
+  },
+  "keyword_sets": {
+    "repro": [
+      "steps to reproduce",
+      "reproducible",
+      "minimal example",
+      "reproduction"
+    ],
+    "fix": [
+      "fixed in",
+      "workaround",
+      "backport",
+      "merged"
+    ],
+    "impact": [
+      "outage",
+      "data loss",
+      "denial of service",
+      "crashloop",
+      "resource exhaustion",
+      "oomkilled"
+    ]
+  }
+}

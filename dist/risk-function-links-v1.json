@@ -1,0 +1,2881 @@
+{
+  "schema_version": "risk-function-links-v1",
+  "summary": {
+    "total_risks": 3513,
+    "total_functions": 87,
+    "risks_with_function_ref": 218,
+    "risks_without_function_ref": 3295,
+    "missing_function_definitions": 76,
+    "function_declares_missing_risks": 0,
+    "function_ccve_link_mismatches": 0,
+    "unreferenced_functions": 0,
+    "track_counts": {
+      "advisory": 16,
+      "misconfiguration": 3497
+    },
+    "category_counts": {
+      "APPLY": 122,
+      "AUTOSCALING": 2,
+      "AVAILABILITY": 1,
+      "CERT-MANAGER": 3,
+      "CONFIG": 1935,
+      "CONFIGURATION": 1,
+      "DEPEND": 75,
+      "DRIFT": 26,
+      "FLUX": 2,
+      "NETWORKING": 2,
+      "ORPHAN": 45,
+      "OVER_PROVISION": 10,
+      "RENDER": 13,
+      "SECRETS": 2,
+      "SECURITY": 24,
+      "SILENT": 4,
+      "SOURCE": 15,
+      "STATE": 1224,
+      "TIMING": 3,
+      "UNRESOLVED": 3,
+      "WORKLOAD": 1
+    },
+    "remedy_type_counts": {
+      "chart_change": 1,
+      "chart_upgrade": 14,
+      "cleanup": 1,
+      "cluster_fix": 1,
+      "config_change": 26,
+      "config_fix": 839,
+      "delete_recreate": 2,
+      "delete_resource": 348,
+      "dependency_update": 4,
+      "diagnose_then_fix": 1442,
+      "documentation": 2,
+      "external_action": 123,
+      "external_dependency": 2,
+      "image_upgrade": 1,
+      "infrastructure": 1,
+      "infrastructure_fix": 1,
+      "install_workaround": 1,
+      "investigate": 1,
+      "manual": 13,
+      "manual_intervention": 16,
+      "manual_only": 5,
+      "no_action": 1,
+      "none": 15,
+      "operational": 4,
+      "platform_upgrade": 1,
+      "pre_upgrade": 1,
+      "rbac_fix": 1,
+      "resource_increase": 1,
+      "restart": 70,
+      "security_fix": 1,
+      "source_fix": 35,
+      "tool_upgrade": 2,
+      "trigger_action": 169,
+      "troubleshooting": 3,
+      "upgrade": 347,
+      "version_change": 4,
+      "version_rollback": 1,
+      "version_skip": 1,
+      "version_upgrade": 7,
+      "workaround": 5
+    }
+  },
+  "links": {
+    "risk_to_function": [
+      {
+        "risk_id": "CCVE-2025-0005",
+        "function_id": "trigger-argo-sync",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "DRIFT",
+        "source_path": "risks/CCVE-2025-0005.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0008",
+        "function_id": "reset-helm-retries",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-0008.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0009",
+        "function_id": "unsuspend-flux",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-0009.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0010",
+        "function_id": "skip-dry-run-missing-resource",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-0010.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0017",
+        "function_id": "enable-server-side-apply",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-0017.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0027",
+        "function_id": "fix-namespace-whitespace",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-0027.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0043",
+        "function_id": "fix-thanos-sidecar-upload",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-0043.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0075",
+        "function_id": "enable-linkerd-injection",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-0075.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0084",
+        "function_id": "fix-pdb-blocking-drain",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-0084.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0091",
+        "function_id": "add-db-pod-anti-affinity",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-0091.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0097",
+        "function_id": "fix-keda-cooldown-period",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-0097.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0098",
+        "function_id": "enable-vpa-auto-update",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-0098.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0105",
+        "function_id": "fix-redis-ha-replicas",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-0105.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0114",
+        "function_id": "set-rabbitmq-partition-handling",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-0114.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0122",
+        "function_id": "scale-coredns-replicas",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-0122.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0124",
+        "function_id": "fix-externalsecret-refresh-interval",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-0124.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0127",
+        "function_id": "set-flux-helmrelease-timeout",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-0127.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0128",
+        "function_id": "enable-argocd-prune",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-0128.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0662",
+        "function_id": "fix-valuesFrom-optional-missing",
+        "remedy_type": "diagnose_then_fix",
+        "track": "misconfiguration",
+        "category": "SILENT",
+        "source_path": "risks/CCVE-2025-0662.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0665",
+        "function_id": "fix-interval-zero",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-0665.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0666",
+        "function_id": "fix-suspended-source",
+        "remedy_type": "trigger_action",
+        "track": "misconfiguration",
+        "category": "DRIFT",
+        "source_path": "risks/CCVE-2025-0666.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0694",
+        "function_id": "remove-finalizers",
+        "remedy_type": "delete_resource",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-0694.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0722",
+        "function_id": "clear-pv-claimref",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-0722.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-0728",
+        "function_id": "remove-finalizers",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-0728.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1226",
+        "function_id": "remove-finalizers",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1226.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1227",
+        "function_id": "remove-finalizers",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1227.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1234",
+        "function_id": "remove-finalizers",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1234.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1482",
+        "function_id": "clear-pv-claimref",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1482.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1521",
+        "function_id": "clear-pv-claimref",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1521.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1771",
+        "function_id": "increase_timeout",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1771.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1772",
+        "function_id": "upgrade_kubernetes",
+        "remedy_type": "external_action",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-1772.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1773",
+        "function_id": "increase_timeout",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1773.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1774",
+        "function_id": "increase_timeout",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1774.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1775",
+        "function_id": "drain_before_reboot",
+        "remedy_type": "manual_only",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-1775.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1776",
+        "function_id": "set_field",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-1776.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1777",
+        "function_id": "upgrade_kubernetes",
+        "remedy_type": "external_action",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1777.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1778",
+        "function_id": "incremental_threshold_change",
+        "remedy_type": "manual_only",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-1778.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1779",
+        "function_id": "set_resource_limits",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1779.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1780",
+        "function_id": "set_field",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1780.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1781",
+        "function_id": "use_init_process",
+        "remedy_type": "source_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1781.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1782",
+        "function_id": "set_resource_requests",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1782.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1783",
+        "function_id": "delete_recreate_pod",
+        "remedy_type": "manual_only",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1783.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1784",
+        "function_id": "increase_memory_limit",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1784.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1785",
+        "function_id": "increase_initial_delay",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1785.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1786",
+        "function_id": "upgrade_kubernetes",
+        "remedy_type": "external_action",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1786.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1787",
+        "function_id": "increase_initial_delay",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1787.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1788",
+        "function_id": "implement_signal_handler",
+        "remedy_type": "source_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-1788.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1789",
+        "function_id": "increase_timeout",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1789.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1790",
+        "function_id": "move_cleanup_to_command",
+        "remedy_type": "source_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-1790.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1791",
+        "function_id": "configure_container_runtime",
+        "remedy_type": "external_action",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-1791.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1792",
+        "function_id": "set_field",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-1792.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1793",
+        "function_id": "set_field",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1793.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1794",
+        "function_id": "configure_systemd_timeout",
+        "remedy_type": "external_action",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-1794.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1795",
+        "function_id": "fix_image_reference",
+        "remedy_type": "source_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1795.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1796",
+        "function_id": "move_init_to_main",
+        "remedy_type": "source_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-1796.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1797",
+        "function_id": "recreate_pod_different_node",
+        "remedy_type": "manual_only",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1797.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1798",
+        "function_id": "fix_image_reference",
+        "remedy_type": "source_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1798.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1799",
+        "function_id": "restart_kubelet",
+        "remedy_type": "trigger_action",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1799.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1800",
+        "function_id": "set_field",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-1800.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1801",
+        "function_id": "delete_state_file",
+        "remedy_type": "trigger_action",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1801.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1802",
+        "function_id": "bring_cpus_online",
+        "remedy_type": "external_action",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1802.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1803",
+        "function_id": "restart_kubelet",
+        "remedy_type": "trigger_action",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1803.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1804",
+        "function_id": "set_resource_limits",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-1804.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1805",
+        "function_id": "delete_pod",
+        "remedy_type": "trigger_action",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1805.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1806",
+        "function_id": "fix_config_reference",
+        "remedy_type": "source_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1806.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1807",
+        "function_id": "restart_kubelet",
+        "remedy_type": "trigger_action",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1807.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1808",
+        "function_id": "restart_kubelet",
+        "remedy_type": "trigger_action",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1808.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1809",
+        "function_id": "restart_kubelet",
+        "remedy_type": "trigger_action",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1809.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1810",
+        "function_id": "upgrade_kubernetes",
+        "remedy_type": "external_action",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1810.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1811",
+        "function_id": "force_status_update",
+        "remedy_type": "trigger_action",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1811.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1812",
+        "function_id": "upgrade_kubernetes",
+        "remedy_type": "external_action",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1812.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1813",
+        "function_id": "increase_timeout",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1813.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1814",
+        "function_id": "delete_pod",
+        "remedy_type": "trigger_action",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1814.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1815",
+        "function_id": "fix_resource_unit",
+        "remedy_type": "source_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-1815.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1816",
+        "function_id": "upgrade_kernel",
+        "remedy_type": "external_action",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1816.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1817",
+        "function_id": "change_restart_policy",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1817.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1818",
+        "function_id": "recreate_static_pod",
+        "remedy_type": "trigger_action",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1818.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1819",
+        "function_id": "set_field",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-1819.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1820",
+        "function_id": "set_field",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1820.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1826",
+        "function_id": "remove-finalizers",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1826.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1829",
+        "function_id": "remove-finalizers",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1829.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1831",
+        "function_id": "remove-finalizers",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-1831.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1832",
+        "function_id": "remove-finalizers",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-1832.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-1930",
+        "function_id": "remove-destinationrule-workloadselector",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-1930.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2106",
+        "function_id": "remove-finalizers",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2106.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2429",
+        "function_id": "remove-finalizers",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2429.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2449",
+        "function_id": "remove-finalizers",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2449.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2551",
+        "function_id": "normalize-cpu-units",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2551.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2552",
+        "function_id": "ignore-servicemonitor-diff",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2552.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2553",
+        "function_id": "presync-namespace-wave",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2553.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2554",
+        "function_id": "presync-job-timeout",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2554.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2555",
+        "function_id": "crd-sync-options",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2555.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2556",
+        "function_id": "enable-server-side-diff",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2556.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2558",
+        "function_id": "ignore-clusterrole-diff",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2558.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2559",
+        "function_id": "increase-sync-timeout",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2559.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2561",
+        "function_id": "appset-gotemplate-strict",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2561.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2563",
+        "function_id": "appset-values-string",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2563.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2564",
+        "function_id": "shorten-appset-name",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2564.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2565",
+        "function_id": "appset-remove-pathsexist",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2565.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2566",
+        "function_id": "appset-progressive-sync",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2566.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2567",
+        "function_id": "appset-remove-template-retry",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2567.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2568",
+        "function_id": "appset-reorder-sources",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2568.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2569",
+        "function_id": "appproject-add-sources",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2569.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2570",
+        "function_id": "add-appset-controller",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2570.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2571",
+        "function_id": "app-health-customization",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2571.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2572",
+        "function_id": "app-health-with-conditions",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2572.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2573",
+        "function_id": "httproute-health-check",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2573.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2574",
+        "function_id": "enable-health-persist",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2574.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2575",
+        "function_id": "enable-health-persist-missing",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2575.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2576",
+        "function_id": "aoa-ignore-syncpolicy-diff",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2576.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2577",
+        "function_id": "aoa-presync-dependency-check",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2577.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2578",
+        "function_id": "aoa-omit-empty-syncpolicy",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2578.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2579",
+        "function_id": "aoa-child-finalizer",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2579.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2580",
+        "function_id": "aoa-omit-recurse-false",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2580.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2581",
+        "function_id": "hook-wave-zero",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2581.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2582",
+        "function_id": "postdelete-cleanup-hook",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2582.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2583",
+        "function_id": "non-hook-early-wave",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2583.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2584",
+        "function_id": "upgrade-sync-wave-adjust",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2584.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2588",
+        "function_id": "limit-sync-retries",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2588.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2589",
+        "function_id": "retry-backoff-for-refresh",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2589.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2591",
+        "function_id": "reduce-reconciliation-timeout",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2591.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2592",
+        "function_id": "use-commit-sha",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2592.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2594",
+        "function_id": "disable-server-side-apply",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2594.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2595",
+        "function_id": "jq-ignore-differences",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2595.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2596",
+        "function_id": "ignore-volumeclaimtemplate-diff",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2596.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2597",
+        "function_id": "remove-ssa-with-createns",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2597.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2599",
+        "function_id": "add-cascade-finalizer",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "ORPHAN",
+        "source_path": "risks/CCVE-2025-2599.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2600",
+        "function_id": "cascade-delete-all-apps",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "ORPHAN",
+        "source_path": "risks/CCVE-2025-2600.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2746",
+        "function_id": "remove-finalizers",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2746.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2891",
+        "function_id": "fix-linkerd-injection-annotation",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2891.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2892",
+        "function_id": "fix-linkerd-deployment-annotation",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2892.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2893",
+        "function_id": "upgrade-linkerd",
+        "remedy_type": "upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2893.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2894",
+        "function_id": "resolve-annotation-precedence",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2894.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2895",
+        "function_id": "enable-linkerd-cni",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2895.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2896",
+        "function_id": "configure-skip-ports",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2896.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2897",
+        "function_id": "restart-identity-first",
+        "remedy_type": "restart",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2897.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2898",
+        "function_id": "configure-dst-override",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "DEPEND",
+        "source_path": "risks/CCVE-2025-2898.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2899",
+        "function_id": "configure-graceful-shutdown",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2899.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2900",
+        "function_id": "upgrade-linkerd",
+        "remedy_type": "upgrade",
+        "track": "misconfiguration",
+        "category": "DEPEND",
+        "source_path": "risks/CCVE-2025-2900.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2901",
+        "function_id": "upgrade-linkerd",
+        "remedy_type": "upgrade",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2901.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2902",
+        "function_id": "sync-opaque-annotations",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2902.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2903",
+        "function_id": "configure-external-opaque",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2903.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2904",
+        "function_id": "configure-skip-ports",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2904.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2905",
+        "function_id": "upgrade-linkerd",
+        "remedy_type": "upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2905.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2906",
+        "function_id": "verify-ha-scheduling",
+        "remedy_type": "cluster_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2906.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2907",
+        "function_id": "staged-ha-install",
+        "remedy_type": "install_workaround",
+        "track": "misconfiguration",
+        "category": "DEPEND",
+        "source_path": "risks/CCVE-2025-2907.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2908",
+        "function_id": "improve-ha-distribution",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2908.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2909",
+        "function_id": "upgrade-linkerd",
+        "remedy_type": "upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2909.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2910",
+        "function_id": "upgrade-linkerd",
+        "remedy_type": "upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2910.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2911",
+        "function_id": "fix-certificate-encoding",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2911.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2912",
+        "function_id": "upgrade-linkerd",
+        "remedy_type": "upgrade",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2912.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2913",
+        "function_id": "install-crds-first",
+        "remedy_type": "pre_upgrade",
+        "track": "misconfiguration",
+        "category": "APPLY",
+        "source_path": "risks/CCVE-2025-2913.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2914",
+        "function_id": "configure-ha-resilience",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2914.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2915",
+        "function_id": "upgrade-linkerd-cni",
+        "remedy_type": "upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2915.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2916",
+        "function_id": "configure-init-skip-ports",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2916.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2917",
+        "function_id": "upgrade-linkerd-cni",
+        "remedy_type": "upgrade",
+        "track": "misconfiguration",
+        "category": "DEPEND",
+        "source_path": "risks/CCVE-2025-2917.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2918",
+        "function_id": "delete-failed-pods",
+        "remedy_type": "restart",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2918.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2919",
+        "function_id": "add-container-ports",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2919.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2920",
+        "function_id": "configure-probe-exemption",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2920.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2921",
+        "function_id": "configure-policy-exemptions",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2921.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2922",
+        "function_id": "recreate-affected-pods",
+        "remedy_type": "restart",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2922.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2923",
+        "function_id": "adjust-timeout-retry-config",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2923.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2924",
+        "function_id": "configure-explicit-timeout",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2924.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2925",
+        "function_id": "configure-failure-accrual",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2925.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2926",
+        "function_id": "increase-destination-memory",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2926.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2927",
+        "function_id": "upgrade-linkerd",
+        "remedy_type": "upgrade",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2927.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2928",
+        "function_id": "configure-grpc-keepalive",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2928.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2929",
+        "function_id": "configure-http2-keepalive",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2929.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2930",
+        "function_id": "configure-long-timeout",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2930.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2931",
+        "function_id": "upgrade-linkerd",
+        "remedy_type": "upgrade",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2931.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2932",
+        "function_id": "delete-evicted-pods",
+        "remedy_type": "cleanup",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2932.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2933",
+        "function_id": "configure-external-prometheus",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2933.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2934",
+        "function_id": "configure-prometheus-url",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2934.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2935",
+        "function_id": "add-noop-init-container",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2935.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2936",
+        "function_id": "configure-init-order",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2936.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2937",
+        "function_id": "pre-create-namespace",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2937.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2938",
+        "function_id": "upgrade-crds-first",
+        "remedy_type": "upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2938.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2939",
+        "function_id": "configure-namespace-override",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2939.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2940",
+        "function_id": "configure-gateway-probe-policy",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-2940.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2992",
+        "function_id": "remove-finalizers",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "STATE",
+        "source_path": "risks/CCVE-2025-2992.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3450",
+        "function_id": "upgrade-vault-helm",
+        "remedy_type": "chart_upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3450.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3451",
+        "function_id": "upgrade-vault-helm",
+        "remedy_type": "chart_upgrade",
+        "track": "misconfiguration",
+        "category": "RENDER",
+        "source_path": "risks/CCVE-2025-3451.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3452",
+        "function_id": "enable-gke-metadata-server",
+        "remedy_type": "infrastructure_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3452.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3453",
+        "function_id": "deploy-dedicated-namespace",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3453.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3454",
+        "function_id": "add-node-permissions",
+        "remedy_type": "rbac_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3454.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3455",
+        "function_id": "upgrade-vault-image",
+        "remedy_type": "image_upgrade",
+        "track": "misconfiguration",
+        "category": "DEPEND",
+        "source_path": "risks/CCVE-2025-3455.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3456",
+        "function_id": "upgrade-kubernetes",
+        "remedy_type": "version_upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3456.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3457",
+        "function_id": "disable-anti-affinity",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3457.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3458",
+        "function_id": "configure-sealed-readiness",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3458.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3459",
+        "function_id": "upgrade-oauth2-proxy",
+        "remedy_type": "chart_upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3459.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3460",
+        "function_id": "fix-redis-connection-url",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3460.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3461",
+        "function_id": "add-offline-access-scope",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3461.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3462",
+        "function_id": "upgrade-helm",
+        "remedy_type": "tool_upgrade",
+        "track": "misconfiguration",
+        "category": "DEPEND",
+        "source_path": "risks/CCVE-2025-3462.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3463",
+        "function_id": "set-ingress-service-port",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3463.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3464",
+        "function_id": "upgrade-oauth2-proxy",
+        "remedy_type": "chart_upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3464.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3465",
+        "function_id": "upgrade-dex-chart",
+        "remedy_type": "chart_upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3465.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3466",
+        "function_id": "upgrade-authentik-chart",
+        "remedy_type": "chart_upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3466.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3467",
+        "function_id": "generate-secure-secrets",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3467.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3468",
+        "function_id": "create-separate-ingress",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3468.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3469",
+        "function_id": "upgrade-teleport-chart",
+        "remedy_type": "chart_upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3469.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3470",
+        "function_id": "upgrade-teleport-agent",
+        "remedy_type": "chart_upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3470.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3471",
+        "function_id": "use-spiffe-chart",
+        "remedy_type": "chart_change",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3471.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3472",
+        "function_id": "upgrade-openshift",
+        "remedy_type": "platform_upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3472.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3473",
+        "function_id": "upgrade-argocd",
+        "remedy_type": "tool_upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3473.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3474",
+        "function_id": "upgrade-vault-helm",
+        "remedy_type": "chart_upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3474.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3475",
+        "function_id": "fix-values-structure",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3475.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3476",
+        "function_id": "upgrade-vault-helm",
+        "remedy_type": "chart_upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3476.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3477",
+        "function_id": "upgrade-vault-helm",
+        "remedy_type": "chart_upgrade",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3477.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3478",
+        "function_id": "upgrade-vault-helm",
+        "remedy_type": "chart_upgrade",
+        "track": "misconfiguration",
+        "category": "RENDER",
+        "source_path": "risks/CCVE-2025-3478.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3479",
+        "function_id": "upgrade-vault-helm",
+        "remedy_type": "chart_upgrade",
+        "track": "misconfiguration",
+        "category": "RENDER",
+        "source_path": "risks/CCVE-2025-3479.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3480",
+        "function_id": "skip-broken-version",
+        "remedy_type": "version_skip",
+        "track": "misconfiguration",
+        "category": "RENDER",
+        "source_path": "risks/CCVE-2025-3480.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3481",
+        "function_id": "upgrade-vault-helm",
+        "remedy_type": "chart_upgrade",
+        "track": "misconfiguration",
+        "category": "DEPEND",
+        "source_path": "risks/CCVE-2025-3481.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3482",
+        "function_id": "fix-csi-image",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3482.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3483",
+        "function_id": "use-downward-api",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3483.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3484",
+        "function_id": "add-kong-annotations",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3484.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3514",
+        "function_id": "set-globalnetworkpolicy-tier",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3514.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3720",
+        "function_id": "enable-argocd-auto-sync",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3720.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3721",
+        "function_id": "set-argocd-target-revision-head",
+        "remedy_type": "config_fix",
+        "track": "misconfiguration",
+        "category": "CONFIG",
+        "source_path": "risks/CCVE-2025-3721.yaml"
+      }
+    ],
+    "function_to_risks": [
+      {
+        "function_id": "add-cascade-finalizer",
+        "risk_ids": [
+          "CCVE-2025-2599"
+        ],
+        "source_path": "functions/add-cascade-finalizer.yaml"
+      },
+      {
+        "function_id": "add-container-ports",
+        "risk_ids": [
+          "CCVE-2025-2919"
+        ],
+        "source_path": "functions/add-container-ports.yaml"
+      },
+      {
+        "function_id": "add-db-pod-anti-affinity",
+        "risk_ids": [
+          "CCVE-2025-0091"
+        ],
+        "source_path": "functions/add-db-pod-anti-affinity.yaml"
+      },
+      {
+        "function_id": "add-node-permissions",
+        "risk_ids": [
+          "CCVE-2025-3454"
+        ],
+        "source_path": "functions/add-node-permissions.yaml"
+      },
+      {
+        "function_id": "bring_cpus_online",
+        "risk_ids": [
+          "CCVE-2025-1802"
+        ],
+        "source_path": "functions/bring_cpus_online.yaml"
+      },
+      {
+        "function_id": "change_restart_policy",
+        "risk_ids": [
+          "CCVE-2025-1817"
+        ],
+        "source_path": "functions/change_restart_policy.yaml"
+      },
+      {
+        "function_id": "clear-pv-claimref",
+        "risk_ids": [
+          "CCVE-2025-0722",
+          "CCVE-2025-1482",
+          "CCVE-2025-1521"
+        ],
+        "source_path": "functions/clear-pv-claimref.yaml"
+      },
+      {
+        "function_id": "configure-skip-ports",
+        "risk_ids": [
+          "CCVE-2025-2896",
+          "CCVE-2025-2904"
+        ],
+        "source_path": "functions/configure-skip-ports.yaml"
+      },
+      {
+        "function_id": "configure_container_runtime",
+        "risk_ids": [
+          "CCVE-2025-1791"
+        ],
+        "source_path": "functions/configure_container_runtime.yaml"
+      },
+      {
+        "function_id": "configure_systemd_timeout",
+        "risk_ids": [
+          "CCVE-2025-1794"
+        ],
+        "source_path": "functions/configure_systemd_timeout.yaml"
+      },
+      {
+        "function_id": "crd-sync-options",
+        "risk_ids": [
+          "CCVE-2025-2555"
+        ],
+        "source_path": "functions/crd-sync-options.yaml"
+      },
+      {
+        "function_id": "delete-evicted-pods",
+        "risk_ids": [
+          "CCVE-2025-2932"
+        ],
+        "source_path": "functions/delete-evicted-pods.yaml"
+      },
+      {
+        "function_id": "delete-failed-pods",
+        "risk_ids": [
+          "CCVE-2025-2918"
+        ],
+        "source_path": "functions/delete-failed-pods.yaml"
+      },
+      {
+        "function_id": "delete_pod",
+        "risk_ids": [
+          "CCVE-2025-1805",
+          "CCVE-2025-1814"
+        ],
+        "source_path": "functions/delete_pod.yaml"
+      },
+      {
+        "function_id": "delete_recreate_pod",
+        "risk_ids": [
+          "CCVE-2025-1783"
+        ],
+        "source_path": "functions/delete_recreate_pod.yaml"
+      },
+      {
+        "function_id": "drain_before_reboot",
+        "risk_ids": [
+          "CCVE-2025-1775"
+        ],
+        "source_path": "functions/drain_before_reboot.yaml"
+      },
+      {
+        "function_id": "enable-argocd-auto-sync",
+        "risk_ids": [
+          "CCVE-2025-3720"
+        ],
+        "source_path": "functions/enable-argocd-auto-sync.yaml"
+      },
+      {
+        "function_id": "enable-argocd-prune",
+        "risk_ids": [
+          "CCVE-2025-0128"
+        ],
+        "source_path": "functions/enable-argocd-prune.yaml"
+      },
+      {
+        "function_id": "enable-gke-metadata-server",
+        "risk_ids": [
+          "CCVE-2025-3452"
+        ],
+        "source_path": "functions/enable-gke-metadata-server.yaml"
+      },
+      {
+        "function_id": "enable-linkerd-injection",
+        "risk_ids": [
+          "CCVE-2025-0075"
+        ],
+        "source_path": "functions/enable-linkerd-injection.yaml"
+      },
+      {
+        "function_id": "enable-server-side-apply",
+        "risk_ids": [
+          "CCVE-2025-0017"
+        ],
+        "source_path": "functions/enable-server-side-apply.yaml"
+      },
+      {
+        "function_id": "enable-server-side-diff",
+        "risk_ids": [
+          "CCVE-2025-2556"
+        ],
+        "source_path": "functions/enable-server-side-diff.yaml"
+      },
+      {
+        "function_id": "enable-vpa-auto-update",
+        "risk_ids": [
+          "CCVE-2025-0098"
+        ],
+        "source_path": "functions/enable-vpa-auto-update.yaml"
+      },
+      {
+        "function_id": "fix-externalsecret-refresh-interval",
+        "risk_ids": [
+          "CCVE-2025-0124"
+        ],
+        "source_path": "functions/fix-externalsecret-refresh-interval.yaml"
+      },
+      {
+        "function_id": "fix-interval-zero",
+        "risk_ids": [
+          "CCVE-2025-0665"
+        ],
+        "source_path": "functions/fix-interval-zero.yaml"
+      },
+      {
+        "function_id": "fix-keda-cooldown-period",
+        "risk_ids": [
+          "CCVE-2025-0097"
+        ],
+        "source_path": "functions/fix-keda-cooldown-period.yaml"
+      },
+      {
+        "function_id": "fix-namespace-whitespace",
+        "risk_ids": [
+          "CCVE-2025-0027"
+        ],
+        "source_path": "functions/fix-namespace-whitespace.yaml"
+      },
+      {
+        "function_id": "fix-pdb-blocking-drain",
+        "risk_ids": [
+          "CCVE-2025-0084"
+        ],
+        "source_path": "functions/fix-pdb-blocking-drain.yaml"
+      },
+      {
+        "function_id": "fix-redis-ha-replicas",
+        "risk_ids": [
+          "CCVE-2025-0105"
+        ],
+        "source_path": "functions/fix-redis-ha-replicas.yaml"
+      },
+      {
+        "function_id": "fix-suspended-source",
+        "risk_ids": [
+          "CCVE-2025-0666"
+        ],
+        "source_path": "functions/fix-suspended-source.yaml"
+      },
+      {
+        "function_id": "fix-thanos-sidecar-upload",
+        "risk_ids": [
+          "CCVE-2025-0043"
+        ],
+        "source_path": "functions/fix-thanos-sidecar-upload.yaml"
+      },
+      {
+        "function_id": "fix-valuesFrom-optional-missing",
+        "risk_ids": [
+          "CCVE-2025-0662"
+        ],
+        "source_path": "functions/fix-valuesFrom-optional-missing.yaml"
+      },
+      {
+        "function_id": "fix_config_reference",
+        "risk_ids": [
+          "CCVE-2025-1806"
+        ],
+        "source_path": "functions/fix_config_reference.yaml"
+      },
+      {
+        "function_id": "fix_image_reference",
+        "risk_ids": [
+          "CCVE-2025-1795",
+          "CCVE-2025-1798"
+        ],
+        "source_path": "functions/fix_image_reference.yaml"
+      },
+      {
+        "function_id": "fix_resource_unit",
+        "risk_ids": [
+          "CCVE-2025-1815"
+        ],
+        "source_path": "functions/fix_resource_unit.yaml"
+      },
+      {
+        "function_id": "force_status_update",
+        "risk_ids": [
+          "CCVE-2025-1811"
+        ],
+        "source_path": "functions/force_status_update.yaml"
+      },
+      {
+        "function_id": "ignore-servicemonitor-diff",
+        "risk_ids": [
+          "CCVE-2025-2552"
+        ],
+        "source_path": "functions/ignore-servicemonitor-diff.yaml"
+      },
+      {
+        "function_id": "implement_signal_handler",
+        "risk_ids": [
+          "CCVE-2025-1788"
+        ],
+        "source_path": "functions/implement_signal_handler.yaml"
+      },
+      {
+        "function_id": "increase-sync-timeout",
+        "risk_ids": [
+          "CCVE-2025-2559"
+        ],
+        "source_path": "functions/increase-sync-timeout.yaml"
+      },
+      {
+        "function_id": "increase_initial_delay",
+        "risk_ids": [
+          "CCVE-2025-1785",
+          "CCVE-2025-1787"
+        ],
+        "source_path": "functions/increase_initial_delay.yaml"
+      },
+      {
+        "function_id": "increase_memory_limit",
+        "risk_ids": [
+          "CCVE-2025-1784"
+        ],
+        "source_path": "functions/increase_memory_limit.yaml"
+      },
+      {
+        "function_id": "increase_timeout",
+        "risk_ids": [
+          "CCVE-2025-1771",
+          "CCVE-2025-1773",
+          "CCVE-2025-1774",
+          "CCVE-2025-1789",
+          "CCVE-2025-1813"
+        ],
+        "source_path": "functions/increase_timeout.yaml"
+      },
+      {
+        "function_id": "incremental_threshold_change",
+        "risk_ids": [
+          "CCVE-2025-1778"
+        ],
+        "source_path": "functions/incremental_threshold_change.yaml"
+      },
+      {
+        "function_id": "install-crds-first",
+        "risk_ids": [
+          "CCVE-2025-2913"
+        ],
+        "source_path": "functions/install-crds-first.yaml"
+      },
+      {
+        "function_id": "limit-sync-retries",
+        "risk_ids": [
+          "CCVE-2025-2588"
+        ],
+        "source_path": "functions/limit-sync-retries.yaml"
+      },
+      {
+        "function_id": "move_cleanup_to_command",
+        "risk_ids": [
+          "CCVE-2025-1790"
+        ],
+        "source_path": "functions/move_cleanup_to_command.yaml"
+      },
+      {
+        "function_id": "move_init_to_main",
+        "risk_ids": [
+          "CCVE-2025-1796"
+        ],
+        "source_path": "functions/move_init_to_main.yaml"
+      },
+      {
+        "function_id": "normalize-cpu-units",
+        "risk_ids": [
+          "CCVE-2025-2551"
+        ],
+        "source_path": "functions/normalize-cpu-units.yaml"
+      },
+      {
+        "function_id": "recreate-affected-pods",
+        "risk_ids": [
+          "CCVE-2025-2922"
+        ],
+        "source_path": "functions/recreate-affected-pods.yaml"
+      },
+      {
+        "function_id": "recreate_pod_different_node",
+        "risk_ids": [
+          "CCVE-2025-1797"
+        ],
+        "source_path": "functions/recreate_pod_different_node.yaml"
+      },
+      {
+        "function_id": "recreate_static_pod",
+        "risk_ids": [
+          "CCVE-2025-1818"
+        ],
+        "source_path": "functions/recreate_static_pod.yaml"
+      },
+      {
+        "function_id": "remove-destinationrule-workloadselector",
+        "risk_ids": [
+          "CCVE-2025-1930"
+        ],
+        "source_path": "functions/remove-destinationrule-workloadselector.yaml"
+      },
+      {
+        "function_id": "remove-finalizers",
+        "risk_ids": [
+          "CCVE-2025-0694",
+          "CCVE-2025-0728",
+          "CCVE-2025-1226",
+          "CCVE-2025-1227",
+          "CCVE-2025-1234",
+          "CCVE-2025-1826",
+          "CCVE-2025-1829",
+          "CCVE-2025-1831",
+          "CCVE-2025-1832",
+          "CCVE-2025-2106",
+          "CCVE-2025-2429",
+          "CCVE-2025-2449",
+          "CCVE-2025-2746",
+          "CCVE-2025-2992"
+        ],
+        "source_path": "functions/remove-finalizers.yaml"
+      },
+      {
+        "function_id": "reset-helm-retries",
+        "risk_ids": [
+          "CCVE-2025-0008"
+        ],
+        "source_path": "functions/reset-helm-retries.yaml"
+      },
+      {
+        "function_id": "restart-identity-first",
+        "risk_ids": [
+          "CCVE-2025-2897"
+        ],
+        "source_path": "functions/restart-identity-first.yaml"
+      },
+      {
+        "function_id": "restart_kubelet",
+        "risk_ids": [
+          "CCVE-2025-1799",
+          "CCVE-2025-1803",
+          "CCVE-2025-1807",
+          "CCVE-2025-1808",
+          "CCVE-2025-1809"
+        ],
+        "source_path": "functions/restart_kubelet.yaml"
+      },
+      {
+        "function_id": "scale-coredns-replicas",
+        "risk_ids": [
+          "CCVE-2025-0122"
+        ],
+        "source_path": "functions/scale-coredns-replicas.yaml"
+      },
+      {
+        "function_id": "set-flux-helmrelease-timeout",
+        "risk_ids": [
+          "CCVE-2025-0127"
+        ],
+        "source_path": "functions/set-flux-helmrelease-timeout.yaml"
+      },
+      {
+        "function_id": "set-globalnetworkpolicy-tier",
+        "risk_ids": [
+          "CCVE-2025-3514"
+        ],
+        "source_path": "functions/set-globalnetworkpolicy-tier.yaml"
+      },
+      {
+        "function_id": "set-rabbitmq-partition-handling",
+        "risk_ids": [
+          "CCVE-2025-0114"
+        ],
+        "source_path": "functions/set-rabbitmq-partition-handling.yaml"
+      },
+      {
+        "function_id": "set_field",
+        "risk_ids": [
+          "CCVE-2025-1776",
+          "CCVE-2025-1780",
+          "CCVE-2025-1792",
+          "CCVE-2025-1793",
+          "CCVE-2025-1800",
+          "CCVE-2025-1819",
+          "CCVE-2025-1820"
+        ],
+        "source_path": "functions/set_field.yaml"
+      },
+      {
+        "function_id": "set_resource_limits",
+        "risk_ids": [
+          "CCVE-2025-1779",
+          "CCVE-2025-1804"
+        ],
+        "source_path": "functions/set_resource_limits.yaml"
+      },
+      {
+        "function_id": "set_resource_requests",
+        "risk_ids": [
+          "CCVE-2025-1782"
+        ],
+        "source_path": "functions/set_resource_requests.yaml"
+      },
+      {
+        "function_id": "skip-broken-version",
+        "risk_ids": [
+          "CCVE-2025-3480"
+        ],
+        "source_path": "functions/skip-broken-version.yaml"
+      },
+      {
+        "function_id": "skip-dry-run-missing-resource",
+        "risk_ids": [
+          "CCVE-2025-0010"
+        ],
+        "source_path": "functions/skip-dry-run-missing-resource.yaml"
+      },
+      {
+        "function_id": "staged-ha-install",
+        "risk_ids": [
+          "CCVE-2025-2907"
+        ],
+        "source_path": "functions/staged-ha-install.yaml"
+      },
+      {
+        "function_id": "trigger-argo-sync",
+        "risk_ids": [
+          "CCVE-2025-0005"
+        ],
+        "source_path": "functions/trigger-argo-sync.yaml"
+      },
+      {
+        "function_id": "unsuspend-flux",
+        "risk_ids": [
+          "CCVE-2025-0009"
+        ],
+        "source_path": "functions/unsuspend-flux.yaml"
+      },
+      {
+        "function_id": "upgrade-argocd",
+        "risk_ids": [
+          "CCVE-2025-3473"
+        ],
+        "source_path": "functions/upgrade-argocd.yaml"
+      },
+      {
+        "function_id": "upgrade-authentik-chart",
+        "risk_ids": [
+          "CCVE-2025-3466"
+        ],
+        "source_path": "functions/upgrade-authentik-chart.yaml"
+      },
+      {
+        "function_id": "upgrade-crds-first",
+        "risk_ids": [
+          "CCVE-2025-2938"
+        ],
+        "source_path": "functions/upgrade-crds-first.yaml"
+      },
+      {
+        "function_id": "upgrade-dex-chart",
+        "risk_ids": [
+          "CCVE-2025-3465"
+        ],
+        "source_path": "functions/upgrade-dex-chart.yaml"
+      },
+      {
+        "function_id": "upgrade-helm",
+        "risk_ids": [
+          "CCVE-2025-3462"
+        ],
+        "source_path": "functions/upgrade-helm.yaml"
+      },
+      {
+        "function_id": "upgrade-kubernetes",
+        "risk_ids": [
+          "CCVE-2025-3456"
+        ],
+        "source_path": "functions/upgrade-kubernetes.yaml"
+      },
+      {
+        "function_id": "upgrade-linkerd",
+        "risk_ids": [
+          "CCVE-2025-2893",
+          "CCVE-2025-2900",
+          "CCVE-2025-2901",
+          "CCVE-2025-2905",
+          "CCVE-2025-2909",
+          "CCVE-2025-2910",
+          "CCVE-2025-2912",
+          "CCVE-2025-2927",
+          "CCVE-2025-2931"
+        ],
+        "source_path": "functions/upgrade-linkerd.yaml"
+      },
+      {
+        "function_id": "upgrade-linkerd-cni",
+        "risk_ids": [
+          "CCVE-2025-2915",
+          "CCVE-2025-2917"
+        ],
+        "source_path": "functions/upgrade-linkerd-cni.yaml"
+      },
+      {
+        "function_id": "upgrade-oauth2-proxy",
+        "risk_ids": [
+          "CCVE-2025-3459",
+          "CCVE-2025-3464"
+        ],
+        "source_path": "functions/upgrade-oauth2-proxy.yaml"
+      },
+      {
+        "function_id": "upgrade-openshift",
+        "risk_ids": [
+          "CCVE-2025-3472"
+        ],
+        "source_path": "functions/upgrade-openshift.yaml"
+      },
+      {
+        "function_id": "upgrade-teleport-agent",
+        "risk_ids": [
+          "CCVE-2025-3470"
+        ],
+        "source_path": "functions/upgrade-teleport-agent.yaml"
+      },
+      {
+        "function_id": "upgrade-teleport-chart",
+        "risk_ids": [
+          "CCVE-2025-3469"
+        ],
+        "source_path": "functions/upgrade-teleport-chart.yaml"
+      },
+      {
+        "function_id": "upgrade-vault-helm",
+        "risk_ids": [
+          "CCVE-2025-3450",
+          "CCVE-2025-3451",
+          "CCVE-2025-3474",
+          "CCVE-2025-3476",
+          "CCVE-2025-3477",
+          "CCVE-2025-3478",
+          "CCVE-2025-3479",
+          "CCVE-2025-3481"
+        ],
+        "source_path": "functions/upgrade-vault-helm.yaml"
+      },
+      {
+        "function_id": "upgrade-vault-image",
+        "risk_ids": [
+          "CCVE-2025-3455"
+        ],
+        "source_path": "functions/upgrade-vault-image.yaml"
+      },
+      {
+        "function_id": "upgrade_kernel",
+        "risk_ids": [
+          "CCVE-2025-1816"
+        ],
+        "source_path": "functions/upgrade_kernel.yaml"
+      },
+      {
+        "function_id": "upgrade_kubernetes",
+        "risk_ids": [
+          "CCVE-2025-1772",
+          "CCVE-2025-1777",
+          "CCVE-2025-1786",
+          "CCVE-2025-1810",
+          "CCVE-2025-1812"
+        ],
+        "source_path": "functions/upgrade_kubernetes.yaml"
+      },
+      {
+        "function_id": "use-spiffe-chart",
+        "risk_ids": [
+          "CCVE-2025-3471"
+        ],
+        "source_path": "functions/use-spiffe-chart.yaml"
+      },
+      {
+        "function_id": "use_init_process",
+        "risk_ids": [
+          "CCVE-2025-1781"
+        ],
+        "source_path": "functions/use_init_process.yaml"
+      },
+      {
+        "function_id": "verify-ha-scheduling",
+        "risk_ids": [
+          "CCVE-2025-2906"
+        ],
+        "source_path": "functions/verify-ha-scheduling.yaml"
+      }
+    ],
+    "missing_function_definitions": [
+      {
+        "risk_id": "CCVE-2025-1801",
+        "function_id": "delete_state_file",
+        "source_path": "risks/CCVE-2025-1801.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2553",
+        "function_id": "presync-namespace-wave",
+        "source_path": "risks/CCVE-2025-2553.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2554",
+        "function_id": "presync-job-timeout",
+        "source_path": "risks/CCVE-2025-2554.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2558",
+        "function_id": "ignore-clusterrole-diff",
+        "source_path": "risks/CCVE-2025-2558.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2561",
+        "function_id": "appset-gotemplate-strict",
+        "source_path": "risks/CCVE-2025-2561.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2563",
+        "function_id": "appset-values-string",
+        "source_path": "risks/CCVE-2025-2563.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2564",
+        "function_id": "shorten-appset-name",
+        "source_path": "risks/CCVE-2025-2564.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2565",
+        "function_id": "appset-remove-pathsexist",
+        "source_path": "risks/CCVE-2025-2565.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2566",
+        "function_id": "appset-progressive-sync",
+        "source_path": "risks/CCVE-2025-2566.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2567",
+        "function_id": "appset-remove-template-retry",
+        "source_path": "risks/CCVE-2025-2567.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2568",
+        "function_id": "appset-reorder-sources",
+        "source_path": "risks/CCVE-2025-2568.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2569",
+        "function_id": "appproject-add-sources",
+        "source_path": "risks/CCVE-2025-2569.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2570",
+        "function_id": "add-appset-controller",
+        "source_path": "risks/CCVE-2025-2570.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2571",
+        "function_id": "app-health-customization",
+        "source_path": "risks/CCVE-2025-2571.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2572",
+        "function_id": "app-health-with-conditions",
+        "source_path": "risks/CCVE-2025-2572.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2573",
+        "function_id": "httproute-health-check",
+        "source_path": "risks/CCVE-2025-2573.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2574",
+        "function_id": "enable-health-persist",
+        "source_path": "risks/CCVE-2025-2574.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2575",
+        "function_id": "enable-health-persist-missing",
+        "source_path": "risks/CCVE-2025-2575.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2576",
+        "function_id": "aoa-ignore-syncpolicy-diff",
+        "source_path": "risks/CCVE-2025-2576.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2577",
+        "function_id": "aoa-presync-dependency-check",
+        "source_path": "risks/CCVE-2025-2577.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2578",
+        "function_id": "aoa-omit-empty-syncpolicy",
+        "source_path": "risks/CCVE-2025-2578.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2579",
+        "function_id": "aoa-child-finalizer",
+        "source_path": "risks/CCVE-2025-2579.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2580",
+        "function_id": "aoa-omit-recurse-false",
+        "source_path": "risks/CCVE-2025-2580.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2581",
+        "function_id": "hook-wave-zero",
+        "source_path": "risks/CCVE-2025-2581.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2582",
+        "function_id": "postdelete-cleanup-hook",
+        "source_path": "risks/CCVE-2025-2582.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2583",
+        "function_id": "non-hook-early-wave",
+        "source_path": "risks/CCVE-2025-2583.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2584",
+        "function_id": "upgrade-sync-wave-adjust",
+        "source_path": "risks/CCVE-2025-2584.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2589",
+        "function_id": "retry-backoff-for-refresh",
+        "source_path": "risks/CCVE-2025-2589.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2591",
+        "function_id": "reduce-reconciliation-timeout",
+        "source_path": "risks/CCVE-2025-2591.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2592",
+        "function_id": "use-commit-sha",
+        "source_path": "risks/CCVE-2025-2592.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2594",
+        "function_id": "disable-server-side-apply",
+        "source_path": "risks/CCVE-2025-2594.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2595",
+        "function_id": "jq-ignore-differences",
+        "source_path": "risks/CCVE-2025-2595.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2596",
+        "function_id": "ignore-volumeclaimtemplate-diff",
+        "source_path": "risks/CCVE-2025-2596.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2597",
+        "function_id": "remove-ssa-with-createns",
+        "source_path": "risks/CCVE-2025-2597.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2600",
+        "function_id": "cascade-delete-all-apps",
+        "source_path": "risks/CCVE-2025-2600.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2891",
+        "function_id": "fix-linkerd-injection-annotation",
+        "source_path": "risks/CCVE-2025-2891.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2892",
+        "function_id": "fix-linkerd-deployment-annotation",
+        "source_path": "risks/CCVE-2025-2892.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2894",
+        "function_id": "resolve-annotation-precedence",
+        "source_path": "risks/CCVE-2025-2894.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2895",
+        "function_id": "enable-linkerd-cni",
+        "source_path": "risks/CCVE-2025-2895.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2898",
+        "function_id": "configure-dst-override",
+        "source_path": "risks/CCVE-2025-2898.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2899",
+        "function_id": "configure-graceful-shutdown",
+        "source_path": "risks/CCVE-2025-2899.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2902",
+        "function_id": "sync-opaque-annotations",
+        "source_path": "risks/CCVE-2025-2902.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2903",
+        "function_id": "configure-external-opaque",
+        "source_path": "risks/CCVE-2025-2903.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2908",
+        "function_id": "improve-ha-distribution",
+        "source_path": "risks/CCVE-2025-2908.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2911",
+        "function_id": "fix-certificate-encoding",
+        "source_path": "risks/CCVE-2025-2911.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2914",
+        "function_id": "configure-ha-resilience",
+        "source_path": "risks/CCVE-2025-2914.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2916",
+        "function_id": "configure-init-skip-ports",
+        "source_path": "risks/CCVE-2025-2916.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2920",
+        "function_id": "configure-probe-exemption",
+        "source_path": "risks/CCVE-2025-2920.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2921",
+        "function_id": "configure-policy-exemptions",
+        "source_path": "risks/CCVE-2025-2921.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2923",
+        "function_id": "adjust-timeout-retry-config",
+        "source_path": "risks/CCVE-2025-2923.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2924",
+        "function_id": "configure-explicit-timeout",
+        "source_path": "risks/CCVE-2025-2924.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2925",
+        "function_id": "configure-failure-accrual",
+        "source_path": "risks/CCVE-2025-2925.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2926",
+        "function_id": "increase-destination-memory",
+        "source_path": "risks/CCVE-2025-2926.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2928",
+        "function_id": "configure-grpc-keepalive",
+        "source_path": "risks/CCVE-2025-2928.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2929",
+        "function_id": "configure-http2-keepalive",
+        "source_path": "risks/CCVE-2025-2929.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2930",
+        "function_id": "configure-long-timeout",
+        "source_path": "risks/CCVE-2025-2930.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2933",
+        "function_id": "configure-external-prometheus",
+        "source_path": "risks/CCVE-2025-2933.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2934",
+        "function_id": "configure-prometheus-url",
+        "source_path": "risks/CCVE-2025-2934.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2935",
+        "function_id": "add-noop-init-container",
+        "source_path": "risks/CCVE-2025-2935.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2936",
+        "function_id": "configure-init-order",
+        "source_path": "risks/CCVE-2025-2936.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2937",
+        "function_id": "pre-create-namespace",
+        "source_path": "risks/CCVE-2025-2937.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2939",
+        "function_id": "configure-namespace-override",
+        "source_path": "risks/CCVE-2025-2939.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-2940",
+        "function_id": "configure-gateway-probe-policy",
+        "source_path": "risks/CCVE-2025-2940.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3453",
+        "function_id": "deploy-dedicated-namespace",
+        "source_path": "risks/CCVE-2025-3453.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3457",
+        "function_id": "disable-anti-affinity",
+        "source_path": "risks/CCVE-2025-3457.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3458",
+        "function_id": "configure-sealed-readiness",
+        "source_path": "risks/CCVE-2025-3458.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3460",
+        "function_id": "fix-redis-connection-url",
+        "source_path": "risks/CCVE-2025-3460.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3461",
+        "function_id": "add-offline-access-scope",
+        "source_path": "risks/CCVE-2025-3461.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3463",
+        "function_id": "set-ingress-service-port",
+        "source_path": "risks/CCVE-2025-3463.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3467",
+        "function_id": "generate-secure-secrets",
+        "source_path": "risks/CCVE-2025-3467.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3468",
+        "function_id": "create-separate-ingress",
+        "source_path": "risks/CCVE-2025-3468.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3475",
+        "function_id": "fix-values-structure",
+        "source_path": "risks/CCVE-2025-3475.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3482",
+        "function_id": "fix-csi-image",
+        "source_path": "risks/CCVE-2025-3482.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3483",
+        "function_id": "use-downward-api",
+        "source_path": "risks/CCVE-2025-3483.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3484",
+        "function_id": "add-kong-annotations",
+        "source_path": "risks/CCVE-2025-3484.yaml"
+      },
+      {
+        "risk_id": "CCVE-2025-3721",
+        "function_id": "set-argocd-target-revision-head",
+        "source_path": "risks/CCVE-2025-3721.yaml"
+      }
+    ],
+    "function_declares_missing_risks": [],
+    "function_ccve_link_mismatches": [],
+    "unreferenced_functions": []
+  }
+}

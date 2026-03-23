@@ -9,10 +9,19 @@ The first bundle release set should include:
 - `bundle-manifest-v1.json`
 - `risk-catalog-v1.json`
 - `risk-function-links-v1.json`
+- `mappings/kyverno/kyverno-ccve-mappings-v1.json`
+- `mappings/trivy/trivy-ccve-mappings-v1.json`
 - `cross-tool-mapping-v1.json`
 
 Optional alongside the same release set:
 - `helm-pattern-database-v1.json`
+- `control-taxonomy-summary-v1.json`
+- `control-framework-bundle-v1.json`
+
+Current state:
+- the repo now generates `dist/bundle-manifest-v1.json`
+- the manifest now advertises the imported-evidence mapping files alongside the
+  runtime catalog/link artifacts and the promoted-taxonomy artifacts
 
 ## Cache Layout
 

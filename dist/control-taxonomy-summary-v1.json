@@ -1,0 +1,279 @@
+{
+  "consumer_counts": {
+    "ai": 4,
+    "cli": 4,
+    "confighub": 4,
+    "cub_scout": 4
+  },
+  "control_count": 4,
+  "control_ids": [
+    "CTRL-GITOPS-0001",
+    "CTRL-GITOPS-0002",
+    "CTRL-WORKLOAD-0001",
+    "CTRL-WORKLOAD-0002"
+  ],
+  "controls": [
+    {
+      "detection_modes": [
+        "native_rule",
+        "derived_comparison"
+      ],
+      "family": "gitops-operators",
+      "id": "CTRL-GITOPS-0001",
+      "maturity": "seeded",
+      "path": "controls/gitops/argocd-application-reconciliation-health.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0004",
+        "CCVE-2025-0005",
+        "CCVE-2025-0006",
+        "CCVE-2025-0156",
+        "CCVE-2025-0169"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "diagnose_only",
+      "remediation_strategy": "diagnose_then_fix",
+      "resource_kinds": [
+        "Application",
+        "Service"
+      ],
+      "severity": "critical",
+      "slug": "argocd-application-reconciliation-health",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "live_state",
+        "repo_vs_live"
+      ],
+      "tags": [
+        "argocd",
+        "gitops",
+        "reconciliation",
+        "live-state",
+        "operator"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule",
+        "derived_comparison"
+      ],
+      "family": "gitops-operators",
+      "id": "CTRL-GITOPS-0002",
+      "maturity": "seeded",
+      "path": "controls/gitops/flux-reconciliation-reliability.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0007",
+        "CCVE-2025-0013",
+        "CCVE-2025-0166",
+        "CCVE-2025-5001",
+        "CCVE-2025-5002"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "diagnose_then_fix",
+      "resource_kinds": [
+        "HelmRelease",
+        "Kustomization"
+      ],
+      "severity": "high",
+      "slug": "flux-reconciliation-reliability",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state",
+        "repo_vs_live"
+      ],
+      "tags": [
+        "flux",
+        "gitops",
+        "helmrelease",
+        "kustomization",
+        "reconciliation"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule"
+      ],
+      "family": "workload-hardening",
+      "id": "CTRL-WORKLOAD-0001",
+      "maturity": "seeded",
+      "path": "controls/workload/workload-security-context-baseline.yaml",
+      "pattern_ids": [
+        "CCVE-2025-3727",
+        "CCVE-2025-3729",
+        "CCVE-2025-3733",
+        "CCVE-2025-3734",
+        "CCVE-2025-3735",
+        "CCVE-2025-3736"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "safe_auto",
+      "remediation_strategy": "config_fix",
+      "resource_kinds": [
+        "Deployment"
+      ],
+      "severity": "critical",
+      "slug": "workload-security-context-baseline",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static"
+      ],
+      "tags": [
+        "workload",
+        "pod-security",
+        "security-context",
+        "container-hardening",
+        "baseline"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule"
+      ],
+      "family": "workload-hardening",
+      "id": "CTRL-WORKLOAD-0002",
+      "maturity": "seeded",
+      "path": "controls/workload/workload-resource-governance-baseline.yaml",
+      "pattern_ids": [
+        "CCVE-2025-3728"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "safe_auto",
+      "remediation_strategy": "config_fix",
+      "resource_kinds": [
+        "Deployment"
+      ],
+      "severity": "warning",
+      "slug": "workload-resource-governance-baseline",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static"
+      ],
+      "tags": [
+        "workload",
+        "resources",
+        "limits",
+        "scheduling",
+        "baseline"
+      ]
+    }
+  ],
+  "detection_mode_counts": {
+    "derived_comparison": 2,
+    "native_rule": 4
+  },
+  "family_counts": {
+    "gitops-operators": 2,
+    "workload-hardening": 2
+  },
+  "framework_count": 2,
+  "framework_ids": [
+    "FRM-GITOPS-0001",
+    "FRM-WORKLOAD-0001"
+  ],
+  "frameworks": [
+    {
+      "control_ids": [
+        "CTRL-GITOPS-0001",
+        "CTRL-GITOPS-0002"
+      ],
+      "family": "gitops-operators",
+      "id": "FRM-GITOPS-0001",
+      "maturity": "seeded",
+      "outcomes": [
+        "Surface the highest-signal GitOps health failures in one operator-facing bundle.",
+        "Encourage intent-vs-live comparison instead of treating every failure as the same class of problem.",
+        "Provide a stable framework surface before the full pattern corpus is promoted into controls."
+      ],
+      "path": "frameworks/gitops-operators.yaml",
+      "platforms": [
+        "argocd",
+        "flux",
+        "kubernetes"
+      ],
+      "slug": "gitops-operators",
+      "tags": [
+        "gitops",
+        "operators",
+        "reconciliation",
+        "intent-vs-live"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTRL-WORKLOAD-0001",
+        "CTRL-WORKLOAD-0002"
+      ],
+      "family": "workload-hardening",
+      "id": "FRM-WORKLOAD-0001",
+      "maturity": "seeded",
+      "outcomes": [
+        "Make the first secure-by-default workload checks visible as one stable framework view.",
+        "Separate operator-facing baseline checks from the broader exploratory pattern corpus.",
+        "Provide a clean starting point for future framework bundles like network exposure and identity hardening."
+      ],
+      "path": "frameworks/workload-hardening.yaml",
+      "platforms": [
+        "kubernetes",
+        "helm"
+      ],
+      "slug": "workload-hardening",
+      "tags": [
+        "workload",
+        "hardening",
+        "baseline",
+        "ci"
+      ]
+    }
+  ],
+  "generated_at": "2026-03-22T22:43:39+00:00",
+  "pattern_coverage_count": 17,
+  "pattern_ids": [
+    "CCVE-2025-0004",
+    "CCVE-2025-0005",
+    "CCVE-2025-0006",
+    "CCVE-2025-0007",
+    "CCVE-2025-0013",
+    "CCVE-2025-0156",
+    "CCVE-2025-0166",
+    "CCVE-2025-0169",
+    "CCVE-2025-3727",
+    "CCVE-2025-3728",
+    "CCVE-2025-3729",
+    "CCVE-2025-3733",
+    "CCVE-2025-3734",
+    "CCVE-2025-3735",
+    "CCVE-2025-3736",
+    "CCVE-2025-5001",
+    "CCVE-2025-5002"
+  ],
+  "pattern_validation_mode": "sibling_confighub_scan",
+  "repo_root": "/Users/alexis/Public/github-repos/confighub-patterns",
+  "schema_version": "control-taxonomy-summary-v1",
+  "source_pattern_repo": "/Users/alexis/Public/github-repos/confighub-scan",
+  "surface_counts": {
+    "live_state": 2,
+    "repo_vs_live": 2,
+    "static": 3
+  }
+}

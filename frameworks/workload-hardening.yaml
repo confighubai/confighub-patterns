@@ -1,0 +1,26 @@
+schema_version: framework-definition-v1
+id: FRM-WORKLOAD-0001
+slug: workload-hardening
+name: Workload hardening
+family: workload-hardening
+summary: Curated controls for secure-by-default workload configuration and resource governance.
+description: >
+  This framework packages the first promoted workload hardening controls for
+  container isolation and resource governance. It is intended as a baseline
+  workflow surface for CI and operator scorecards.
+maturity: seeded
+control_ids:
+  - CTRL-WORKLOAD-0001
+  - CTRL-WORKLOAD-0002
+platforms:
+  - kubernetes
+  - helm
+tags:
+  - workload
+  - hardening
+  - baseline
+  - ci
+outcomes:
+  - Make the first secure-by-default workload checks visible as one stable framework view.
+  - Separate operator-facing baseline checks from the broader exploratory pattern corpus.
+  - Provide a clean starting point for future framework bundles like network exposure and identity hardening.

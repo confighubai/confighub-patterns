@@ -1,0 +1,35 @@
+schema_version: control-definition-v1
+id: CTRL-GITOPS-0999
+slug: sample-gitops-control
+name: Sample GitOps control
+family: gitops-operators
+summary: Sample control for validator testing.
+description: Sample control for validator testing.
+maturity: seeded
+severity: high
+supported_surfaces:
+  - static
+supported_consumers:
+  - cli
+detection_modes:
+  - native_rule
+resource_kinds:
+  - Application
+pattern_ids:
+  - CCVE-2025-0004
+  - CCVE-2025-0005
+tags:
+  - gitops
+  - sample
+remediation:
+  strategy: diagnose_then_fix
+  safety_class: diagnose_only
+  guidance:
+    - Sample remediation guidance.
+evidence_expectations:
+  intent_signals:
+    - spec.source
+  live_signals:
+    - status.sync.status
+  corroborating_sources:
+    - argocd app get

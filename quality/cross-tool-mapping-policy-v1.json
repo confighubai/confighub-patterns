@@ -1,0 +1,27 @@
+{
+  "schema_version": "cross-tool-mapping-policy-v1",
+  "tool_mappings": [
+    {
+      "tool": "kyverno",
+      "path": "mappings/kyverno/kyverno-ccve-mappings-v1.json",
+      "schema_version": "kyverno-ccve-mapping-v1",
+      "external_id_fields": [
+        "policy",
+        "rule"
+      ]
+    },
+    {
+      "tool": "trivy",
+      "path": "mappings/trivy/trivy-ccve-mappings-v1.json",
+      "schema_version": "trivy-ccve-mapping-v1",
+      "external_id_fields": [
+        "trivy_id"
+      ]
+    }
+  ],
+  "min_mappings_by_tool": {
+    "kyverno": 2,
+    "trivy": 1
+  },
+  "max_missing_catalog_refs": 0
+}

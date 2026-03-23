@@ -1,0 +1,20 @@
+{
+  "schema_version": "unresolved-external-findings-policy-v1",
+  "thresholds": {
+    "critical_days": 1,
+    "high_days": 7,
+    "medium_days": 14,
+    "low_days": 30
+  },
+  "rollout_limits": {
+    "max_critical": 0,
+    "max_warning": 8,
+    "max_total": 50,
+    "max_oldest_age_days": 60
+  },
+  "active_status_values": [
+    "open",
+    "unresolved",
+    "active"
+  ]
+}

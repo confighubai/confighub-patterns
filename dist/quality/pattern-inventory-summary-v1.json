@@ -1,0 +1,127 @@
+{
+  "schema_version": "pattern-inventory-summary-v1",
+  "generated_at": "2026-03-22T10:58:44Z",
+  "inputs": {
+    "catalog": "dist/risk-catalog-v1.json",
+    "rule_inventory": "dist/quality/rule-inventory-v1.json",
+    "risk_function_links": "dist/risk-function-links-v1.json",
+    "overrides": "risks/quality/pattern-inventory-overrides-v1.json",
+    "cross_tool_mapping": "dist/quality/cross-tool-mapping-v1.json"
+  },
+  "summary": {
+    "total_patterns": 3513,
+    "implemented_patterns": 278,
+    "partially_implemented_patterns": 204,
+    "unimplemented_patterns": 3031,
+    "implementation_mode_counts": {
+      "catalog_only": 3031,
+      "external_mapping": 2,
+      "native_rule": 278,
+      "remedy_only": 204
+    },
+    "pattern_surface_class_counts": {
+      "imported_evidence": 3,
+      "live_state": 98,
+      "static": 180
+    },
+    "supported_consumer_counts": {
+      "ci": 278,
+      "confighub": 260,
+      "cub-scan": 278,
+      "cub-scout": 181
+    },
+    "confighub_function_fit_counts": {
+      "needs_projection": 3495,
+      "not_suitable": 18
+    },
+    "confighub_function_fit_source_counts": {
+      "aggregated_native_rules": 278,
+      "catalog_only_default": 3031,
+      "remedy_only_default": 204
+    },
+    "patterns_with_native_rules": 278,
+    "patterns_with_external_mappings": 2,
+    "patterns_with_remedy_refs": 218,
+    "patterns_with_worker_function_refs": 0,
+    "patterns_with_overrides": 8,
+    "patterns_with_pod_live_state_dependency": 17,
+    "pod_live_state_pattern_ids": [
+      "CCVE-2025-0049",
+      "CCVE-2025-0060",
+      "CCVE-2025-0079",
+      "CCVE-2025-0080",
+      "CCVE-2025-0081",
+      "CCVE-2025-0082",
+      "CCVE-2025-0152",
+      "CCVE-2025-0190",
+      "CCVE-2025-0201",
+      "CCVE-2025-0281",
+      "CCVE-2025-0732",
+      "CCVE-2025-0966",
+      "CCVE-2025-2509",
+      "CCVE-2025-2799",
+      "CCVE-2025-2836",
+      "CCVE-2025-2866",
+      "CCVE-2025-3222"
+    ],
+    "remedy_only_pattern_ids_sample": [
+      "CCVE-2025-0008",
+      "CCVE-2025-0009",
+      "CCVE-2025-0010",
+      "CCVE-2025-0017",
+      "CCVE-2025-0075",
+      "CCVE-2025-0084",
+      "CCVE-2025-0091",
+      "CCVE-2025-0097",
+      "CCVE-2025-0105",
+      "CCVE-2025-0122",
+      "CCVE-2025-0124",
+      "CCVE-2025-0127",
+      "CCVE-2025-0662",
+      "CCVE-2025-0665",
+      "CCVE-2025-0666",
+      "CCVE-2025-0728",
+      "CCVE-2025-1226",
+      "CCVE-2025-1227",
+      "CCVE-2025-1234",
+      "CCVE-2025-1482"
+    ],
+    "patterns_with_external_mapping_ids": [
+      "CCVE-2025-3727",
+      "CCVE-2025-4075"
+    ],
+    "external_mapping_only_pattern_ids": [],
+    "catalog_only_needs_projection_patterns": 3031,
+    "catalog_only_needs_projection_pattern_ids_sample": [
+      "CCVE-2025-0003",
+      "CCVE-2025-0011",
+      "CCVE-2025-0014",
+      "CCVE-2025-0015",
+      "CCVE-2025-0016",
+      "CCVE-2025-0018",
+      "CCVE-2025-0019",
+      "CCVE-2025-0020",
+      "CCVE-2025-0023",
+      "CCVE-2025-0025",
+      "CCVE-2025-0026",
+      "CCVE-2025-0032",
+      "CCVE-2025-0033",
+      "CCVE-2025-0034",
+      "CCVE-2025-0038",
+      "CCVE-2025-0039",
+      "CCVE-2025-0041",
+      "CCVE-2025-0042",
+      "CCVE-2025-0044",
+      "CCVE-2025-0045"
+    ],
+    "rule_surface_class_counts": {
+      "imported_evidence": 1,
+      "live_state": 98,
+      "static": 186
+    },
+    "rule_confighub_function_fit_counts": {
+      "needs_projection": 267,
+      "not_suitable": 18
+    }
+  }
+}

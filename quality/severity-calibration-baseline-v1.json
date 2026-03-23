@@ -1,0 +1,129 @@
+{
+  "schema_version": "severity-calibration-baseline-v1",
+  "distribution": {
+    "by_bucket": {
+      "critical": 1813,
+      "warning": 1503,
+      "info": 190
+    },
+    "by_track": {
+      "misconfiguration": {
+        "critical": 1813,
+        "warning": 1501,
+        "info": 176
+      },
+      "advisory": {
+        "critical": 0,
+        "warning": 2,
+        "info": 14
+      }
+    },
+    "by_category": {
+      "SOURCE": {
+        "critical": 9,
+        "warning": 6,
+        "info": 0
+      },
+      "RENDER": {
+        "critical": 10,
+        "warning": 3,
+        "info": 0
+      },
+      "APPLY": {
+        "critical": 72,
+        "warning": 47,
+        "info": 3
+      },
+      "DRIFT": {
+        "critical": 7,
+        "warning": 19,
+        "info": 0
+      },
+      "STATE": {
+        "critical": 792,
+        "warning": 395,
+        "info": 35
+      },
+      "CONFIG": {
+        "critical": 824,
+        "warning": 970,
+        "info": 138
+      },
+      "DEPEND": {
+        "critical": 59,
+        "warning": 16,
+        "info": 0
+      },
+      "ORPHAN": {
+        "critical": 16,
+        "warning": 24,
+        "info": 4
+      },
+      "SILENT": {
+        "critical": 2,
+        "warning": 2,
+        "info": 0
+      },
+      "TIMING": {
+        "critical": 0,
+        "warning": 3,
+        "info": 0
+      },
+      "UNRESOLVED": {
+        "critical": 3,
+        "warning": 0,
+        "info": 0
+      },
+      "OVER_PROVISION": {
+        "critical": 0,
+        "warning": 0,
+        "info": 10
+      },
+      "SECURITY": {
+        "critical": 15,
+        "warning": 8,
+        "info": 0
+      },
+      "NETWORKING": {
+        "critical": 0,
+        "warning": 2,
+        "info": 0
+      },
+      "AUTOSCALING": {
+        "critical": 0,
+        "warning": 2,
+        "info": 0
+      },
+      "AVAILABILITY": {
+        "critical": 0,
+        "warning": 1,
+        "info": 0
+      },
+      "CONFIGURATION": {
+        "critical": 0,
+        "warning": 1,
+        "info": 0
+      },
+      "FLUX": {
+        "critical": 1,
+        "warning": 1,
+        "info": 0
+      },
+      "CERT-MANAGER": {
+        "critical": 2,
+        "warning": 1,
+        "info": 0
+      },
+      "WORKLOAD": {
+        "critical": 0,
+        "warning": 1,
+        "info": 0
+      },
+      "SECRETS": {
+        "critical": 1,
+        "warning": 1,
+        "info": 0
+      }
+    }
+  }
+}

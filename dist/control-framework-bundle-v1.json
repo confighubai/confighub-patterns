@@ -1,0 +1,617 @@
+{
+  "control_count": 4,
+  "control_ids": [
+    "CTRL-GITOPS-0001",
+    "CTRL-GITOPS-0002",
+    "CTRL-WORKLOAD-0001",
+    "CTRL-WORKLOAD-0002"
+  ],
+  "controls": [
+    {
+      "description": "This control groups the core Argo CD Application health and sync failures that operators actually triage during broken rollouts. It is meant to support both live-state detection and higher-level intent-vs-live reasoning.\n",
+      "detection_modes": [
+        "native_rule",
+        "derived_comparison"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "argocd app get",
+          "argocd-application-controller logs",
+          "kubectl describe application"
+        ],
+        "intent_signals": [],
+        "live_signals": [
+          "status.sync.status",
+          "status.health.status",
+          "status.operationState.phase"
+        ]
+      },
+      "family": "gitops-operators",
+      "id": "CTRL-GITOPS-0001",
+      "maturity": "seeded",
+      "name": "Argo CD application reconciliation health",
+      "pattern_refs": [
+        {
+          "category": "APPLY",
+          "confidence": "high",
+          "id": "CCVE-2025-0004",
+          "name": "Application sync failed",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "DRIFT",
+          "confidence": "high",
+          "id": "CCVE-2025-0005",
+          "name": "Application out of sync",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-0006",
+          "name": "Application health degraded",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "medium",
+          "id": "CCVE-2025-0156",
+          "name": "Traefik LoadBalancer Service stuck progressing in ArgoCD",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-0169",
+          "name": "ArgoCD Application stuck syncing with managed namespace PreSync",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Inspect sync status, health status, and operation state together before applying a fix.",
+          "Correlate controller logs with resource-level errors so we distinguish bad intent from broken rollout execution.",
+          "Prefer intent-vs-live comparison when a repo scan is also available."
+        ],
+        "safety_class": "diagnose_only",
+        "strategy": "diagnose_then_fix"
+      },
+      "resource_kinds": [
+        "Application",
+        "Service"
+      ],
+      "severity": "critical",
+      "slug": "argocd-application-reconciliation-health",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/gitops/argocd-application-reconciliation-health.yaml",
+      "summary": "Detect Application states that indicate failed sync, drift, or degraded reconciliation health.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "live_state",
+        "repo_vs_live"
+      ],
+      "tags": [
+        "argocd",
+        "gitops",
+        "reconciliation",
+        "live-state",
+        "operator"
+      ]
+    },
+    {
+      "description": "This control covers the high-signal Flux failure modes that show up as broken HelmRelease or Kustomization reconciliation, especially where static config and live-state evidence need to be read together.\n",
+      "detection_modes": [
+        "native_rule",
+        "derived_comparison"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "flux get all",
+          "source-controller logs",
+          "helm-controller logs"
+        ],
+        "intent_signals": [
+          "spec.timeout",
+          "spec.dependsOn"
+        ],
+        "live_signals": [
+          "status.conditions",
+          "Ready Unknown or Failed reconciliation state"
+        ]
+      },
+      "family": "gitops-operators",
+      "id": "CTRL-GITOPS-0002",
+      "maturity": "seeded",
+      "name": "Flux reconciliation reliability",
+      "pattern_refs": [
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-0007",
+          "name": "Helm release failed",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-0013",
+          "name": "Helm release pending upgrade",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-0166",
+          "name": "Flux HelmRelease stuck in Ready Unknown indefinitely",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "FLUX",
+          "confidence": "unknown",
+          "id": "CCVE-2025-5001",
+          "name": "CCVE-2025-5001",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [
+            "scanner-detected"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "FLUX",
+          "confidence": "unknown",
+          "id": "CCVE-2025-5002",
+          "name": "CCVE-2025-5002",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "scanner-detected"
+          ],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Fix dependency cycles and timeout configuration in intent before retrying reconciliation.",
+          "Correlate live Ready or progressing state with the desired config to separate rollout lag from bad configuration.",
+          "Use live cluster evidence when investigating stuck or repeatedly failing releases."
+        ],
+        "safety_class": "review_required",
+        "strategy": "diagnose_then_fix"
+      },
+      "resource_kinds": [
+        "HelmRelease",
+        "Kustomization"
+      ],
+      "severity": "high",
+      "slug": "flux-reconciliation-reliability",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/gitops/flux-reconciliation-reliability.yaml",
+      "summary": "Detect release, source, and dependency conditions that cause Flux reconciliation to stall or fail.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state",
+        "repo_vs_live"
+      ],
+      "tags": [
+        "flux",
+        "gitops",
+        "helmrelease",
+        "kustomization",
+        "reconciliation"
+      ]
+    },
+    {
+      "description": "This control packages the first high-signal workload hardening checks that should be visible to operators as one baseline: privilege, host namespace access, root execution, privilege escalation, immutable filesystem posture, and capability dropping.\n",
+      "detection_modes": [
+        "native_rule"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "rendered manifests",
+          "deployment yaml"
+        ],
+        "intent_signals": [
+          "spec.template.spec.containers[].securityContext",
+          "spec.template.spec.hostPID",
+          "spec.template.spec.hostIPC",
+          "spec.template.spec.hostNetwork"
+        ],
+        "live_signals": []
+      },
+      "family": "workload-hardening",
+      "id": "CTRL-WORKLOAD-0001",
+      "maturity": "seeded",
+      "name": "Workload security context baseline",
+      "pattern_refs": [
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-3727",
+          "name": "Deployment container runs in privileged mode",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "deployment",
+            "privileged",
+            "security-context",
+            "static-scan",
+            "pre-deploy"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-3729",
+          "name": "Deployment uses host namespaces",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [
+            "deployment",
+            "host-namespaces",
+            "static-scan",
+            "pre-deploy"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "SECURITY",
+          "confidence": "high",
+          "id": "CCVE-2025-3733",
+          "name": "Container does not set runAsNonRoot",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "deployment",
+            "security",
+            "pod-security-standards",
+            "static-scan",
+            "pre-deploy"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "SECURITY",
+          "confidence": "high",
+          "id": "CCVE-2025-3734",
+          "name": "Container does not disable allowPrivilegeEscalation",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "deployment",
+            "security",
+            "pod-security-standards",
+            "static-scan",
+            "pre-deploy"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "SECURITY",
+          "confidence": "high",
+          "id": "CCVE-2025-3735",
+          "name": "Container does not enforce readOnlyRootFilesystem",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [
+            "deployment",
+            "security",
+            "filesystem",
+            "static-scan",
+            "pre-deploy"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "SECURITY",
+          "confidence": "high",
+          "id": "CCVE-2025-3736",
+          "name": "Container does not drop ALL capabilities",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [
+            "deployment",
+            "security",
+            "capabilities",
+            "pod-security-standards",
+            "static-scan",
+            "pre-deploy"
+          ],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Remove privileged and host-namespace access unless there is an explicit, reviewed platform need.",
+          "Set non-root execution, disable allowPrivilegeEscalation, enforce readOnlyRootFilesystem, and drop ALL capabilities by default.",
+          "Treat exceptions as narrow waivers, not baseline config."
+        ],
+        "safety_class": "safe_auto",
+        "strategy": "config_fix"
+      },
+      "resource_kinds": [
+        "Deployment"
+      ],
+      "severity": "critical",
+      "slug": "workload-security-context-baseline",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/workload/workload-security-context-baseline.yaml",
+      "summary": "Detect dangerous workload security-context defaults that materially weaken container isolation.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static"
+      ],
+      "tags": [
+        "workload",
+        "pod-security",
+        "security-context",
+        "container-hardening",
+        "baseline"
+      ]
+    },
+    {
+      "description": "This control groups the minimum resource-governance baseline that should be visible in operator scorecards and CI gates. It starts with resource limits because that signal is deterministic and widely actionable.\n",
+      "detection_modes": [
+        "native_rule"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "rendered manifests",
+          "deployment yaml"
+        ],
+        "intent_signals": [
+          "spec.template.spec.containers[].resources"
+        ],
+        "live_signals": []
+      },
+      "family": "workload-hardening",
+      "id": "CTRL-WORKLOAD-0002",
+      "maturity": "seeded",
+      "name": "Workload resource governance baseline",
+      "pattern_refs": [
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-3728",
+          "name": "Deployment containers omit resource limits",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [
+            "deployment",
+            "resource-limits",
+            "static-scan",
+            "pre-deploy"
+          ],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Set CPU and memory limits for every container and pair them with requests.",
+          "Consider namespace-level defaults where teams repeatedly omit limits.",
+          "Treat missing limits as a reliability problem, not only a policy problem."
+        ],
+        "safety_class": "safe_auto",
+        "strategy": "config_fix"
+      },
+      "resource_kinds": [
+        "Deployment"
+      ],
+      "severity": "warning",
+      "slug": "workload-resource-governance-baseline",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/workload/workload-resource-governance-baseline.yaml",
+      "summary": "Detect missing resource limits that lead to noisy-neighbor behavior and unstable scheduling.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static"
+      ],
+      "tags": [
+        "workload",
+        "resources",
+        "limits",
+        "scheduling",
+        "baseline"
+      ]
+    }
+  ],
+  "framework_count": 2,
+  "framework_ids": [
+    "FRM-GITOPS-0001",
+    "FRM-WORKLOAD-0001"
+  ],
+  "frameworks": [
+    {
+      "control_ids": [
+        "CTRL-GITOPS-0001",
+        "CTRL-GITOPS-0002"
+      ],
+      "controls": [
+        {
+          "family": "gitops-operators",
+          "id": "CTRL-GITOPS-0001",
+          "name": "Argo CD application reconciliation health",
+          "severity": "critical",
+          "slug": "argocd-application-reconciliation-health"
+        },
+        {
+          "family": "gitops-operators",
+          "id": "CTRL-GITOPS-0002",
+          "name": "Flux reconciliation reliability",
+          "severity": "high",
+          "slug": "flux-reconciliation-reliability"
+        }
+      ],
+      "description": "This framework groups the first operator-facing controls for Argo CD and Flux. It is aimed at teams who need to distinguish desired-state defects from rollout and reconciliation failures.\n",
+      "family": "gitops-operators",
+      "id": "FRM-GITOPS-0001",
+      "maturity": "seeded",
+      "name": "GitOps operators",
+      "outcomes": [
+        "Surface the highest-signal GitOps health failures in one operator-facing bundle.",
+        "Encourage intent-vs-live comparison instead of treating every failure as the same class of problem.",
+        "Provide a stable framework surface before the full pattern corpus is promoted into controls."
+      ],
+      "platforms": [
+        "argocd",
+        "flux",
+        "kubernetes"
+      ],
+      "slug": "gitops-operators",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/frameworks/gitops-operators.yaml",
+      "summary": "Curated controls for diagnosing intent, reconciliation, and live-state problems in GitOps-managed workloads.",
+      "tags": [
+        "gitops",
+        "operators",
+        "reconciliation",
+        "intent-vs-live"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTRL-WORKLOAD-0001",
+        "CTRL-WORKLOAD-0002"
+      ],
+      "controls": [
+        {
+          "family": "workload-hardening",
+          "id": "CTRL-WORKLOAD-0001",
+          "name": "Workload security context baseline",
+          "severity": "critical",
+          "slug": "workload-security-context-baseline"
+        },
+        {
+          "family": "workload-hardening",
+          "id": "CTRL-WORKLOAD-0002",
+          "name": "Workload resource governance baseline",
+          "severity": "warning",
+          "slug": "workload-resource-governance-baseline"
+        }
+      ],
+      "description": "This framework packages the first promoted workload hardening controls for container isolation and resource governance. It is intended as a baseline workflow surface for CI and operator scorecards.\n",
+      "family": "workload-hardening",
+      "id": "FRM-WORKLOAD-0001",
+      "maturity": "seeded",
+      "name": "Workload hardening",
+      "outcomes": [
+        "Make the first secure-by-default workload checks visible as one stable framework view.",
+        "Separate operator-facing baseline checks from the broader exploratory pattern corpus.",
+        "Provide a clean starting point for future framework bundles like network exposure and identity hardening."
+      ],
+      "platforms": [
+        "kubernetes",
+        "helm"
+      ],
+      "slug": "workload-hardening",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/frameworks/workload-hardening.yaml",
+      "summary": "Curated controls for secure-by-default workload configuration and resource governance.",
+      "tags": [
+        "workload",
+        "hardening",
+        "baseline",
+        "ci"
+      ]
+    }
+  ],
+  "generated_at": "2026-03-22T22:49:59+00:00",
+  "pattern_coverage_count": 17,
+  "pattern_ids": [
+    "CCVE-2025-0004",
+    "CCVE-2025-0005",
+    "CCVE-2025-0006",
+    "CCVE-2025-0007",
+    "CCVE-2025-0013",
+    "CCVE-2025-0156",
+    "CCVE-2025-0166",
+    "CCVE-2025-0169",
+    "CCVE-2025-3727",
+    "CCVE-2025-3728",
+    "CCVE-2025-3729",
+    "CCVE-2025-3733",
+    "CCVE-2025-3734",
+    "CCVE-2025-3735",
+    "CCVE-2025-3736",
+    "CCVE-2025-5001",
+    "CCVE-2025-5002"
+  ],
+  "repo_root": "/Users/alexis/Public/github-repos/confighub-patterns",
+  "schema_version": "control-framework-bundle-v1",
+  "source_catalog": "/Users/alexis/Public/github-repos/confighub-patterns/dist/risk-catalog-v1.json",
+  "source_summary": "/Users/alexis/Public/github-repos/confighub-patterns/dist/control-taxonomy-summary-v1.json"
+}

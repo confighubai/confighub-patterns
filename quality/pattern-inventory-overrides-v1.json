@@ -1,0 +1,37 @@
+{
+  "schema_version": "pattern-inventory-overrides-v1",
+  "patterns": {
+    "CCVE-2025-2909": {
+      "primary_kind": "Deployment",
+      "status_note": "manual override: Linkerd install output failure is a static manifest/render-time backlog candidate despite missing detection.kinds in source YAML"
+    },
+    "CCVE-2025-2910": {
+      "primary_kind": "Deployment",
+      "status_note": "manual override: Linkerd multicluster render failure is a static manifest/spec backlog candidate despite missing detection.kinds in source YAML"
+    },
+    "CCVE-2025-2984": {
+      "primary_kind": "HelmChart",
+      "status_note": "manual override: Gatekeeper Helm render failure is a static chart/template backlog candidate despite missing detection.kinds in source YAML"
+    },
+    "CCVE-2025-2986": {
+      "primary_kind": "HelmChart",
+      "status_note": "manual override: Gatekeeper Helm indentation failure is a static chart/render backlog candidate despite missing detection.kinds in source YAML"
+    },
+    "CCVE-2025-3266": {
+      "primary_kind": "HelmChart",
+      "status_note": "manual override: Jaeger Helm dependency compatibility failure is a static chart/dependency backlog candidate despite missing detection.kinds in source YAML"
+    },
+    "CCVE-2025-3478": {
+      "primary_kind": "HelmChart",
+      "status_note": "manual override: Helm template parse failure is a static chart/render backlog candidate despite missing detection.kinds in source YAML"
+    },
+    "CCVE-2025-3479": {
+      "primary_kind": "HelmChart",
+      "status_note": "manual override: Helm values schema failure is a static chart/render backlog candidate despite missing detection.kinds in source YAML"
+    },
+    "CCVE-2025-3480": {
+      "primary_kind": "HelmChart",
+      "status_note": "manual override: Helm YAML parse failure is a static chart/render backlog candidate despite missing detection.kinds in source YAML"
+    }
+  }
+}

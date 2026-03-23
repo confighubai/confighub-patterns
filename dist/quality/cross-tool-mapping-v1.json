@@ -1,0 +1,56 @@
+{
+  "schema_version": "cross-tool-mapping-v1",
+  "policy_schema_version": "cross-tool-mapping-policy-v1",
+  "catalog_schema_version": "risk-catalog-v1",
+  "summary": {
+    "tools": 2,
+    "total_mappings": 3,
+    "mapped_ccve_ids": 2,
+    "missing_catalog_refs": 0,
+    "policy_failures": 0,
+    "errors": 0
+  },
+  "tools": {
+    "kyverno": {
+      "path": "mappings/kyverno/kyverno-ccve-mappings-v1.json",
+      "mappings": 2,
+      "unique_ccve_ids": 2,
+      "missing_catalog_refs": 0
+    },
+    "trivy": {
+      "path": "mappings/trivy/trivy-ccve-mappings-v1.json",
+      "mappings": 1,
+      "unique_ccve_ids": 1,
+      "missing_catalog_refs": 0
+    }
+  },
+  "mappings": [
+    {
+      "tool": "kyverno",
+      "external_id": "disallow-privileged|no-privileged-containers",
+      "ccve_id": "CCVE-2025-3727",
+      "category": "CONFIG",
+      "track": "misconfiguration",
+      "source_file": "mappings/kyverno/kyverno-ccve-mappings-v1.json"
+    },
+    {
+      "tool": "kyverno",
+      "external_id": "restrict-clusterrole-nodesproxy|clusterrole-nodesproxy",
+      "ccve_id": "CCVE-2025-4075",
+      "category": "SECURITY",
+      "track": "misconfiguration",
+      "source_file": "mappings/kyverno/kyverno-ccve-mappings-v1.json"
+    },
+    {
+      "tool": "trivy",
+      "external_id": "AVD-KSV-0017",
+      "ccve_id": "CCVE-2025-3727",
+      "category": "CONFIG",
+      "track": "misconfiguration",
+      "source_file": "mappings/trivy/trivy-ccve-mappings-v1.json"
+    }
+  ],
+  "missing_catalog_refs": [],
+  "policy_failure_messages": [],
+  "error_messages": []
+}

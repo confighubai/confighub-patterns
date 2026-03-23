@@ -1,0 +1,19 @@
+{
+  "schema_version": "control-taxonomy-summary-v1",
+  "controls": [
+    {
+      "id": "CTRL-GITOPS-0999",
+      "path": "controls/sample-control.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0004",
+        "CCVE-2025-0005"
+      ]
+    }
+  ],
+  "frameworks": [
+    {
+      "id": "FRM-GITOPS-0999",
+      "path": "frameworks/sample-framework.yaml"
+    }
+  ]
+}
