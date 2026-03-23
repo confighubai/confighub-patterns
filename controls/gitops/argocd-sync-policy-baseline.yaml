@@ -1,0 +1,59 @@
+schema_version: control-definition-v1
+id: CTRL-GITOPS-0003
+slug: argocd-sync-policy-baseline
+name: Argo CD sync policy baseline
+family: gitops-operators
+summary: Promote the Argo CD sync-policy defaults that keep desired state and live state converged.
+description: >
+  This control focuses on the high-value Argo CD configuration choices that
+  determine whether drift is corrected or silently allowed to accumulate. It is
+  intended to answer "what does good look like?" for Application sync policy,
+  prune behavior, and self-heal posture before teams debug broken syncs in
+  production.
+maturity: seeded
+severity: high
+supported_surfaces:
+  - static
+  - live_state
+  - repo_vs_live
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - sdk
+  - ai
+detection_modes:
+  - native_rule
+  - derived_comparison
+resource_kinds:
+  - Application
+pattern_ids:
+  - CCVE-2025-0128
+  - CCVE-2025-2599
+  - CCVE-2025-3720
+tags:
+  - argocd
+  - gitops
+  - sync-policy
+  - prune
+  - self-heal
+  - baseline
+remediation:
+  strategy: config_fix
+  safety_class: review_required
+  guidance:
+    - Prefer automated sync with explicit prune posture for applications expected to converge continuously.
+    - Enable self-heal deliberately when the platform expects Argo CD to correct manual drift.
+    - Verify prune expectations against live orphan behavior before changing sync policy defaults on shared applications.
+evidence_expectations:
+  intent_signals:
+    - spec.syncPolicy.automated
+    - spec.syncPolicy.automated.prune
+    - spec.syncPolicy.automated.selfHeal
+  live_signals:
+    - status.sync.status
+    - orphaned or undeleted resources after Git removal
+  corroborating_sources:
+    - argocd app get
+    - argocd app diff
+    - kubectl get application -o yaml

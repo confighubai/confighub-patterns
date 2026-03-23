@@ -1,14 +1,18 @@
 {
   "consumer_counts": {
-    "ai": 4,
-    "cli": 4,
-    "confighub": 4,
-    "cub_scout": 4
+    "ai": 7,
+    "cli": 7,
+    "confighub": 7,
+    "cub_scout": 7,
+    "sdk": 3
   },
-  "control_count": 4,
+  "control_count": 7,
   "control_ids": [
     "CTRL-GITOPS-0001",
     "CTRL-GITOPS-0002",
+    "CTRL-GITOPS-0003",
+    "CTRL-GITOPS-0004",
+    "CTRL-GITOPS-0005",
     "CTRL-WORKLOAD-0001",
     "CTRL-WORKLOAD-0002"
   ],
@@ -102,6 +106,141 @@
     },
     {
       "detection_modes": [
+        "native_rule",
+        "derived_comparison"
+      ],
+      "family": "gitops-operators",
+      "id": "CTRL-GITOPS-0003",
+      "maturity": "seeded",
+      "path": "controls/gitops/argocd-sync-policy-baseline.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0128",
+        "CCVE-2025-2599",
+        "CCVE-2025-3720"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "config_fix",
+      "resource_kinds": [
+        "Application"
+      ],
+      "severity": "high",
+      "slug": "argocd-sync-policy-baseline",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state",
+        "repo_vs_live"
+      ],
+      "tags": [
+        "argocd",
+        "gitops",
+        "sync-policy",
+        "prune",
+        "self-heal",
+        "baseline"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule"
+      ],
+      "family": "gitops-operators",
+      "id": "CTRL-GITOPS-0004",
+      "maturity": "seeded",
+      "path": "controls/gitops/applicationset-generator-safety.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0129",
+        "CCVE-2025-2563",
+        "CCVE-2025-2565",
+        "CCVE-2025-2567",
+        "CCVE-2025-3724"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "manual_review",
+      "resource_kinds": [
+        "ApplicationSet"
+      ],
+      "severity": "high",
+      "slug": "applicationset-generator-safety",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "argocd",
+        "applicationset",
+        "generator",
+        "templating",
+        "rollout-safety"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule",
+        "derived_comparison"
+      ],
+      "family": "gitops-operators",
+      "id": "CTRL-GITOPS-0005",
+      "maturity": "seeded",
+      "path": "controls/gitops/flux-intent-and-reconcile-baseline.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0127",
+        "CCVE-2025-0168",
+        "CCVE-2025-0665",
+        "CCVE-2025-0666",
+        "CCVE-2025-0667",
+        "CCVE-2025-0672",
+        "CCVE-2025-2603"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "config_fix",
+      "resource_kinds": [
+        "GitRepository",
+        "HelmRelease",
+        "Kustomization"
+      ],
+      "severity": "high",
+      "slug": "flux-intent-and-reconcile-baseline",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state",
+        "repo_vs_live"
+      ],
+      "tags": [
+        "flux",
+        "helmrelease",
+        "kustomization",
+        "gitrepository",
+        "prune",
+        "baseline",
+        "reconciliation"
+      ]
+    },
+    {
+      "detection_modes": [
         "native_rule"
       ],
       "family": "workload-hardening",
@@ -179,11 +318,11 @@
     }
   ],
   "detection_mode_counts": {
-    "derived_comparison": 2,
-    "native_rule": 4
+    "derived_comparison": 4,
+    "native_rule": 7
   },
   "family_counts": {
-    "gitops-operators": 2,
+    "gitops-operators": 5,
     "workload-hardening": 2
   },
   "framework_count": 2,
@@ -195,7 +334,10 @@
     {
       "control_ids": [
         "CTRL-GITOPS-0001",
-        "CTRL-GITOPS-0002"
+        "CTRL-GITOPS-0002",
+        "CTRL-GITOPS-0003",
+        "CTRL-GITOPS-0004",
+        "CTRL-GITOPS-0005"
       ],
       "family": "gitops-operators",
       "id": "FRM-GITOPS-0001",
@@ -203,6 +345,8 @@
       "outcomes": [
         "Surface the highest-signal GitOps health failures in one operator-facing bundle.",
         "Encourage intent-vs-live comparison instead of treating every failure as the same class of problem.",
+        "Make healthy Argo CD and Flux configuration defaults visible as promoted controls, not just scattered pattern IDs.",
+        "Keep multi-application generator and reconcile-path safety in the same framework as live health failures.",
         "Provide a stable framework surface before the full pattern corpus is promoted into controls."
       ],
       "path": "frameworks/gitops-operators.yaml",
@@ -246,17 +390,32 @@
       ]
     }
   ],
-  "generated_at": "2026-03-22T22:43:39+00:00",
-  "pattern_coverage_count": 17,
+  "generated_at": "2026-03-23T12:58:03+00:00",
+  "pattern_coverage_count": 32,
   "pattern_ids": [
     "CCVE-2025-0004",
     "CCVE-2025-0005",
     "CCVE-2025-0006",
     "CCVE-2025-0007",
     "CCVE-2025-0013",
+    "CCVE-2025-0127",
+    "CCVE-2025-0128",
+    "CCVE-2025-0129",
     "CCVE-2025-0156",
     "CCVE-2025-0166",
+    "CCVE-2025-0168",
     "CCVE-2025-0169",
+    "CCVE-2025-0665",
+    "CCVE-2025-0666",
+    "CCVE-2025-0667",
+    "CCVE-2025-0672",
+    "CCVE-2025-2563",
+    "CCVE-2025-2565",
+    "CCVE-2025-2567",
+    "CCVE-2025-2599",
+    "CCVE-2025-2603",
+    "CCVE-2025-3720",
+    "CCVE-2025-3724",
     "CCVE-2025-3727",
     "CCVE-2025-3728",
     "CCVE-2025-3729",
@@ -272,8 +431,8 @@
   "schema_version": "control-taxonomy-summary-v1",
   "source_pattern_repo": "/Users/alexis/Public/github-repos/confighub-scan",
   "surface_counts": {
-    "live_state": 2,
-    "repo_vs_live": 2,
-    "static": 3
+    "live_state": 5,
+    "repo_vs_live": 4,
+    "static": 6
   }
 }

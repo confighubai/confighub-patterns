@@ -1,0 +1,69 @@
+schema_version: control-definition-v1
+id: CTRL-GITOPS-0005
+slug: flux-intent-and-reconcile-baseline
+name: Flux intent and reconcile baseline
+family: gitops-operators
+summary: Define the key Flux config defaults that prevent reconcile stalls, stale source usage, and drift after Git changes.
+description: >
+  This control groups the static and live-state signals that make Flux
+  reconciliations reliable in practice: timeouts, dependency graphs, source
+  freshness, interval configuration, and prune behavior. It is the "good Flux
+  config" baseline that should inform both repo review and live-cluster triage.
+maturity: seeded
+severity: high
+supported_surfaces:
+  - static
+  - live_state
+  - repo_vs_live
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - sdk
+  - ai
+detection_modes:
+  - native_rule
+  - derived_comparison
+resource_kinds:
+  - GitRepository
+  - HelmRelease
+  - Kustomization
+pattern_ids:
+  - CCVE-2025-0127
+  - CCVE-2025-0168
+  - CCVE-2025-0665
+  - CCVE-2025-0666
+  - CCVE-2025-0667
+  - CCVE-2025-0672
+  - CCVE-2025-2603
+tags:
+  - flux
+  - helmrelease
+  - kustomization
+  - gitrepository
+  - prune
+  - baseline
+  - reconciliation
+remediation:
+  strategy: config_fix
+  safety_class: review_required
+  guidance:
+    - Set timeout and interval values deliberately so Flux continues reconciling and fails fast enough to debug.
+    - Keep dependency graphs acyclic and verify source references do not point at suspended or stale inputs.
+    - Treat prune-related changes as potentially destructive and confirm expected live deletions before rollout.
+evidence_expectations:
+  intent_signals:
+    - spec.interval
+    - spec.timeout
+    - spec.dependsOn
+    - spec.prune
+    - spec.sourceRef
+  live_signals:
+    - status.conditions
+    - Ready Unknown or stalled reconciliation
+    - stale source revision or unexpected retained resources
+  corroborating_sources:
+    - flux get all
+    - source-controller logs
+    - kustomize-controller logs
+    - helm-controller logs
