@@ -30,6 +30,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--helm-pattern-db", default="dist/helm-pattern-database-v1.json", help="Path to Helm pattern database artifact")
     parser.add_argument("--control-taxonomy-summary", default="dist/control-taxonomy-summary-v1.json", help="Path to control taxonomy summary artifact")
     parser.add_argument("--control-framework-bundle", default="dist/control-framework-bundle-v1.json", help="Path to control/framework bundle artifact")
+    parser.add_argument("--framework-coverage-report", default="dist/framework-coverage-report-v1.json", help="Path to framework coverage report artifact")
     parser.add_argument("--output", default="dist/bundle-manifest-v1.json", help="Output path")
     parser.add_argument("--check", action="store_true", help="Check mode: fail if output differs on disk")
     return parser.parse_args()
@@ -103,6 +104,7 @@ def build_manifest(args: argparse.Namespace) -> dict[str, Any]:
         ("helm-pattern-database", Path(args.helm_pattern_db), False),
         ("control-taxonomy-summary", Path(args.control_taxonomy_summary), False),
         ("control-framework-bundle", Path(args.control_framework_bundle), False),
+        ("framework-coverage-report", Path(args.framework_coverage_report), False),
     ]
 
     files: list[dict[str, Any]] = []

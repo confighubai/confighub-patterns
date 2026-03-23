@@ -17,6 +17,7 @@ Optional alongside the same release set:
 - `helm-pattern-database-v1.json`
 - `control-taxonomy-summary-v1.json`
 - `control-framework-bundle-v1.json`
+- `framework-coverage-report-v1.json`
 
 Current state:
 - the repo now generates `dist/bundle-manifest-v1.json`

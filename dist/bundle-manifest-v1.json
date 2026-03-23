@@ -1,6 +1,6 @@
 {
   "schema_version": "bundle-manifest-v1",
-  "published_at": "2026-03-23T14:03:51Z",
+  "published_at": "2026-03-23T14:23:28Z",
   "bundle_version": "dev",
   "source_repo": "confighubai/confighub-patterns",
   "files": [
@@ -66,6 +66,14 @@
       "schema_version": "control-framework-bundle-v1",
       "sha256": "701bdf60c210cbb7a63bd557f59ee4667173fe158822944cb563c6049865dda7",
       "size_bytes": 98779,
+      "required": false
+    },
+    {
+      "name": "framework-coverage-report",
+      "path": "dist/framework-coverage-report-v1.json",
+      "schema_version": "framework-coverage-report-v1",
+      "sha256": "631104014e17faa6dc0a96b6a4c195a0a147750d990cce860297c42035663ca9",
+      "size_bytes": 11929,
       "required": false
     }
   ]
