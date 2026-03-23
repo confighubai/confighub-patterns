@@ -42,6 +42,7 @@
           "admission behavior diverging from expected pod-security posture"
         ]
       },
+      "example_refs": [],
       "family": "cluster-hardening",
       "id": "CTRL-CLUSTER-0001",
       "maturity": "seeded",
@@ -167,6 +168,7 @@
           "node or control-plane disruption after rotation"
         ]
       },
+      "example_refs": [],
       "family": "cluster-hardening",
       "id": "CTRL-CLUSTER-0002",
       "maturity": "seeded",
@@ -329,6 +331,7 @@
           "reconciliation or garbage collection blocked by webhook failures"
         ]
       },
+      "example_refs": [],
       "family": "cluster-hardening",
       "id": "CTRL-CLUSTER-0003",
       "maturity": "seeded",
@@ -498,6 +501,7 @@
           "cluster policy state diverging from intended migration target"
         ]
       },
+      "example_refs": [],
       "family": "cluster-hardening",
       "id": "CTRL-CLUSTER-0004",
       "maturity": "seeded",
@@ -605,6 +609,13 @@
           "status.operationState.phase"
         ]
       },
+      "example_refs": [
+        {
+          "path": "examples/gitops-good-baselines/argocd-application-good.yaml",
+          "purpose": "Healthy single-application Argo baseline for intent-vs-live comparison and operator explainers.",
+          "repo": "confighub-scan"
+        }
+      ],
       "family": "gitops-operators",
       "id": "CTRL-GITOPS-0001",
       "maturity": "seeded",
@@ -727,6 +738,18 @@
           "Ready Unknown or Failed reconciliation state"
         ]
       },
+      "example_refs": [
+        {
+          "path": "examples/gitops-good-baselines/flux-gitrepository-kustomization-good.yaml",
+          "purpose": "Healthy source and kustomization baseline used to contrast stalled or cyclic reconciliation cases.",
+          "repo": "confighub-scan"
+        },
+        {
+          "path": "examples/gitops-good-baselines/flux-helmrelease-good.yaml",
+          "purpose": "Healthy HelmRelease baseline used to explain timeout and Ready-state failures without secret or chart drift noise.",
+          "repo": "confighub-scan"
+        }
+      ],
       "family": "gitops-operators",
       "id": "CTRL-GITOPS-0002",
       "maturity": "seeded",
@@ -855,6 +878,13 @@
           "orphaned or undeleted resources after Git removal"
         ]
       },
+      "example_refs": [
+        {
+          "path": "examples/gitops-good-baselines/argocd-application-good.yaml",
+          "purpose": "Recommended Argo Application sync-policy baseline with explicit prune, self-heal, and bounded retry.",
+          "repo": "confighub-scan"
+        }
+      ],
       "family": "gitops-operators",
       "id": "CTRL-GITOPS-0003",
       "maturity": "seeded",
@@ -955,6 +985,13 @@
           "generated Applications diverging from intended template output"
         ]
       },
+      "example_refs": [
+        {
+          "path": "examples/gitops-good-baselines/argocd-applicationset-good.yaml",
+          "purpose": "Focused list-generator baseline with bounded rollout scope and explicit sync posture.",
+          "repo": "confighub-scan"
+        }
+      ],
       "family": "gitops-operators",
       "id": "CTRL-GITOPS-0004",
       "maturity": "seeded",
@@ -1082,6 +1119,18 @@
           "stale source revision or unexpected retained resources"
         ]
       },
+      "example_refs": [
+        {
+          "path": "examples/gitops-good-baselines/flux-gitrepository-kustomization-good.yaml",
+          "purpose": "Baseline GitRepository and Kustomization pair with explicit source freshness, timeout, retry, wait, and prune posture.",
+          "repo": "confighub-scan"
+        },
+        {
+          "path": "examples/gitops-good-baselines/flux-helmrelease-good.yaml",
+          "purpose": "Baseline HelmRelease with explicit timing, remediation retries, and values wiring.",
+          "repo": "confighub-scan"
+        }
+      ],
       "family": "gitops-operators",
       "id": "CTRL-GITOPS-0005",
       "maturity": "seeded",
@@ -1234,6 +1283,7 @@
           "readiness probe failures caused by policy"
         ]
       },
+      "example_refs": [],
       "family": "network-exposure",
       "id": "CTRL-NET-0001",
       "maturity": "seeded",
@@ -1357,6 +1407,7 @@
           "fake or temporary certificates served"
         ]
       },
+      "example_refs": [],
       "family": "network-exposure",
       "id": "CTRL-NET-0002",
       "maturity": "seeded",
@@ -1553,6 +1604,7 @@
           "unexpected config generation or route behavior"
         ]
       },
+      "example_refs": [],
       "family": "network-exposure",
       "id": "CTRL-NET-0003",
       "maturity": "seeded",
@@ -1698,6 +1750,7 @@
           "bound subjects with high-risk permissions in active cluster RBAC objects"
         ]
       },
+      "example_refs": [],
       "family": "rbac-and-identity",
       "id": "CTRL-RBAC-0001",
       "maturity": "seeded",
@@ -1887,6 +1940,7 @@
           "running workloads with unnecessary service account tokens mounted"
         ]
       },
+      "example_refs": [],
       "family": "rbac-and-identity",
       "id": "CTRL-RBAC-0002",
       "maturity": "seeded",
@@ -2050,6 +2104,7 @@
           "target Secret missing or stale after external change"
         ]
       },
+      "example_refs": [],
       "family": "secrets-and-credentials",
       "id": "CTRL-SECRETS-0001",
       "maturity": "seeded",
@@ -2235,6 +2290,7 @@
           "cleartext credentials visible in generated config or logs"
         ]
       },
+      "example_refs": [],
       "family": "secrets-and-credentials",
       "id": "CTRL-SECRETS-0002",
       "maturity": "seeded",
@@ -2385,6 +2441,7 @@
         ],
         "live_signals": []
       },
+      "example_refs": [],
       "family": "workload-hardening",
       "id": "CTRL-WORKLOAD-0001",
       "maturity": "seeded",
@@ -2547,6 +2604,7 @@
         ],
         "live_signals": []
       },
+      "example_refs": [],
       "family": "workload-hardening",
       "id": "CTRL-WORKLOAD-0002",
       "maturity": "seeded",
@@ -3060,7 +3118,7 @@
       ]
     }
   ],
-  "generated_at": "2026-03-23T14:37:35+00:00",
+  "generated_at": "2026-03-23T15:09:26+00:00",
   "pattern_coverage_count": 103,
   "pattern_ids": [
     "CCVE-2025-0004",

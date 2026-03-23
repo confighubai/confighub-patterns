@@ -1,6 +1,6 @@
 {
   "schema_version": "bundle-manifest-v1",
-  "published_at": "2026-03-23T14:38:25Z",
+  "published_at": "2026-03-23T15:09:52Z",
   "bundle_version": "dev",
   "source_repo": "confighubai/confighub-patterns",
   "files": [
@@ -64,8 +64,8 @@
       "name": "control-framework-bundle",
       "path": "dist/control-framework-bundle-v1.json",
       "schema_version": "control-framework-bundle-v1",
-      "sha256": "904182f10bf4a8e1d114f7fadad7447b29fa7cf8884bc5c9026e98ee030a60e7",
-      "size_bytes": 103194,
+      "sha256": "7d0707d1b34703ce24944c017f6144731c9421b9f89e90e32d871e41158a229b",
+      "size_bytes": 105545,
       "required": false
     },
     {
