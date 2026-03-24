@@ -883,6 +883,21 @@
           "path": "examples/gitops-good-baselines/argocd-application-good.yaml",
           "purpose": "Recommended Argo Application sync-policy baseline with explicit prune, self-heal, and bounded retry.",
           "repo": "confighub-scan"
+        },
+        {
+          "path": "examples/gitops-bad-baselines/argocd-application-bad.yaml",
+          "purpose": "Owned negative contrast example where automated sync is enabled but prune is not true.",
+          "repo": "confighub-scan"
+        },
+        {
+          "path": "examples/gitops-bad-baselines/argocd-application-selfheal-disabled-bad.yaml",
+          "purpose": "Owned negative contrast example where automated sync is enabled but selfHeal is disabled.",
+          "repo": "confighub-scan"
+        },
+        {
+          "path": "examples/gitops-prune-gaps/snapshot/live-state.yaml",
+          "purpose": "Paired live snapshot showing Argo-owned resources that remain after an Application disappears from Git intent.",
+          "repo": "confighub-scan"
         }
       ],
       "family": "gitops-operators",
@@ -989,6 +1004,11 @@
         {
           "path": "examples/gitops-good-baselines/argocd-applicationset-good.yaml",
           "purpose": "Focused list-generator baseline with bounded rollout scope and explicit sync posture.",
+          "repo": "confighub-scan"
+        },
+        {
+          "path": "examples/gitops-bad-baselines/argocd-applicationset-bad.yaml",
+          "purpose": "Owned negative contrast example where a list generator is combined with helm.valuesObject in the template source.",
           "repo": "confighub-scan"
         }
       ],
@@ -1128,6 +1148,41 @@
         {
           "path": "examples/gitops-good-baselines/flux-helmrelease-good.yaml",
           "purpose": "Baseline HelmRelease with explicit timing, remediation retries, and values wiring.",
+          "repo": "confighub-scan"
+        },
+        {
+          "path": "examples/gitops-bad-baselines/flux-gitrepository-kustomization-bad.yaml",
+          "purpose": "Owned negative contrast example showing broken source authentication and a Kustomization build failure.",
+          "repo": "confighub-scan"
+        },
+        {
+          "path": "examples/gitops-bad-baselines/flux-gitrepository-kustomization-suspended-source-bad.yaml",
+          "purpose": "Owned negative contrast example showing a Kustomization pointed at a suspended GitRepository.",
+          "repo": "confighub-scan"
+        },
+        {
+          "path": "examples/gitops-bad-baselines/flux-helmrelease-circular-dependency-bad.yaml",
+          "purpose": "Owned negative contrast example showing two HelmRelease resources in a circular dependsOn chain.",
+          "repo": "confighub-scan"
+        },
+        {
+          "path": "examples/gitops-bad-baselines/flux-helmrelease-bad.yaml",
+          "purpose": "Owned negative contrast example where HelmRelease is missing spec.timeout.",
+          "repo": "confighub-scan"
+        },
+        {
+          "path": "examples/gitops-bad-baselines/flux-helmrelease-interval-zero-bad.yaml",
+          "purpose": "Owned negative contrast example where HelmRelease disables continuous reconciliation with spec.interval: 0s.",
+          "repo": "confighub-scan"
+        },
+        {
+          "path": "examples/gitops-bad-baselines/flux-helmrelease-short-timeout-bad.yaml",
+          "purpose": "Owned negative contrast example where HelmRelease timeout is shorter than one minute.",
+          "repo": "confighub-scan"
+        },
+        {
+          "path": "examples/gitops-prune-gaps/snapshot/live-state.yaml",
+          "purpose": "Paired live snapshot showing Flux-owned resources that remain after a Kustomization disappears from Git intent.",
           "repo": "confighub-scan"
         }
       ],
@@ -3118,7 +3173,7 @@
       ]
     }
   ],
-  "generated_at": "2026-03-23T15:09:26+00:00",
+  "generated_at": "2026-03-24T21:04:17+00:00",
   "pattern_coverage_count": 103,
   "pattern_ids": [
     "CCVE-2025-0004",

@@ -42,6 +42,15 @@ example_refs:
   - repo: confighub-scan
     path: examples/gitops-good-baselines/argocd-application-good.yaml
     purpose: Recommended Argo Application sync-policy baseline with explicit prune, self-heal, and bounded retry.
+  - repo: confighub-scan
+    path: examples/gitops-bad-baselines/argocd-application-bad.yaml
+    purpose: Owned negative contrast example where automated sync is enabled but prune is not true.
+  - repo: confighub-scan
+    path: examples/gitops-bad-baselines/argocd-application-selfheal-disabled-bad.yaml
+    purpose: Owned negative contrast example where automated sync is enabled but selfHeal is disabled.
+  - repo: confighub-scan
+    path: examples/gitops-prune-gaps/snapshot/live-state.yaml
+    purpose: Paired live snapshot showing Argo-owned resources that remain after an Application disappears from Git intent.
 remediation:
   strategy: config_fix
   safety_class: review_required

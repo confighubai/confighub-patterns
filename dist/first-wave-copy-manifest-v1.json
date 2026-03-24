@@ -11,7 +11,7 @@
     "copied_drifted": 8,
     "copied_matching": 31
   },
-  "generated_at": "2026-03-23T13:36:41+00:00",
+  "generated_at": "2026-03-24T20:45:58+00:00",
   "item_count": 39,
   "items": [
     {
@@ -415,13 +415,13 @@
       "copy_status": "copied_matching",
       "destination": "dist/risk-catalog-v1.json",
       "exists": true,
-      "size_bytes": 9162960,
+      "size_bytes": 9162922,
       "source": "dist/risk-catalog-v1.json",
-      "source_sha256": "3315e06b520610c00415c5ae700b7bce3277689c99166e396a99ab6532e4f689",
+      "source_sha256": "49a6354ceba05bc8f0f1b6e7ac5c6f237e6383a0825242b04ff74f368fc9e150",
       "source_type": "file",
       "target": "dist/risk-catalog-v1.json",
       "target_exists": true,
-      "target_sha256": "3315e06b520610c00415c5ae700b7bce3277689c99166e396a99ab6532e4f689"
+      "target_sha256": "49a6354ceba05bc8f0f1b6e7ac5c6f237e6383a0825242b04ff74f368fc9e150"
     },
     {
       "category": "released_bundles",

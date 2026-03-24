@@ -40,6 +40,9 @@ example_refs:
   - repo: confighub-scan
     path: examples/gitops-good-baselines/argocd-applicationset-good.yaml
     purpose: Focused list-generator baseline with bounded rollout scope and explicit sync posture.
+  - repo: confighub-scan
+    path: examples/gitops-bad-baselines/argocd-applicationset-bad.yaml
+    purpose: Owned negative contrast example where a list generator is combined with helm.valuesObject in the template source.
 remediation:
   strategy: manual_review
   safety_class: review_required

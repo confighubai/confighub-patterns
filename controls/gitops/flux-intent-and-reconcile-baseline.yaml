@@ -51,6 +51,27 @@ example_refs:
   - repo: confighub-scan
     path: examples/gitops-good-baselines/flux-helmrelease-good.yaml
     purpose: Baseline HelmRelease with explicit timing, remediation retries, and values wiring.
+  - repo: confighub-scan
+    path: examples/gitops-bad-baselines/flux-gitrepository-kustomization-bad.yaml
+    purpose: Owned negative contrast example showing broken source authentication and a Kustomization build failure.
+  - repo: confighub-scan
+    path: examples/gitops-bad-baselines/flux-gitrepository-kustomization-suspended-source-bad.yaml
+    purpose: Owned negative contrast example showing a Kustomization pointed at a suspended GitRepository.
+  - repo: confighub-scan
+    path: examples/gitops-bad-baselines/flux-helmrelease-circular-dependency-bad.yaml
+    purpose: Owned negative contrast example showing two HelmRelease resources in a circular dependsOn chain.
+  - repo: confighub-scan
+    path: examples/gitops-bad-baselines/flux-helmrelease-bad.yaml
+    purpose: Owned negative contrast example where HelmRelease is missing spec.timeout.
+  - repo: confighub-scan
+    path: examples/gitops-bad-baselines/flux-helmrelease-interval-zero-bad.yaml
+    purpose: "Owned negative contrast example where HelmRelease disables continuous reconciliation with spec.interval: 0s."
+  - repo: confighub-scan
+    path: examples/gitops-bad-baselines/flux-helmrelease-short-timeout-bad.yaml
+    purpose: Owned negative contrast example where HelmRelease timeout is shorter than one minute.
+  - repo: confighub-scan
+    path: examples/gitops-prune-gaps/snapshot/live-state.yaml
+    purpose: Paired live snapshot showing Flux-owned resources that remain after a Kustomization disappears from Git intent.
 remediation:
   strategy: config_fix
   safety_class: review_required
