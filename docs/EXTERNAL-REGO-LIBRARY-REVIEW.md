@@ -140,6 +140,47 @@ differentiate first.
 - external secret management posture
   - using external secret stores as a promoted baseline, not just a catalog note
 
+## March 24 Follow-On Priorities
+
+The external Rego review should stay connected to two concrete follow-ons:
+
+### 1. Keep Kubescape as an intake source for non-GitOps control families
+
+The strongest near-term Kubescape-style intake areas remain:
+- policy-control and admission baseline controls
+- service-account and secret-access hygiene
+- gateway and public exposure coverage beyond classic Ingress
+- external secret management posture
+
+Near-term intake queue to keep explicit while GitOps work continues:
+- admission coverage that answers "is there at least one active policy layer?"
+- service account token-mount and broad secret-read controls
+- gateway and public exposure controls outside classic Ingress-only thinking
+- external secret store posture controls that can become promoted baselines
+
+That is where the public control library has useful breadth we can review for
+candidate promoted controls in `confighub-patterns`.
+
+### 2. Keep GitOps good+bad baselines repo-owned
+
+For Argo CD and Flux specifically, our primary reference set should remain the
+owned examples in `confighub-scan`:
+- `examples/gitops-good-baselines/`
+- `examples/gitops-bad-baselines/`
+
+That keeps our GitOps operator story anchored in:
+- repo-vs-live reasoning,
+- Argo/Flux-specific intent and reconcile behavior,
+- promoted controls tied back to our own examples,
+- scanner-backed examples that we can use in demos, docs, AI explainers, and
+  future benchmark work.
+
+In other words:
+- use Kubescape/Rego libraries to expand backlog ideas for generic control
+  families,
+- keep Argo CD and Flux baseline ownership in our own examples and promoted
+  controls.
+
 ### Gaps that reinforce our product wedge
 
 The external library had very little public control coverage for:
