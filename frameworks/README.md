@@ -8,12 +8,11 @@ workflow context.
 Framework definitions should validate against:
 - `schema/framework-definition-v1.schema.json`
 
-Current seeded examples:
+Current seeded framework views include:
 - `gitops-operators.yaml`
+- `network-exposure.yaml`
 - `workload-hardening.yaml`
-
-Future framework families still to promote:
-- RBAC and identity
-- network exposure
-- secrets and credentials
-- cluster hardening
+- `cluster-hardening.yaml`
+- `rbac-and-identity.yaml`
+- `secrets-and-credentials.yaml`
+- `platform-best.yaml`

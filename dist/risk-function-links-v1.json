@@ -1,17 +1,17 @@
 {
   "schema_version": "risk-function-links-v1",
   "summary": {
-    "total_risks": 3513,
+    "total_risks": 3514,
     "total_functions": 87,
     "risks_with_function_ref": 218,
-    "risks_without_function_ref": 3295,
+    "risks_without_function_ref": 3296,
     "missing_function_definitions": 76,
     "function_declares_missing_risks": 0,
     "function_ccve_link_mismatches": 0,
     "unreferenced_functions": 0,
     "track_counts": {
       "advisory": 16,
-      "misconfiguration": 3497
+      "misconfiguration": 3498
     },
     "category_counts": {
       "APPLY": 122,
@@ -31,7 +31,7 @@
       "SECURITY": 24,
       "SILENT": 4,
       "SOURCE": 15,
-      "STATE": 1224,
+      "STATE": 1225,
       "TIMING": 3,
       "UNRESOLVED": 3,
       "WORKLOAD": 1
@@ -67,7 +67,7 @@
       "resource_increase": 1,
       "restart": 70,
       "security_fix": 1,
-      "source_fix": 35,
+      "source_fix": 36,
       "tool_upgrade": 2,
       "trigger_action": 169,
       "troubleshooting": 3,

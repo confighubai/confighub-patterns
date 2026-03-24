@@ -1,0 +1,77 @@
+schema_version: control-definition-v1
+id: CTRL-NET-0004
+slug: gateway-api-route-and-tls-baseline
+name: Gateway API route and TLS baseline
+family: network-exposure
+summary: Detect Gateway API attachment, timeout, cross-namespace reference, and TLS semantics that leave routes present but not actually safe or routable.
+description: >
+  This control promotes the high-signal Gateway API failures that operators
+  repeatedly hit when moving beyond classic Ingress: routes attached to the
+  wrong parent, missing timeout posture, unsupported route semantics, and
+  cross-namespace or TLS reference wiring that looks valid in YAML but fails in
+  practice. It is the first promoted Gateway/public-exposure baseline in this
+  repo family.
+maturity: seeded
+severity: high
+supported_surfaces:
+  - static
+  - live_state
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - sdk
+  - ai
+detection_modes:
+  - native_rule
+resource_kinds:
+  - Gateway
+  - GatewayClass
+  - HTTPRoute
+  - GRPCRoute
+  - TLSRoute
+  - TCPRoute
+  - UDPRoute
+  - ReferenceGrant
+  - BackendTLSPolicy
+  - Secret
+pattern_ids:
+  - CCVE-2025-0110
+  - CCVE-2025-1406
+  - CCVE-2025-1408
+  - CCVE-2025-1415
+  - CCVE-2025-1416
+  - CCVE-2025-1424
+  - CCVE-2025-1434
+tags:
+  - gateway-api
+  - gateway
+  - httproute
+  - grpcroute
+  - tlsroute
+  - referencegrant
+  - public-exposure
+  - tls
+  - baseline
+remediation:
+  strategy: diagnose_then_fix
+  safety_class: review_required
+  guidance:
+    - Treat parentRef, ReferenceGrant, and route-kind compatibility as deployment blockers for Gateway API changes.
+    - Configure explicit timeout and TLS posture for Gateway API routes instead of relying on implementation-specific defaults.
+    - Validate cross-namespace Secret and backend references with live status, not only static manifest review.
+evidence_expectations:
+  intent_signals:
+    - spec.parentRefs
+    - spec.rules
+    - spec.hostnames
+    - spec.listeners
+    - certificateRefs and backendRefs
+  live_signals:
+    - routes attached to missing or incompatible parents
+    - ReferenceGrant or Secret access failures
+    - route or listener status diverging from expected Gateway behavior
+  corroborating_sources:
+    - kubectl get gateway,gatewayclass,httproute,grpcroute,tlsroute -o yaml
+    - kubectl get referencegrant -A -o yaml
+    - gateway controller status and logs

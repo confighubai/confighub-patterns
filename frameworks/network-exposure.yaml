@@ -7,23 +7,26 @@ summary: Curated controls for ingress, TLS, and NetworkPolicy posture that keep 
 description: >
   This framework groups the first promoted controls for network-facing
   Kubernetes configuration. It is intended to help teams reason about safe
-  exposure, controller selection, TLS posture, and policy-driven connectivity in
-  one place.
+  exposure, controller selection, TLS posture, Gateway API semantics, and
+  policy-driven connectivity in one place.
 maturity: seeded
 control_ids:
   - CTRL-NET-0001
   - CTRL-NET-0002
   - CTRL-NET-0003
+  - CTRL-NET-0004
 platforms:
   - kubernetes
   - ingress
+  - gateway-api
   - networkpolicy
 tags:
   - network
   - ingress
+  - gateway-api
   - tls
   - exposure
 outcomes:
-  - Make safe service exposure and policy-driven connectivity visible as one stable framework view.
-  - Separate ingress and NetworkPolicy baseline posture from the broader exploratory pattern corpus.
-  - Provide a clean starting point for future Gateway API and service-exposure promoted controls.
+  - Make safe service exposure, Gateway API route semantics, and policy-driven connectivity visible as one stable framework view.
+  - Separate ingress, Gateway API, and NetworkPolicy baseline posture from the broader exploratory pattern corpus.
+  - Provide a clean operator-facing bundle for classic Ingress and newer Gateway API exposure paths.

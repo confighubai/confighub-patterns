@@ -1,6 +1,6 @@
 {
   "schema_version": "pattern-inventory-v1",
-  "generated_at": "2026-03-22T10:58:44Z",
+  "generated_at": "2026-03-24T21:51:09Z",
   "inputs": {
     "catalog": "dist/risk-catalog-v1.json",
     "rule_inventory": "dist/quality/rule-inventory-v1.json",
@@ -20239,6 +20239,35 @@
       "tags": [],
       "detection_resource_count": 0,
       "detection_condition": "",
+      "catalog_source": "ccve",
+      "implementation_state": "unimplemented",
+      "implementation_modes": [
+        "catalog_only"
+      ],
+      "native_rule_ids": [],
+      "adapter_sources": [],
+      "worker_function_refs": [],
+      "remedy_refs": [],
+      "resource_kinds": [],
+      "surface_classes": [],
+      "supported_consumers": [],
+      "confighub_function_fit": "needs_projection",
+      "confighub_execution_mode": "none",
+      "classification_source": {
+        "confighub_function_fit": "catalog_only_default",
+        "confighub_execution_mode": "catalog_only_default"
+      },
+      "status_note": "catalog entry has no native rules or external mappings yet",
+      "override_applied": false
+    },
+    {
+      "pattern_id": "CCVE-2025-0661",
+      "title": "Git SSH key Secret expiry will break GitOps fetches",
+      "severity": "warning",
+      "primary_kind": "Secret",
+      "tags": [],
+      "detection_resource_count": 0,
+      "detection_condition": "metadata.annotations[\"ssh.kubernetes.io/expires-at\"] exists AND\nexpiry time is already passed or within 14 days",
       "catalog_source": "ccve",
       "implementation_state": "unimplemented",
       "implementation_modes": [

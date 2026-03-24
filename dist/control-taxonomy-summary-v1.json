@@ -1,12 +1,12 @@
 {
   "consumer_counts": {
-    "ai": 18,
-    "cli": 18,
-    "confighub": 18,
-    "cub_scout": 18,
-    "sdk": 14
+    "ai": 19,
+    "cli": 19,
+    "confighub": 19,
+    "cub_scout": 19,
+    "sdk": 15
   },
-  "control_count": 18,
+  "control_count": 19,
   "control_ids": [
     "CTRL-CLUSTER-0001",
     "CTRL-CLUSTER-0002",
@@ -20,6 +20,7 @@
     "CTRL-NET-0001",
     "CTRL-NET-0002",
     "CTRL-NET-0003",
+    "CTRL-NET-0004",
     "CTRL-RBAC-0001",
     "CTRL-RBAC-0002",
     "CTRL-SECRETS-0001",
@@ -571,6 +572,63 @@
       "detection_modes": [
         "native_rule"
       ],
+      "family": "network-exposure",
+      "id": "CTRL-NET-0004",
+      "maturity": "seeded",
+      "path": "controls/network/gateway-api-route-and-tls-baseline.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0110",
+        "CCVE-2025-1406",
+        "CCVE-2025-1408",
+        "CCVE-2025-1415",
+        "CCVE-2025-1416",
+        "CCVE-2025-1424",
+        "CCVE-2025-1434"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "diagnose_then_fix",
+      "resource_kinds": [
+        "Gateway",
+        "GatewayClass",
+        "HTTPRoute",
+        "GRPCRoute",
+        "TLSRoute",
+        "TCPRoute",
+        "UDPRoute",
+        "ReferenceGrant",
+        "BackendTLSPolicy",
+        "Secret"
+      ],
+      "severity": "high",
+      "slug": "gateway-api-route-and-tls-baseline",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "gateway-api",
+        "gateway",
+        "httproute",
+        "grpcroute",
+        "tlsroute",
+        "referencegrant",
+        "public-exposure",
+        "tls",
+        "baseline"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule"
+      ],
       "family": "rbac-and-identity",
       "id": "CTRL-RBAC-0001",
       "maturity": "seeded",
@@ -836,13 +894,13 @@
   ],
   "detection_mode_counts": {
     "derived_comparison": 4,
-    "native_rule": 18,
+    "native_rule": 19,
     "sdk_worker": 1
   },
   "family_counts": {
     "cluster-hardening": 4,
     "gitops-operators": 5,
-    "network-exposure": 3,
+    "network-exposure": 4,
     "rbac-and-identity": 2,
     "secrets-and-credentials": 2,
     "workload-hardening": 2
@@ -923,26 +981,29 @@
       "control_ids": [
         "CTRL-NET-0001",
         "CTRL-NET-0002",
-        "CTRL-NET-0003"
+        "CTRL-NET-0003",
+        "CTRL-NET-0004"
       ],
       "family": "network-exposure",
       "id": "FRM-NET-0001",
       "maturity": "seeded",
       "outcomes": [
-        "Make safe service exposure and policy-driven connectivity visible as one stable framework view.",
-        "Separate ingress and NetworkPolicy baseline posture from the broader exploratory pattern corpus.",
-        "Provide a clean starting point for future Gateway API and service-exposure promoted controls."
+        "Make safe service exposure, Gateway API route semantics, and policy-driven connectivity visible as one stable framework view.",
+        "Separate ingress, Gateway API, and NetworkPolicy baseline posture from the broader exploratory pattern corpus.",
+        "Provide a clean operator-facing bundle for classic Ingress and newer Gateway API exposure paths."
       ],
       "path": "frameworks/network-exposure.yaml",
       "platforms": [
         "kubernetes",
         "ingress",
+        "gateway-api",
         "networkpolicy"
       ],
       "slug": "network-exposure",
       "tags": [
         "network",
         "ingress",
+        "gateway-api",
         "tls",
         "exposure"
       ]
@@ -1065,8 +1126,8 @@
       ]
     }
   ],
-  "generated_at": "2026-03-23T14:37:27+00:00",
-  "pattern_coverage_count": 103,
+  "generated_at": "2026-03-24T22:05:53+00:00",
+  "pattern_coverage_count": 110,
   "pattern_ids": [
     "CCVE-2025-0004",
     "CCVE-2025-0005",
@@ -1078,6 +1139,7 @@
     "CCVE-2025-0063",
     "CCVE-2025-0067",
     "CCVE-2025-0068",
+    "CCVE-2025-0110",
     "CCVE-2025-0124",
     "CCVE-2025-0125",
     "CCVE-2025-0127",
@@ -1119,6 +1181,12 @@
     "CCVE-2025-1165",
     "CCVE-2025-1262",
     "CCVE-2025-1264",
+    "CCVE-2025-1406",
+    "CCVE-2025-1408",
+    "CCVE-2025-1415",
+    "CCVE-2025-1416",
+    "CCVE-2025-1424",
+    "CCVE-2025-1434",
     "CCVE-2025-1601",
     "CCVE-2025-1821",
     "CCVE-2025-1824",
@@ -1178,8 +1246,8 @@
   "source_pattern_repo": "/Users/alexis/Public/github-repos/confighub-scan",
   "surface_counts": {
     "connected_validation": 1,
-    "live_state": 16,
+    "live_state": 17,
     "repo_vs_live": 4,
-    "static": 16
+    "static": 17
   }
 }
