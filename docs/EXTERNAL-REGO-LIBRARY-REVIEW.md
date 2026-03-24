@@ -158,6 +158,11 @@ Near-term intake queue to keep explicit while GitOps work continues:
 - gateway and public exposure controls outside classic Ingress-only thinking
 - external secret store posture controls that can become promoted baselines
 
+Concrete follow-on now landed from that queue:
+- `CTRL-NET-0004` in `controls/network/gateway-api-route-and-tls-baseline.yaml`
+  promotes the first Gateway/public-exposure baseline built from native
+  Gateway API scanner coverage we already have
+
 That is where the public control library has useful breadth we can review for
 candidate promoted controls in `confighub-patterns`.
 

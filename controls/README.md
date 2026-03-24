@@ -14,8 +14,10 @@ The first seeded controls now live here for:
 Control definitions should validate against:
 - `schema/control-definition-v1.schema.json`
 
-Current seeded examples:
-- `gitops/argocd-application-reconciliation-health.yaml`
-- `gitops/flux-reconciliation-reliability.yaml`
-- `workload/workload-security-context-baseline.yaml`
-- `workload/workload-resource-governance-baseline.yaml`
+Current seeded families now include:
+- `gitops/` for Argo CD and Flux reliability controls
+- `workload/` for workload security-context and resource-governance baselines
+- `network/` for Ingress, Gateway/public exposure, and connectivity controls
+- `cluster/` for admission, policy-control, and control-plane posture
+- `rbac/` for privilege-boundary and service-account identity controls
+- `secrets/` for secret-handling and external secret-store posture

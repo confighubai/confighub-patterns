@@ -1,6 +1,6 @@
 {
   "schema_version": "pattern-inventory-summary-v1",
-  "generated_at": "2026-03-22T10:58:44Z",
+  "generated_at": "2026-03-24T21:51:09Z",
   "inputs": {
     "catalog": "dist/risk-catalog-v1.json",
     "rule_inventory": "dist/quality/rule-inventory-v1.json",
@@ -9,12 +9,12 @@
     "cross_tool_mapping": "dist/quality/cross-tool-mapping-v1.json"
   },
   "summary": {
-    "total_patterns": 3513,
+    "total_patterns": 3514,
     "implemented_patterns": 278,
     "partially_implemented_patterns": 204,
-    "unimplemented_patterns": 3031,
+    "unimplemented_patterns": 3032,
     "implementation_mode_counts": {
-      "catalog_only": 3031,
+      "catalog_only": 3032,
       "external_mapping": 2,
       "native_rule": 278,
       "remedy_only": 204
@@ -31,12 +31,12 @@
       "cub-scout": 181
     },
     "confighub_function_fit_counts": {
-      "needs_projection": 3495,
+      "needs_projection": 3496,
       "not_suitable": 18
     },
     "confighub_function_fit_source_counts": {
       "aggregated_native_rules": 278,
-      "catalog_only_default": 3031,
+      "catalog_only_default": 3032,
       "remedy_only_default": 204
     },
     "patterns_with_native_rules": 278,
@@ -91,7 +91,7 @@
       "CCVE-2025-4075"
     ],
     "external_mapping_only_pattern_ids": [],
-    "catalog_only_needs_projection_patterns": 3031,
+    "catalog_only_needs_projection_patterns": 3032,
     "catalog_only_needs_projection_pattern_ids_sample": [
       "CCVE-2025-0003",
       "CCVE-2025-0011",

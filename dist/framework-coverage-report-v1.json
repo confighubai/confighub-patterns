@@ -156,14 +156,15 @@
       ]
     },
     {
-      "control_count": 3,
+      "control_count": 4,
       "control_families": [
         "network-exposure"
       ],
       "control_ids": [
         "CTRL-NET-0001",
         "CTRL-NET-0002",
-        "CTRL-NET-0003"
+        "CTRL-NET-0003",
+        "CTRL-NET-0004"
       ],
       "detection_modes": [
         "native_rule"
@@ -172,10 +173,11 @@
       "id": "FRM-NET-0001",
       "maturity": "seeded",
       "name": "Network exposure",
-      "pattern_coverage_count": 19,
+      "pattern_coverage_count": 26,
       "pattern_ids": [
         "CCVE-2025-0032",
         "CCVE-2025-0063",
+        "CCVE-2025-0110",
         "CCVE-2025-0690",
         "CCVE-2025-0772",
         "CCVE-2025-0773",
@@ -184,6 +186,12 @@
         "CCVE-2025-0916",
         "CCVE-2025-1116",
         "CCVE-2025-1125",
+        "CCVE-2025-1406",
+        "CCVE-2025-1408",
+        "CCVE-2025-1415",
+        "CCVE-2025-1416",
+        "CCVE-2025-1424",
+        "CCVE-2025-1434",
         "CCVE-2025-1601",
         "CCVE-2025-2155",
         "CCVE-2025-2156",
@@ -197,11 +205,12 @@
       "platforms": [
         "kubernetes",
         "ingress",
+        "gateway-api",
         "networkpolicy"
       ],
       "severity_counts": {
         "critical": 2,
-        "high": 1
+        "high": 2
       },
       "slug": "network-exposure",
       "supported_consumers": [
@@ -218,6 +227,7 @@
       "tags": [
         "network",
         "ingress",
+        "gateway-api",
         "tls",
         "exposure"
       ]
@@ -524,7 +534,7 @@
       ]
     }
   ],
-  "generated_at": "2026-03-24T21:04:17+00:00",
+  "generated_at": "2026-03-24T22:06:19+00:00",
   "schema_version": "framework-coverage-report-v1",
   "source_bundle": "/Users/alexis/Public/github-repos/confighub-patterns/dist/control-framework-bundle-v1.json"
 }

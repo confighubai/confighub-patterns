@@ -11,7 +11,7 @@
     "copied_drifted": 8,
     "copied_matching": 31
   },
-  "generated_at": "2026-03-24T20:45:58+00:00",
+  "generated_at": "2026-03-24T21:52:22+00:00",
   "item_count": 39,
   "items": [
     {
@@ -19,7 +19,7 @@
       "copy_status": "copied_matching",
       "destination": "patterns/",
       "exists": true,
-      "match_count": 3513,
+      "match_count": 3514,
       "samples": [
         "risks/CCVE-2025-0001.yaml",
         "risks/CCVE-2025-0002.yaml",
@@ -31,7 +31,7 @@
       "source_type": "glob",
       "target": "patterns/",
       "target_exists": true,
-      "target_match_count": 3513,
+      "target_match_count": 3514,
       "target_samples": [
         "patterns/CCVE-2025-0001.yaml",
         "patterns/CCVE-2025-0002.yaml",
@@ -415,13 +415,13 @@
       "copy_status": "copied_matching",
       "destination": "dist/risk-catalog-v1.json",
       "exists": true,
-      "size_bytes": 9162922,
+      "size_bytes": 9165368,
       "source": "dist/risk-catalog-v1.json",
-      "source_sha256": "49a6354ceba05bc8f0f1b6e7ac5c6f237e6383a0825242b04ff74f368fc9e150",
+      "source_sha256": "7d47e57df947bcd7587611516c5808127aebc52df796e3b74eba15579b110c52",
       "source_type": "file",
       "target": "dist/risk-catalog-v1.json",
       "target_exists": true,
-      "target_sha256": "49a6354ceba05bc8f0f1b6e7ac5c6f237e6383a0825242b04ff74f368fc9e150"
+      "target_sha256": "7d47e57df947bcd7587611516c5808127aebc52df796e3b74eba15579b110c52"
     },
     {
       "category": "released_bundles",
@@ -430,11 +430,11 @@
       "exists": true,
       "size_bytes": 87750,
       "source": "dist/risk-function-links-v1.json",
-      "source_sha256": "9ebb1ec77387610642eb3b3f19ed0e8f8a443f73cc8c3aef9f3c4b5e56c4d7b9",
+      "source_sha256": "192c0ee45f82d74018cec50ee33342a71f829f5833e1f326f9cccdac67d81783",
       "source_type": "file",
       "target": "dist/risk-function-links-v1.json",
       "target_exists": true,
-      "target_sha256": "9ebb1ec77387610642eb3b3f19ed0e8f8a443f73cc8c3aef9f3c4b5e56c4d7b9"
+      "target_sha256": "192c0ee45f82d74018cec50ee33342a71f829f5833e1f326f9cccdac67d81783"
     },
     {
       "category": "released_bundles",
@@ -467,13 +467,13 @@
       "copy_status": "copied_matching",
       "destination": "dist/quality/pattern-inventory-v1.json",
       "exists": true,
-      "size_bytes": 4043476,
+      "size_bytes": 4044578,
       "source": "dist/quality/pattern-inventory-v1.json",
-      "source_sha256": "56a1a4479dd9717017bef165c13e2838c0d72efa101a6d15f56d307392c9bc90",
+      "source_sha256": "2a3cee2fb861b8b3b369815a122bf9b6f6a1751a5f33d30062611e1425456dcd",
       "source_type": "file",
       "target": "dist/quality/pattern-inventory-v1.json",
       "target_exists": true,
-      "target_sha256": "56a1a4479dd9717017bef165c13e2838c0d72efa101a6d15f56d307392c9bc90"
+      "target_sha256": "2a3cee2fb861b8b3b369815a122bf9b6f6a1751a5f33d30062611e1425456dcd"
     },
     {
       "category": "released_bundles",
@@ -482,11 +482,11 @@
       "exists": true,
       "size_bytes": 3430,
       "source": "dist/quality/pattern-inventory-summary-v1.json",
-      "source_sha256": "f846fa329490fd66053e0dd28ba85de3189420d0fb44cd3c55dc303325048a75",
+      "source_sha256": "c266ce6f0595f24cee8ac110a3f9b78453a0c64b09b36b2f0cfb74b56dee2610",
       "source_type": "file",
       "target": "dist/quality/pattern-inventory-summary-v1.json",
       "target_exists": true,
-      "target_sha256": "f846fa329490fd66053e0dd28ba85de3189420d0fb44cd3c55dc303325048a75"
+      "target_sha256": "c266ce6f0595f24cee8ac110a3f9b78453a0c64b09b36b2f0cfb74b56dee2610"
     },
     {
       "category": "released_bundles",

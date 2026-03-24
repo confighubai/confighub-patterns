@@ -1,5 +1,5 @@
 {
-  "control_count": 18,
+  "control_count": 19,
   "control_ids": [
     "CTRL-CLUSTER-0001",
     "CTRL-CLUSTER-0002",
@@ -13,6 +13,7 @@
     "CTRL-NET-0001",
     "CTRL-NET-0002",
     "CTRL-NET-0003",
+    "CTRL-NET-0004",
     "CTRL-RBAC-0001",
     "CTRL-RBAC-0002",
     "CTRL-SECRETS-0001",
@@ -1010,6 +1011,21 @@
           "path": "examples/gitops-bad-baselines/argocd-applicationset-bad.yaml",
           "purpose": "Owned negative contrast example where a list generator is combined with helm.valuesObject in the template source.",
           "repo": "confighub-scan"
+        },
+        {
+          "path": "examples/gitops-bad-baselines/argocd-applicationset-gitlab-pathsexist-bad.yaml",
+          "purpose": "Owned negative contrast example where a GitLab SCM provider generator uses filters.pathsExist.",
+          "repo": "confighub-scan"
+        },
+        {
+          "path": "examples/gitops-bad-baselines/argocd-applicationset-progressive-sync-retry-bad.yaml",
+          "purpose": "Owned negative contrast example where RollingSync template retry.limit is set to zero but generated applications already retried.",
+          "repo": "confighub-scan"
+        },
+        {
+          "path": "examples/gitops-bad-baselines/argocd-applicationset-complex-generators-bad.yaml",
+          "purpose": "Owned negative contrast example showing a mega-ApplicationSet with too many mixed generators.",
+          "repo": "confighub-scan"
         }
       ],
       "family": "gitops-operators",
@@ -1783,6 +1799,169 @@
         "annotations",
         "injection",
         "security"
+      ]
+    },
+    {
+      "description": "This control promotes the high-signal Gateway API failures that operators repeatedly hit when moving beyond classic Ingress: routes attached to the wrong parent, missing timeout posture, unsupported route semantics, and cross-namespace or TLS reference wiring that looks valid in YAML but fails in practice. It is the first promoted Gateway/public-exposure baseline in this repo family.\n",
+      "detection_modes": [
+        "native_rule"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "kubectl get gateway,gatewayclass,httproute,grpcroute,tlsroute -o yaml",
+          "kubectl get referencegrant -A -o yaml",
+          "gateway controller status and logs"
+        ],
+        "intent_signals": [
+          "spec.parentRefs",
+          "spec.rules",
+          "spec.hostnames",
+          "spec.listeners",
+          "certificateRefs and backendRefs"
+        ],
+        "live_signals": [
+          "routes attached to missing or incompatible parents",
+          "ReferenceGrant or Secret access failures",
+          "route or listener status diverging from expected Gateway behavior"
+        ]
+      },
+      "example_refs": [],
+      "family": "network-exposure",
+      "id": "CTRL-NET-0004",
+      "maturity": "seeded",
+      "name": "Gateway API route and TLS baseline",
+      "pattern_refs": [
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-0110",
+          "name": "Gateway API HTTPRoute parentRef not matching Gateway",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-1406",
+          "name": "BackendTLSPolicy conflicts with TLS passthrough",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "medium",
+          "id": "CCVE-2025-1408",
+          "name": "TLSRoute SNI match inconsistent with HTTPRoute hostnames",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-1415",
+          "name": "GRPCRoute lacks BackendTLSPolicy support",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-1416",
+          "name": "GRPCRoute missing request timeout for streaming RPC",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-1424",
+          "name": "TCPRoute and UDPRoute lack hostname support",
+          "severity": {
+            "bucket": "info",
+            "raw": "info"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-1434",
+          "name": "Gateway secret reference requires ReferenceGrant for cross-namespace",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Treat parentRef, ReferenceGrant, and route-kind compatibility as deployment blockers for Gateway API changes.",
+          "Configure explicit timeout and TLS posture for Gateway API routes instead of relying on implementation-specific defaults.",
+          "Validate cross-namespace Secret and backend references with live status, not only static manifest review."
+        ],
+        "safety_class": "review_required",
+        "strategy": "diagnose_then_fix"
+      },
+      "resource_kinds": [
+        "Gateway",
+        "GatewayClass",
+        "HTTPRoute",
+        "GRPCRoute",
+        "TLSRoute",
+        "TCPRoute",
+        "UDPRoute",
+        "ReferenceGrant",
+        "BackendTLSPolicy",
+        "Secret"
+      ],
+      "severity": "high",
+      "slug": "gateway-api-route-and-tls-baseline",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/network/gateway-api-route-and-tls-baseline.yaml",
+      "summary": "Detect Gateway API attachment, timeout, cross-namespace reference, and TLS semantics that leave routes present but not actually safe or routable.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "gateway-api",
+        "gateway",
+        "httproute",
+        "grpcroute",
+        "tlsroute",
+        "referencegrant",
+        "public-exposure",
+        "tls",
+        "baseline"
       ]
     },
     {
@@ -2866,7 +3045,8 @@
       "control_ids": [
         "CTRL-NET-0001",
         "CTRL-NET-0002",
-        "CTRL-NET-0003"
+        "CTRL-NET-0003",
+        "CTRL-NET-0004"
       ],
       "controls": [
         {
@@ -2889,21 +3069,29 @@
           "name": "Ingress annotation safety",
           "severity": "critical",
           "slug": "ingress-annotation-safety"
+        },
+        {
+          "family": "network-exposure",
+          "id": "CTRL-NET-0004",
+          "name": "Gateway API route and TLS baseline",
+          "severity": "high",
+          "slug": "gateway-api-route-and-tls-baseline"
         }
       ],
-      "description": "This framework groups the first promoted controls for network-facing Kubernetes configuration. It is intended to help teams reason about safe exposure, controller selection, TLS posture, and policy-driven connectivity in one place.\n",
+      "description": "This framework groups the first promoted controls for network-facing Kubernetes configuration. It is intended to help teams reason about safe exposure, controller selection, TLS posture, Gateway API semantics, and policy-driven connectivity in one place.\n",
       "family": "network-exposure",
       "id": "FRM-NET-0001",
       "maturity": "seeded",
       "name": "Network exposure",
       "outcomes": [
-        "Make safe service exposure and policy-driven connectivity visible as one stable framework view.",
-        "Separate ingress and NetworkPolicy baseline posture from the broader exploratory pattern corpus.",
-        "Provide a clean starting point for future Gateway API and service-exposure promoted controls."
+        "Make safe service exposure, Gateway API route semantics, and policy-driven connectivity visible as one stable framework view.",
+        "Separate ingress, Gateway API, and NetworkPolicy baseline posture from the broader exploratory pattern corpus.",
+        "Provide a clean operator-facing bundle for classic Ingress and newer Gateway API exposure paths."
       ],
       "platforms": [
         "kubernetes",
         "ingress",
+        "gateway-api",
         "networkpolicy"
       ],
       "slug": "network-exposure",
@@ -2912,6 +3100,7 @@
       "tags": [
         "network",
         "ingress",
+        "gateway-api",
         "tls",
         "exposure"
       ]
@@ -3173,8 +3362,8 @@
       ]
     }
   ],
-  "generated_at": "2026-03-24T21:04:17+00:00",
-  "pattern_coverage_count": 103,
+  "generated_at": "2026-03-24T22:06:13+00:00",
+  "pattern_coverage_count": 110,
   "pattern_ids": [
     "CCVE-2025-0004",
     "CCVE-2025-0005",
@@ -3186,6 +3375,7 @@
     "CCVE-2025-0063",
     "CCVE-2025-0067",
     "CCVE-2025-0068",
+    "CCVE-2025-0110",
     "CCVE-2025-0124",
     "CCVE-2025-0125",
     "CCVE-2025-0127",
@@ -3227,6 +3417,12 @@
     "CCVE-2025-1165",
     "CCVE-2025-1262",
     "CCVE-2025-1264",
+    "CCVE-2025-1406",
+    "CCVE-2025-1408",
+    "CCVE-2025-1415",
+    "CCVE-2025-1416",
+    "CCVE-2025-1424",
+    "CCVE-2025-1434",
     "CCVE-2025-1601",
     "CCVE-2025-1821",
     "CCVE-2025-1824",

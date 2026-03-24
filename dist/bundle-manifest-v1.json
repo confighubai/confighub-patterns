@@ -1,6 +1,6 @@
 {
   "schema_version": "bundle-manifest-v1",
-  "published_at": "2026-03-24T21:04:17Z",
+  "published_at": "2026-03-24T22:06:19Z",
   "bundle_version": "dev",
   "source_repo": "confighubai/confighub-patterns",
   "files": [
@@ -8,15 +8,15 @@
       "name": "risk-catalog",
       "path": "dist/risk-catalog-v1.json",
       "schema_version": "risk-catalog-v1",
-      "sha256": "49a6354ceba05bc8f0f1b6e7ac5c6f237e6383a0825242b04ff74f368fc9e150",
-      "size_bytes": 9162922,
+      "sha256": "7d47e57df947bcd7587611516c5808127aebc52df796e3b74eba15579b110c52",
+      "size_bytes": 9165368,
       "required": true
     },
     {
       "name": "risk-function-links",
       "path": "dist/risk-function-links-v1.json",
       "schema_version": "risk-function-links-v1",
-      "sha256": "9ebb1ec77387610642eb3b3f19ed0e8f8a443f73cc8c3aef9f3c4b5e56c4d7b9",
+      "sha256": "192c0ee45f82d74018cec50ee33342a71f829f5833e1f326f9cccdac67d81783",
       "size_bytes": 87750,
       "required": true
     },
@@ -56,24 +56,24 @@
       "name": "control-taxonomy-summary",
       "path": "dist/control-taxonomy-summary-v1.json",
       "schema_version": "control-taxonomy-summary-v1",
-      "sha256": "e8030c3403d3874022d58971cd6812b47569f861edaced5a823a3632ac32b711",
-      "size_bytes": 29844,
+      "sha256": "dc4f55e3c2fe7760c44af82ad18084837bf18a39d98446edeb6c03376402f60b",
+      "size_bytes": 31478,
       "required": false
     },
     {
       "name": "control-framework-bundle",
       "path": "dist/control-framework-bundle-v1.json",
       "schema_version": "control-framework-bundle-v1",
-      "sha256": "8d98e0cd421fe433670b9fac84a486344477c50deb72dc97c163e007270894e6",
-      "size_bytes": 108467,
+      "sha256": "70aaa8cf9dd0ea54597248275686e1f8a2d4dc0c2bd36be199c7662ee7a57054",
+      "size_bytes": 115283,
       "required": false
     },
     {
       "name": "framework-coverage-report",
       "path": "dist/framework-coverage-report-v1.json",
       "schema_version": "framework-coverage-report-v1",
-      "sha256": "4717e3585cd9b67b2987332f2066642f225ca84efc3cff48ea5cceef6136f0a8",
-      "size_bytes": 12055,
+      "sha256": "7367254c54681db130553535f69b739cc1444959f3ab93b8d55ac81662e042e8",
+      "size_bytes": 12308,
       "required": false
     }
   ]

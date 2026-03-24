@@ -43,6 +43,15 @@ example_refs:
   - repo: confighub-scan
     path: examples/gitops-bad-baselines/argocd-applicationset-bad.yaml
     purpose: Owned negative contrast example where a list generator is combined with helm.valuesObject in the template source.
+  - repo: confighub-scan
+    path: examples/gitops-bad-baselines/argocd-applicationset-gitlab-pathsexist-bad.yaml
+    purpose: Owned negative contrast example where a GitLab SCM provider generator uses filters.pathsExist.
+  - repo: confighub-scan
+    path: examples/gitops-bad-baselines/argocd-applicationset-progressive-sync-retry-bad.yaml
+    purpose: Owned negative contrast example where RollingSync template retry.limit is set to zero but generated applications already retried.
+  - repo: confighub-scan
+    path: examples/gitops-bad-baselines/argocd-applicationset-complex-generators-bad.yaml
+    purpose: Owned negative contrast example showing a mega-ApplicationSet with too many mixed generators.
 remediation:
   strategy: manual_review
   safety_class: review_required
