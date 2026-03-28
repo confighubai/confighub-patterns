@@ -1,9 +1,24 @@
 # Product Thesis
 
-The long-term goal is not to be a generic scanner with more checks.
+The long-term goal is not merely to be a generic scanner with more checks.
 
-The long-term goal is to be the best system for understanding and fixing
-configuration risk across intent, live state, and connected evidence.
+The long-term goal is to pair a large, reusable, well-organized configuration
+risk database with the best system for understanding and fixing risk across
+intent, live state, and connected evidence.
+
+## Pillar 0: Database Breadth With Structure
+
+Database breadth is part of the moat when it stays organized.
+
+This repo should keep growing through:
+- mined canonical patterns
+- borrowed external patterns and control ideas
+- third-party mappings
+- promoted controls and framework views
+
+The point is not to pretend every borrowed pattern is immediately a native rule.
+The point is to keep making the database broader, more reusable, and easier for
+consumers to benefit from quickly.
 
 ## Pillar 1: GitOps And Operator Depth
 
@@ -53,7 +68,8 @@ This means the corpus must support:
 `confighub-patterns` should become more than a data dump.
 
 It should provide:
-- broad canonical patterns
+- broad canonical patterns that keep growing over time
+- borrowed and normalized external pattern knowledge where useful
 - promoted controls
 - framework views
 - remediation and safety metadata
