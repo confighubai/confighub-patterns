@@ -1,7 +1,9 @@
 # Bundle Scope
 
-This repo is expected to publish the runtime-consumed pattern bundle used by
-`confighub-scan`, `cub-scout`, and worker packaging.
+This repo is expected to publish the runtime-consumed pattern bundle used by:
+- ConfigHub built-in scan functions
+- standalone cub-based scan (`cub-scan` today, future `cub scan` or plugin possible)
+- wrapper CLIs/TUIs such as `cub-scout`
 
 ## Required Bundle Files
 
@@ -47,4 +49,6 @@ Bundles must be published with:
 After the split:
 - this repo is the source of truth for runtime pattern data,
 - consumers read released bundle artifacts,
+- controls remain bundle metadata while executable rules stay in
+  `confighub-scan`,
 - no consumer should silently replace the full catalog with a legacy subset.

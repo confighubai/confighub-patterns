@@ -8,10 +8,10 @@
     "schema": 3
   },
   "copy_status_counts": {
-    "copied_drifted": 8,
-    "copied_matching": 31
+    "copied_drifted": 12,
+    "copied_matching": 27
   },
-  "generated_at": "2026-03-24T21:52:22+00:00",
+  "generated_at": "2026-03-28T07:54:10+00:00",
   "item_count": 39,
   "items": [
     {
@@ -464,12 +464,12 @@
     },
     {
       "category": "released_bundles",
-      "copy_status": "copied_matching",
+      "copy_status": "copied_drifted",
       "destination": "dist/quality/pattern-inventory-v1.json",
       "exists": true,
-      "size_bytes": 4044578,
+      "size_bytes": 4044723,
       "source": "dist/quality/pattern-inventory-v1.json",
-      "source_sha256": "2a3cee2fb861b8b3b369815a122bf9b6f6a1751a5f33d30062611e1425456dcd",
+      "source_sha256": "e6786eb5de0a4c0cc7974d82a976e271b06b927b78eb0f38bdfb9f667deae5d3",
       "source_type": "file",
       "target": "dist/quality/pattern-inventory-v1.json",
       "target_exists": true,
@@ -477,12 +477,12 @@
     },
     {
       "category": "released_bundles",
-      "copy_status": "copied_matching",
+      "copy_status": "copied_drifted",
       "destination": "dist/quality/pattern-inventory-summary-v1.json",
       "exists": true,
-      "size_bytes": 3430,
+      "size_bytes": 3431,
       "source": "dist/quality/pattern-inventory-summary-v1.json",
-      "source_sha256": "c266ce6f0595f24cee8ac110a3f9b78453a0c64b09b36b2f0cfb74b56dee2610",
+      "source_sha256": "d263299da70d0bdfcaf101ae42fbe554488f369f99673cd1a6f33719bde99433",
       "source_type": "file",
       "target": "dist/quality/pattern-inventory-summary-v1.json",
       "target_exists": true,
@@ -490,12 +490,12 @@
     },
     {
       "category": "released_bundles",
-      "copy_status": "copied_matching",
+      "copy_status": "copied_drifted",
       "destination": "dist/quality/pattern-queue-report-v1.json",
       "exists": true,
       "size_bytes": 854702,
       "source": "dist/quality/pattern-queue-report-v1.json",
-      "source_sha256": "3b73b286b6d37d294427693dac62da6e16b5587a0dd253647a4014b9dcfc3939",
+      "source_sha256": "2b0d74db1cb9af30dde7daa5862e7e1dd26247ab834c6b7103fdf0d70d1393c7",
       "source_type": "file",
       "target": "dist/quality/pattern-queue-report-v1.json",
       "target_exists": true,
@@ -516,12 +516,12 @@
     },
     {
       "category": "released_bundles",
-      "copy_status": "copied_matching",
+      "copy_status": "copied_drifted",
       "destination": "dist/quality/severity-review-sample-v1.json",
       "exists": true,
       "size_bytes": 17524,
       "source": "dist/quality/severity-review-sample-v1.json",
-      "source_sha256": "a0ac37a86837b910b655f1fdb6f087f78b4de36d395310e4d82a1f5d6a273c70",
+      "source_sha256": "d6b366956f1a70ad93b73ae2138796255826bbe67a6051cf1b0c7e1354cec007",
       "source_type": "file",
       "target": "dist/quality/severity-review-sample-v1.json",
       "target_exists": true,

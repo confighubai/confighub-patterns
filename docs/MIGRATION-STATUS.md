@@ -59,8 +59,21 @@ The target taxonomy is now explicit:
 - `controls/` for promoted operator-facing checks
 - `frameworks/` for grouped views over controls
 
+Runtime rule:
+- controls, mappings, remedies, and released bundles belong here
+- executable detector rules stay in `confighub-scan`
+- ConfigHub functions, standalone cub-based scan, and wrappers all consume the
+  same released bundles
+
+Near-term execution rule:
+- do not treat this repo as a passive copy target only
+- keep making the database bigger through mined and borrowed patterns,
+  third-party mappings, and promoted controls
+- keep bundle consumers easy to support across ConfigHub functions, local CLI,
+  and wrappers while the migration wave continues
+
 The first seeded implementation slice is now explicit too:
-- 18 seeded controls
+- 19 seeded controls
 - 7 seeded frameworks
 - a summary artifact at `dist/control-taxonomy-summary-v1.json`
 - an initial promoted-taxonomy bundle at `dist/control-framework-bundle-v1.json`

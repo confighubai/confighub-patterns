@@ -14,9 +14,32 @@ It should become the authoring home for:
 - pattern-quality and promotion policy inputs,
 - released bundle artifacts.
 
-It should not become a second engine repo. Native Go rules, scan orchestration,
-worker wrappers, CLI code, and engine-only quality reports stay in
-`confighub-scan`.
+It should not become a second engine repo. Executable Go rules, scan
+orchestration, worker wrappers, CLI code, and engine-only quality reports stay
+in `confighub-scan`.
+
+## Primary Consumers
+
+This repo exists to support three clear user stories:
+
+1. ConfigHub built-in functions
+   - function workers use `confighub-scan` for execution and this repo for catalog, controls, mappings, and remedies
+2. Standalone cub-based scan
+   - today the local entry point is `cub-scan`
+   - later the same engine may be exposed as `cub scan` or a `cub` plugin
+3. Wrapper CLIs and TUIs
+   - `cub-scout` and similar tools wrap the same engine and consume the same bundle contract
+
+## Near-Term Product Goal
+
+This repo is not just a migration bucket. In the next wave it needs to support
+three practical outcomes:
+
+1. make ConfigHub built-in functions easy to consume through released bundles
+2. make local CLI and AI-assisted scan flows easy to consume through the same
+   bundles
+3. make the database bigger every week through mined patterns, borrowed external
+   patterns, mappings, and promoted controls
 
 ## Status
 
@@ -47,10 +70,12 @@ As of 2026-03-22:
 - the repo-native release manifest now exists at `dist/bundle-manifest-v1.json`
 - the release manifest now advertises Kyverno and Trivy mapping files as
   first-class runtime bundle assets
-- the promoted taxonomy now includes 18 controls, 7 frameworks, and 103 covered
+- the promoted taxonomy now includes 19 controls, 7 frameworks, and 110 covered
   pattern IDs
 - the repo now has native validation plumbing via `make validate` and
   `.github/workflows/validate.yml`
+- near-term success is not only "move files"; it is also "grow the reusable
+  database while keeping bundle consumers easy to support"
 
 ## Intended Layout
 
@@ -87,9 +112,9 @@ See also:
 
 The expected interaction model is:
 - `confighub-patterns` publishes versioned bundles,
-- `confighub-scan` consumes those bundles locally and in CI,
-- `cub-scout` consumes the same bundle cache contract,
-- ConfigHub/SDK worker packaging consumes released runtime assets where needed.
+- ConfigHub built-in functions consume those bundles through `confighub-scan`,
+- standalone cub-based scan consumes those bundles locally and in CI,
+- wrapper CLIs/TUIs consume the same bundle cache contract.
 
 The initial shared cache contract is:
 - `~/.confighub/pattern-bundles/current/`
