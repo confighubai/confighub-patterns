@@ -11,7 +11,7 @@
     "copied_drifted": 15,
     "copied_matching": 24
   },
-  "generated_at": "2026-03-30T17:10:24+00:00",
+  "generated_at": "2026-03-30T18:35:03+00:00",
   "item_count": 39,
   "items": [
     {
@@ -469,7 +469,7 @@
       "exists": true,
       "size_bytes": 4046324,
       "source": "dist/quality/pattern-inventory-v1.json",
-      "source_sha256": "796b8f72aca3cb6edf2fdede06e974bf3f98dbf10a1c2d783ebb85017022ce12",
+      "source_sha256": "6f7eb5c9fcaae91c2cda1bfad3ab88a78eef0a0352cf6f68d848114204a60f57",
       "source_type": "file",
       "target": "dist/quality/pattern-inventory-v1.json",
       "target_exists": true,
@@ -482,7 +482,7 @@
       "exists": true,
       "size_bytes": 3956,
       "source": "dist/quality/pattern-inventory-summary-v1.json",
-      "source_sha256": "747287424f1c5308b43c7f59098dff096f0bb59453791f5f9ee6282cf5057e15",
+      "source_sha256": "2cbb172e678ecba9be997a686dec7ecfc038d44d518ac3d6f9315d76e0a560a3",
       "source_type": "file",
       "target": "dist/quality/pattern-inventory-summary-v1.json",
       "target_exists": true,
@@ -495,7 +495,7 @@
       "exists": true,
       "size_bytes": 888530,
       "source": "dist/quality/pattern-queue-report-v1.json",
-      "source_sha256": "6e3be7f946594d22acd069f15a40399412921c0ba461f78a14f483259257a9d0",
+      "source_sha256": "47182f18b93fffe8383d12d1d4b455115903d5d1a32a53e4e157a949c8352dcf",
       "source_type": "file",
       "target": "dist/quality/pattern-queue-report-v1.json",
       "target_exists": true,
