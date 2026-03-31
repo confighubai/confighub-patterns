@@ -23,6 +23,8 @@ control_ids:
   - CTRL-SECRETS-0002
   - CTRL-CLUSTER-0001
   - CTRL-CLUSTER-0003
+  - CTRL-CLUSTER-0005
+  - CTRL-CLUSTER-0006
 platforms:
   - kubernetes
   - argocd
@@ -36,5 +38,5 @@ tags:
   - intent-vs-live
 outcomes:
   - Give platform teams one baseline view that crosses family boundaries instead of forcing them to assemble controls manually.
-  - Keep GitOps health, workload safety, identity posture, network exposure, secret hygiene, and admission safeguards in one operator-facing bundle.
+  - Keep GitOps health, workload safety, identity posture, network exposure, secret hygiene, Kyverno, Gatekeeper, and admission safeguards in one operator-facing bundle.
   - Provide a practical "good configuration" starter surface for future explanations, scorecards, and AI-assisted triage.

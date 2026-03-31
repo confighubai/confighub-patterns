@@ -1,0 +1,89 @@
+schema_version: control-definition-v1
+id: CTRL-CLUSTER-0006
+slug: gatekeeper-constraint-reliability
+name: Gatekeeper constraint reliability
+family: cluster-hardening
+summary: Detect OPA Gatekeeper constraint, audit, and webhook failures that cause policy gaps or cluster instability.
+description: >
+  This control groups the high-signal OPA Gatekeeper failures that operators
+  encounter in production: ConstraintTemplates not enforced, constraints silently
+  skipped, audit pods OOMKilled, webhook timeouts blocking cluster operations,
+  and upgrade-related breakages across Helm chart and controller versions.
+maturity: seeded
+severity: critical
+supported_surfaces:
+  - static
+  - live_state
+  - connected_validation
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - sdk
+  - ai
+detection_modes:
+  - native_rule
+  - sdk_worker
+resource_kinds:
+  - ConstraintTemplate
+  - Constraint
+  - Config
+  - ValidatingWebhookConfiguration
+pattern_ids:
+  - CCVE-2025-0078
+  - CCVE-2025-0317
+  - CCVE-2025-0430
+  - CCVE-2025-0431
+  - CCVE-2025-2941
+  - CCVE-2025-2942
+  - CCVE-2025-2943
+  - CCVE-2025-2944
+  - CCVE-2025-2945
+  - CCVE-2025-2946
+  - CCVE-2025-2947
+  - CCVE-2025-2953
+  - CCVE-2025-2954
+  - CCVE-2025-2955
+  - CCVE-2025-2956
+  - CCVE-2025-2957
+  - CCVE-2025-2958
+  - CCVE-2025-2959
+  - CCVE-2025-2963
+  - CCVE-2025-2964
+  - CCVE-2025-2965
+  - CCVE-2025-2967
+  - CCVE-2025-2972
+  - CCVE-2025-2975
+  - CCVE-2025-2977
+  - CCVE-2025-2978
+  - CCVE-2025-2979
+  - CCVE-2025-2990
+tags:
+  - cluster
+  - gatekeeper
+  - opa
+  - constraint
+  - policy
+  - admission
+  - baseline
+remediation:
+  strategy: diagnose_then_fix
+  safety_class: review_required
+  guidance:
+    - Monitor Gatekeeper audit pod memory usage and constraint count; OOMKilled audit pods leave policy gaps.
+    - Validate ConstraintTemplate enforcement with real admission tests, not only audit-mode violations.
+    - Test Gatekeeper upgrades and Helm chart changes in staging; webhook and CRD changes break silently.
+evidence_expectations:
+  intent_signals:
+    - ConstraintTemplate spec.crd and spec.targets
+    - Constraint match and exclude configuration
+    - Config sync and excludedNamespaces settings
+  live_signals:
+    - Gatekeeper webhook timeout or connection refused errors
+    - audit pod OOMKilled or restart loops
+    - constraints not enforcing despite audit violations
+  corroborating_sources:
+    - kubectl get constrainttemplate -o yaml
+    - kubectl get constraints --all-namespaces
+    - kubectl get pods -n gatekeeper-system -o wide
+    - kubectl logs -n gatekeeper-system -l control-plane=controller-manager
