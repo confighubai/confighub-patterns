@@ -83,6 +83,7 @@ Seeded controls now in `controls/gitops/`:
 - `applicationset-generator-safety`
 - `flux-reconciliation-reliability`
 - `flux-intent-and-reconcile-baseline`
+- `gitops-drift-detection`
 
 ## 6. Cluster And Node Hardening
 
@@ -98,6 +99,9 @@ Seeded controls now in `controls/cluster/`:
 - `pod-security-and-hostpath-baseline`
 - `control-plane-certificate-baseline`
 - `admission-webhook-availability-baseline`
+- `policy-control-migration-baseline`
+- `kyverno-policy-reliability`
+- `gatekeeper-constraint-reliability`
 
 ## 7. Framework Candidates
 
