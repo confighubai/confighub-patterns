@@ -15,6 +15,7 @@ control_ids:
   - CTRL-GITOPS-0003
   - CTRL-GITOPS-0004
   - CTRL-GITOPS-0005
+  - CTRL-GITOPS-0006
 platforms:
   - argocd
   - flux
