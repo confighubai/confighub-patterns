@@ -1,10 +1,12 @@
 {
-  "control_count": 20,
+  "control_count": 22,
   "control_ids": [
     "CTRL-CLUSTER-0001",
     "CTRL-CLUSTER-0002",
     "CTRL-CLUSTER-0003",
     "CTRL-CLUSTER-0004",
+    "CTRL-CLUSTER-0005",
+    "CTRL-CLUSTER-0006",
     "CTRL-GITOPS-0001",
     "CTRL-GITOPS-0002",
     "CTRL-GITOPS-0003",
@@ -359,6 +361,18 @@
           "track": "misconfiguration"
         },
         {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-0206",
+          "name": "Kubernetes admission webhook objectSelector bypassed for subresources",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
           "category": "STATE",
           "confidence": "high",
           "id": "CCVE-2025-0368",
@@ -366,6 +380,30 @@
           "severity": {
             "bucket": "critical",
             "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "APPLY",
+          "confidence": "unknown",
+          "id": "CCVE-2025-0586",
+          "name": "Prometheus admission webhook blocks upgrade",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-0933",
+          "name": "Pod admission fails with context deadline exceeded",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
           },
           "tags": [],
           "track": "misconfiguration"
@@ -385,8 +423,44 @@
         {
           "category": "STATE",
           "confidence": "high",
+          "id": "CCVE-2025-1263",
+          "name": "Pod admission fails with context deadline exceeded despite Ignore failurePolicy",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
           "id": "CCVE-2025-1264",
           "name": "Admission webhooks affected by dead TCP connections",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-1270",
+          "name": "Multi-version CRDs break when admission webhooks are registered",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-1629",
+          "name": "DaemonSet scheduling broken with admission plugins",
           "severity": {
             "bucket": "critical",
             "raw": "high"
@@ -407,6 +481,18 @@
           "track": "misconfiguration"
         },
         {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-1822",
+          "name": "Admission webhooks affected by dead TCP connections",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
           "category": "CONFIG",
           "confidence": "high",
           "id": "CCVE-2025-1824",
@@ -414,6 +500,30 @@
           "severity": {
             "bucket": "warning",
             "raw": "medium"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-1877",
+          "name": "DaemonSet scheduling broken with admission plugins",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-1977",
+          "name": "Admission webhook blocks ScaledObject with fallback using AverageValue",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
           },
           "tags": [],
           "track": "misconfiguration"
@@ -590,6 +700,793 @@
         "migration",
         "vap",
         "gatekeeper"
+      ]
+    },
+    {
+      "description": "This control groups the high-signal Kyverno policy engine failures that operators encounter in production: ClusterPolicy resources that never become ready or cause OOM, webhook timeouts that block pod admission, wildcard resource matching that degrades performance, and validation webhook failures during Kyverno downtime.\n",
+      "detection_modes": [
+        "native_rule",
+        "sdk_worker"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "kubectl get clusterpolicy -o yaml",
+          "kubectl get pods -n kyverno -o wide",
+          "kubectl logs -n kyverno -l app=kyverno"
+        ],
+        "intent_signals": [
+          "ClusterPolicy spec.rules with match.any or match.all",
+          "validate and mutate rule configurations",
+          "PolicyException exclusions"
+        ],
+        "live_signals": [
+          "Kyverno webhook timeout or connection refused errors",
+          "ClusterPolicy status.ready false",
+          "Kyverno pod OOMKilled or restart loops"
+        ]
+      },
+      "example_refs": [],
+      "family": "cluster-hardening",
+      "id": "CTRL-CLUSTER-0005",
+      "maturity": "seeded",
+      "name": "Kyverno policy reliability",
+      "pattern_refs": [
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-0077",
+          "name": "Kyverno wildcard resource matching causing performance degradation",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-0318",
+          "name": "Kyverno webhook timeout causes pod admission delay",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-0463",
+          "name": "Kyverno webhook timeout blocks cluster operations",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-0464",
+          "name": "Kyverno policy silently not applied",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "UNRESOLVED",
+          "confidence": "unknown",
+          "id": "CCVE-2025-0682",
+          "name": "Unresolved Kyverno policy violations",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "unresolved",
+            "kyverno",
+            "policy",
+            "compliance"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-1006",
+          "name": "Kyverno anyPattern type breaks in Kubernetes 1.23",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2701",
+          "name": "ClusterPolicy never becomes ready",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2704",
+          "name": "ClusterPolicy with empty rules causes panic",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2706",
+          "name": "Generate ClusterPolicy fails after upgrade to 1.13.0",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-2707",
+          "name": "ClusterPolicy causes Kyverno OOM and restart",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2720",
+          "name": "Admission webhook denied mutation policy",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-2741",
+          "name": "Validation webhook blocks cluster during Kyverno downtime",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-2742",
+          "name": "Internal error calling validate.kyverno.svc-fail webhook",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Monitor ClusterPolicy ready status and Kyverno controller memory usage before scaling policy count.",
+          "Avoid wildcard resource matching in validate rules; use explicit kinds lists to prevent performance degradation.",
+          "Test Kyverno upgrades in staging first, especially for anyPattern and generate rules that changed behavior across versions."
+        ],
+        "safety_class": "review_required",
+        "strategy": "diagnose_then_fix"
+      },
+      "resource_kinds": [
+        "ClusterPolicy",
+        "Policy",
+        "PolicyException",
+        "ValidatingWebhookConfiguration"
+      ],
+      "severity": "critical",
+      "slug": "kyverno-policy-reliability",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/cluster/kyverno-policy-reliability.yaml",
+      "summary": "Detect Kyverno ClusterPolicy, webhook, and validation failures that block workloads or cause cluster instability.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state",
+        "connected_validation"
+      ],
+      "tags": [
+        "cluster",
+        "kyverno",
+        "policy",
+        "admission",
+        "webhook",
+        "baseline"
+      ]
+    },
+    {
+      "description": "This control groups the high-signal OPA Gatekeeper failures that operators encounter in production: ConstraintTemplates not enforced, constraints silently skipped, audit pods OOMKilled, webhook timeouts blocking cluster operations, and upgrade-related breakages across Helm chart and controller versions.\n",
+      "detection_modes": [
+        "native_rule",
+        "sdk_worker"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "kubectl get constrainttemplate -o yaml",
+          "kubectl get constraints --all-namespaces",
+          "kubectl get pods -n gatekeeper-system -o wide",
+          "kubectl logs -n gatekeeper-system -l control-plane=controller-manager"
+        ],
+        "intent_signals": [
+          "ConstraintTemplate spec.crd and spec.targets",
+          "Constraint match and exclude configuration",
+          "Config sync and excludedNamespaces settings"
+        ],
+        "live_signals": [
+          "Gatekeeper webhook timeout or connection refused errors",
+          "audit pod OOMKilled or restart loops",
+          "constraints not enforcing despite audit violations"
+        ]
+      },
+      "example_refs": [],
+      "family": "cluster-hardening",
+      "id": "CTRL-CLUSTER-0006",
+      "maturity": "seeded",
+      "name": "Gatekeeper constraint reliability",
+      "pattern_refs": [
+        {
+          "category": "DEPEND",
+          "confidence": "high",
+          "id": "CCVE-2025-0078",
+          "name": "OPA Gatekeeper Constraint without ConstraintTemplate",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-0317",
+          "name": "OPA Gatekeeper constraint template not enforced",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-0430",
+          "name": "OPA Gatekeeper constraint not enforcing",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-0431",
+          "name": "OPA Gatekeeper webhook timeout blocks cluster",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2941",
+          "name": "Gatekeeper webhook timeout configuration ignored",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "webhook",
+            "timeout",
+            "configuration",
+            "validation"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-2942",
+          "name": "Gatekeeper webhook causes slow pod creation",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "webhook",
+            "performance",
+            "latency",
+            "pod-creation"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-2943",
+          "name": "Gatekeeper audit OOMKilled due to constraint growth",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "gatekeeper",
+            "audit",
+            "oom",
+            "memory",
+            "constraints",
+            "scaling"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2944",
+          "name": "Gatekeeper audit ignores excluded namespaces",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "audit",
+            "namespace-exclusion",
+            "kube-system",
+            "configuration"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2945",
+          "name": "Gatekeeper audit pod panic on startup",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "gatekeeper",
+            "audit",
+            "panic",
+            "crash",
+            "startup"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "APPLY",
+          "confidence": "high",
+          "id": "CCVE-2025-2946",
+          "name": "Gatekeeper external data provider connection failure",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "external-data",
+            "provider",
+            "connection",
+            "mutation"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2947",
+          "name": "Gatekeeper ConstraintTemplate VAP incompatibility",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "constrainttemplate",
+            "vap",
+            "validating-admission-policy",
+            "regression"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2953",
+          "name": "Gatekeeper Helm chart CRD creation fails on upgrade",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "helm",
+            "crd",
+            "upgrade",
+            "installation"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-2954",
+          "name": "Gatekeeper controller manager OOMKilled",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "gatekeeper",
+            "controller-manager",
+            "oom",
+            "memory",
+            "resources"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2955",
+          "name": "Gatekeeper CA certificate missing in webhook secret",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "gatekeeper",
+            "webhook",
+            "certificate",
+            "tls",
+            "secret",
+            "ca"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "APPLY",
+          "confidence": "high",
+          "id": "CCVE-2025-2956",
+          "name": "Gatekeeper policy evaluation skipped for null objects",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "policy",
+            "evaluation",
+            "bypass",
+            "security"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2957",
+          "name": "Gatekeeper policy not denied on EKS despite audit violations",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "eks",
+            "enforcement",
+            "audit",
+            "webhook"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "APPLY",
+          "confidence": "high",
+          "id": "CCVE-2025-2958",
+          "name": "Gatekeeper webhook fails on EKS Fargate",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "eks",
+            "fargate",
+            "webhook",
+            "networking",
+            "aws"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-2959",
+          "name": "Gatekeeper informer fails on single resource watch error",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "informer",
+            "sync",
+            "config",
+            "startup",
+            "crd"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-2963",
+          "name": "Gatekeeper high response time with thread limits",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "performance",
+            "threading",
+            "latency",
+            "webhook"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2964",
+          "name": "Gatekeeper EKS upgrade fails with webhook installed",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "eks",
+            "upgrade",
+            "webhook",
+            "failurepolicy"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2965",
+          "name": "Gatekeeper Helm install fails on check-ignore-label webhook",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "helm",
+            "installation",
+            "webhook",
+            "bootstrap"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2967",
+          "name": "Gatekeeper failurePolicy Fail blocks pod creation",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [
+            "gatekeeper",
+            "failurepolicy",
+            "webhook",
+            "deadlock",
+            "bootstrap"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "APPLY",
+          "confidence": "high",
+          "id": "CCVE-2025-2972",
+          "name": "Gatekeeper expanded resource not evaluated",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "expansion",
+            "pods",
+            "workload",
+            "validation"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-2975",
+          "name": "Gatekeeper Config sync stops on resource deletion",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "sync",
+            "config",
+            "inventory",
+            "data"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "APPLY",
+          "confidence": "high",
+          "id": "CCVE-2025-2977",
+          "name": "Gatekeeper rejects valid ConstraintTemplate after upgrade",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "constrainttemplate",
+            "rego",
+            "upgrade",
+            "validation"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-2978",
+          "name": "Gatekeeper violations not found after upgrade",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "audit",
+            "violations",
+            "upgrade",
+            "regression"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "STATE",
+          "confidence": "high",
+          "id": "CCVE-2025-2979",
+          "name": "Gatekeeper lock contention under load",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "performance",
+            "lock-contention",
+            "concurrency",
+            "scaling"
+          ],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "CONFIG",
+          "confidence": "high",
+          "id": "CCVE-2025-2990",
+          "name": "Gatekeeper hardcoded CA breaks custom certificate",
+          "severity": {
+            "bucket": "critical",
+            "raw": "high"
+          },
+          "tags": [
+            "gatekeeper",
+            "certificate",
+            "ca",
+            "webhook",
+            "cert-manager"
+          ],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Monitor Gatekeeper audit pod memory usage and constraint count; OOMKilled audit pods leave policy gaps.",
+          "Validate ConstraintTemplate enforcement with real admission tests, not only audit-mode violations.",
+          "Test Gatekeeper upgrades and Helm chart changes in staging; webhook and CRD changes break silently."
+        ],
+        "safety_class": "review_required",
+        "strategy": "diagnose_then_fix"
+      },
+      "resource_kinds": [
+        "ConstraintTemplate",
+        "Constraint",
+        "Config",
+        "ValidatingWebhookConfiguration"
+      ],
+      "severity": "critical",
+      "slug": "gatekeeper-constraint-reliability",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/cluster/gatekeeper-constraint-reliability.yaml",
+      "summary": "Detect OPA Gatekeeper constraint, audit, and webhook failures that cause policy gaps or cluster instability.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state",
+        "connected_validation"
+      ],
+      "tags": [
+        "cluster",
+        "gatekeeper",
+        "opa",
+        "constraint",
+        "policy",
+        "admission",
+        "baseline"
       ]
     },
     {
@@ -3063,7 +3960,9 @@
         "CTRL-CLUSTER-0001",
         "CTRL-CLUSTER-0002",
         "CTRL-CLUSTER-0003",
-        "CTRL-CLUSTER-0004"
+        "CTRL-CLUSTER-0004",
+        "CTRL-CLUSTER-0005",
+        "CTRL-CLUSTER-0006"
       ],
       "controls": [
         {
@@ -3093,6 +3992,20 @@
           "name": "Policy-control migration baseline",
           "severity": "high",
           "slug": "policy-control-migration-baseline"
+        },
+        {
+          "family": "cluster-hardening",
+          "id": "CTRL-CLUSTER-0005",
+          "name": "Kyverno policy reliability",
+          "severity": "critical",
+          "slug": "kyverno-policy-reliability"
+        },
+        {
+          "family": "cluster-hardening",
+          "id": "CTRL-CLUSTER-0006",
+          "name": "Gatekeeper constraint reliability",
+          "severity": "critical",
+          "slug": "gatekeeper-constraint-reliability"
         }
       ],
       "description": "This framework groups the first promoted controls that describe secure and resilient cluster defaults. It is aimed at platform teams who need a stable view over cluster-hardening posture rather than isolated upgrade bugs.\n",
@@ -3102,7 +4015,7 @@
       "name": "Cluster hardening",
       "outcomes": [
         "Surface the first stable cluster-hardening controls in one operator-facing bundle.",
-        "Keep pod security boundaries, control-plane certificates, admission reliability, and policy-control migration visible together.",
+        "Keep pod security, control-plane certificates, admission reliability, Kyverno, and Gatekeeper posture visible together.",
         "Provide a clean starting point for future API server, scheduler, and kubelet hardening controls."
       ],
       "platforms": [
@@ -3111,7 +4024,7 @@
       ],
       "slug": "cluster-hardening",
       "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/frameworks/cluster-hardening.yaml",
-      "summary": "Curated controls for pod security boundaries, control-plane certificates, and admission reliability.",
+      "summary": "Curated controls for pod security, control-plane certificates, admission reliability, Kyverno, and Gatekeeper.",
       "tags": [
         "cluster",
         "hardening",
@@ -3277,7 +4190,9 @@
         "CTRL-NET-0002",
         "CTRL-SECRETS-0002",
         "CTRL-CLUSTER-0001",
-        "CTRL-CLUSTER-0003"
+        "CTRL-CLUSTER-0003",
+        "CTRL-CLUSTER-0005",
+        "CTRL-CLUSTER-0006"
       ],
       "controls": [
         {
@@ -3363,6 +4278,20 @@
           "name": "Admission webhook availability baseline",
           "severity": "critical",
           "slug": "admission-webhook-availability-baseline"
+        },
+        {
+          "family": "cluster-hardening",
+          "id": "CTRL-CLUSTER-0005",
+          "name": "Kyverno policy reliability",
+          "severity": "critical",
+          "slug": "kyverno-policy-reliability"
+        },
+        {
+          "family": "cluster-hardening",
+          "id": "CTRL-CLUSTER-0006",
+          "name": "Gatekeeper constraint reliability",
+          "severity": "critical",
+          "slug": "gatekeeper-constraint-reliability"
         }
       ],
       "description": "This framework curates the highest-value promoted controls across GitOps, workload hardening, identity, exposure, secrets, and cluster safety. It is meant to answer \"what good looks like\" for platform teams who want a focused operational baseline instead of a broad compliance checklist.\n",
@@ -3372,7 +4301,7 @@
       "name": "Platform best",
       "outcomes": [
         "Give platform teams one baseline view that crosses family boundaries instead of forcing them to assemble controls manually.",
-        "Keep GitOps health, workload safety, identity posture, network exposure, secret hygiene, and admission safeguards in one operator-facing bundle.",
+        "Keep GitOps health, workload safety, identity posture, network exposure, secret hygiene, Kyverno, Gatekeeper, and admission safeguards in one operator-facing bundle.",
         "Provide a practical \"good configuration\" starter surface for future explanations, scorecards, and AI-assisted triage."
       ],
       "platforms": [
@@ -3529,8 +4458,8 @@
       ]
     }
   ],
-  "generated_at": "2026-03-31T11:22:15+00:00",
-  "pattern_coverage_count": 115,
+  "generated_at": "2026-03-31T11:39:18+00:00",
+  "pattern_coverage_count": 165,
   "pattern_ids": [
     "CCVE-2025-0001",
     "CCVE-2025-0002",
@@ -3547,6 +4476,8 @@
     "CCVE-2025-0063",
     "CCVE-2025-0067",
     "CCVE-2025-0068",
+    "CCVE-2025-0077",
+    "CCVE-2025-0078",
     "CCVE-2025-0110",
     "CCVE-2025-0124",
     "CCVE-2025-0125",
@@ -3558,20 +4489,29 @@
     "CCVE-2025-0168",
     "CCVE-2025-0169",
     "CCVE-2025-0197",
+    "CCVE-2025-0206",
     "CCVE-2025-0207",
     "CCVE-2025-0228",
     "CCVE-2025-0229",
     "CCVE-2025-0275",
     "CCVE-2025-0296",
     "CCVE-2025-0297",
+    "CCVE-2025-0317",
+    "CCVE-2025-0318",
     "CCVE-2025-0368",
+    "CCVE-2025-0430",
+    "CCVE-2025-0431",
+    "CCVE-2025-0463",
+    "CCVE-2025-0464",
     "CCVE-2025-0480",
     "CCVE-2025-0481",
+    "CCVE-2025-0586",
     "CCVE-2025-0593",
     "CCVE-2025-0665",
     "CCVE-2025-0666",
     "CCVE-2025-0667",
     "CCVE-2025-0672",
+    "CCVE-2025-0682",
     "CCVE-2025-0690",
     "CCVE-2025-0724",
     "CCVE-2025-0772",
@@ -3580,6 +4520,8 @@
     "CCVE-2025-0895",
     "CCVE-2025-0916",
     "CCVE-2025-0921",
+    "CCVE-2025-0933",
+    "CCVE-2025-1006",
     "CCVE-2025-1015",
     "CCVE-2025-1116",
     "CCVE-2025-1125",
@@ -3588,7 +4530,9 @@
     "CCVE-2025-1164",
     "CCVE-2025-1165",
     "CCVE-2025-1262",
+    "CCVE-2025-1263",
     "CCVE-2025-1264",
+    "CCVE-2025-1270",
     "CCVE-2025-1406",
     "CCVE-2025-1408",
     "CCVE-2025-1415",
@@ -3596,8 +4540,12 @@
     "CCVE-2025-1424",
     "CCVE-2025-1434",
     "CCVE-2025-1601",
+    "CCVE-2025-1629",
     "CCVE-2025-1821",
+    "CCVE-2025-1822",
     "CCVE-2025-1824",
+    "CCVE-2025-1877",
+    "CCVE-2025-1977",
     "CCVE-2025-2155",
     "CCVE-2025-2156",
     "CCVE-2025-2432",
@@ -3614,8 +4562,39 @@
     "CCVE-2025-2638",
     "CCVE-2025-2654",
     "CCVE-2025-2676",
+    "CCVE-2025-2701",
+    "CCVE-2025-2704",
+    "CCVE-2025-2706",
+    "CCVE-2025-2707",
+    "CCVE-2025-2720",
+    "CCVE-2025-2741",
+    "CCVE-2025-2742",
     "CCVE-2025-2790",
+    "CCVE-2025-2941",
+    "CCVE-2025-2942",
+    "CCVE-2025-2943",
+    "CCVE-2025-2944",
+    "CCVE-2025-2945",
+    "CCVE-2025-2946",
+    "CCVE-2025-2947",
     "CCVE-2025-2949",
+    "CCVE-2025-2953",
+    "CCVE-2025-2954",
+    "CCVE-2025-2955",
+    "CCVE-2025-2956",
+    "CCVE-2025-2957",
+    "CCVE-2025-2958",
+    "CCVE-2025-2959",
+    "CCVE-2025-2963",
+    "CCVE-2025-2964",
+    "CCVE-2025-2965",
+    "CCVE-2025-2967",
+    "CCVE-2025-2972",
+    "CCVE-2025-2975",
+    "CCVE-2025-2977",
+    "CCVE-2025-2978",
+    "CCVE-2025-2979",
+    "CCVE-2025-2990",
     "CCVE-2025-3153",
     "CCVE-2025-3167",
     "CCVE-2025-3201",

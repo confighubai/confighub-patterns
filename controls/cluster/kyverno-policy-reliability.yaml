@@ -1,0 +1,72 @@
+schema_version: control-definition-v1
+id: CTRL-CLUSTER-0005
+slug: kyverno-policy-reliability
+name: Kyverno policy reliability
+family: cluster-hardening
+summary: Detect Kyverno ClusterPolicy, webhook, and validation failures that block workloads or cause cluster instability.
+description: >
+  This control groups the high-signal Kyverno policy engine failures that operators
+  encounter in production: ClusterPolicy resources that never become ready or cause
+  OOM, webhook timeouts that block pod admission, wildcard resource matching that
+  degrades performance, and validation webhook failures during Kyverno downtime.
+maturity: seeded
+severity: critical
+supported_surfaces:
+  - static
+  - live_state
+  - connected_validation
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - sdk
+  - ai
+detection_modes:
+  - native_rule
+  - sdk_worker
+resource_kinds:
+  - ClusterPolicy
+  - Policy
+  - PolicyException
+  - ValidatingWebhookConfiguration
+pattern_ids:
+  - CCVE-2025-0077
+  - CCVE-2025-0318
+  - CCVE-2025-0463
+  - CCVE-2025-0464
+  - CCVE-2025-0682
+  - CCVE-2025-1006
+  - CCVE-2025-2701
+  - CCVE-2025-2704
+  - CCVE-2025-2706
+  - CCVE-2025-2707
+  - CCVE-2025-2720
+  - CCVE-2025-2741
+  - CCVE-2025-2742
+tags:
+  - cluster
+  - kyverno
+  - policy
+  - admission
+  - webhook
+  - baseline
+remediation:
+  strategy: diagnose_then_fix
+  safety_class: review_required
+  guidance:
+    - Monitor ClusterPolicy ready status and Kyverno controller memory usage before scaling policy count.
+    - Avoid wildcard resource matching in validate rules; use explicit kinds lists to prevent performance degradation.
+    - Test Kyverno upgrades in staging first, especially for anyPattern and generate rules that changed behavior across versions.
+evidence_expectations:
+  intent_signals:
+    - ClusterPolicy spec.rules with match.any or match.all
+    - validate and mutate rule configurations
+    - PolicyException exclusions
+  live_signals:
+    - Kyverno webhook timeout or connection refused errors
+    - ClusterPolicy status.ready false
+    - Kyverno pod OOMKilled or restart loops
+  corroborating_sources:
+    - kubectl get clusterpolicy -o yaml
+    - kubectl get pods -n kyverno -o wide
+    - kubectl logs -n kyverno -l app=kyverno
