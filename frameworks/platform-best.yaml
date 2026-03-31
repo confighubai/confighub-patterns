@@ -20,6 +20,8 @@ control_ids:
   - CTRL-RBAC-0002
   - CTRL-NET-0001
   - CTRL-NET-0002
+  - CTRL-NET-0004
+  - CTRL-NET-0005
   - CTRL-SECRETS-0002
   - CTRL-CLUSTER-0001
   - CTRL-CLUSTER-0003
@@ -30,6 +32,8 @@ platforms:
   - argocd
   - flux
   - helm
+  - gateway-api
+  - istio
 tags:
   - platform
   - baseline

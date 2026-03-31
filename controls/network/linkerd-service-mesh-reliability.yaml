@@ -1,0 +1,79 @@
+schema_version: control-definition-v1
+id: CTRL-NET-0006
+slug: linkerd-service-mesh-reliability
+name: Linkerd service mesh reliability
+family: network-exposure
+summary: Detect Linkerd proxy injection, identity, destination service, and upgrade failures that cause service disruption.
+description: >
+  This control groups the high-signal Linkerd service mesh failures that operators
+  encounter in production: proxy injection missing due to namespace labels or
+  PSP/PSA restrictions, identity issuer certificate expiry, destination service
+  crashes, proxy-init failures, and upgrade-related breakages.
+maturity: seeded
+severity: critical
+supported_surfaces:
+  - static
+  - live_state
+  - connected_validation
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - sdk
+  - ai
+detection_modes:
+  - native_rule
+  - sdk_worker
+resource_kinds:
+  - Namespace
+  - Deployment
+  - Pod
+  - ServiceProfile
+  - Server
+  - ServerAuthorization
+pattern_ids:
+  - CCVE-2025-0075
+  - CCVE-2025-0076
+  - CCVE-2025-0507
+  - CCVE-2025-2891
+  - CCVE-2025-2892
+  - CCVE-2025-2895
+  - CCVE-2025-2896
+  - CCVE-2025-2897
+  - CCVE-2025-2898
+  - CCVE-2025-2899
+  - CCVE-2025-2900
+  - CCVE-2025-2901
+  - CCVE-2025-2902
+  - CCVE-2025-2903
+  - CCVE-2025-2904
+  - CCVE-2025-2905
+tags:
+  - linkerd
+  - service-mesh
+  - proxy
+  - identity
+  - mtls
+  - injection
+  - baseline
+remediation:
+  strategy: diagnose_then_fix
+  safety_class: review_required
+  guidance:
+    - Check namespace labels for linkerd.io/inject annotation before expecting proxy injection.
+    - Monitor identity issuer certificate expiry; expired certs break mTLS silently.
+    - Ensure proxy-init has NET_RAW capability or configure CNI mode for restrictive PSA.
+evidence_expectations:
+  intent_signals:
+    - linkerd.io/inject annotation on namespace or pod
+    - linkerd.io/proxy-version annotation
+    - Server and ServerAuthorization policies
+  live_signals:
+    - proxy-init container failing with capability errors
+    - destination or proxy-injector pods in CrashLoopBackOff
+    - identity certificate expiry warnings in linkerd check
+  corroborating_sources:
+    - linkerd check --pre
+    - linkerd check
+    - kubectl get pods -n linkerd -o wide
+    - kubectl logs -n linkerd -l linkerd.io/control-plane-component=destination

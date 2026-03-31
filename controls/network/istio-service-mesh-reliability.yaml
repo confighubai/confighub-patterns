@@ -1,0 +1,76 @@
+schema_version: control-definition-v1
+id: CTRL-NET-0005
+slug: istio-service-mesh-reliability
+name: Istio service mesh reliability
+family: network-exposure
+summary: Detect Istio proxy, sidecar injection, mTLS, and Gateway failures that cause service unavailability or security gaps.
+description: >
+  This control groups the high-signal Istio service mesh failures that operators
+  encounter in production: proxy OOM from config overload, sidecar injection
+  webhook timeouts, mTLS PERMISSIVE mode allowing plaintext, Gateway Secret
+  warming failures, and Envoy crashes from duplicate filter chains.
+maturity: seeded
+severity: critical
+supported_surfaces:
+  - static
+  - live_state
+  - connected_validation
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - sdk
+  - ai
+detection_modes:
+  - native_rule
+  - sdk_worker
+resource_kinds:
+  - Gateway
+  - VirtualService
+  - DestinationRule
+  - PeerAuthentication
+  - Sidecar
+  - EnvoyFilter
+  - Pod
+pattern_ids:
+  - CCVE-2025-0060
+  - CCVE-2025-0171
+  - CCVE-2025-0172
+  - CCVE-2025-0300
+  - CCVE-2025-0401
+  - CCVE-2025-0402
+  - CCVE-2025-0403
+  - CCVE-2025-0405
+  - CCVE-2025-0406
+  - CCVE-2025-0618
+  - CCVE-2025-0619
+  - CCVE-2025-0620
+tags:
+  - istio
+  - service-mesh
+  - envoy
+  - proxy
+  - mtls
+  - sidecar
+  - gateway
+  - baseline
+remediation:
+  strategy: diagnose_then_fix
+  safety_class: review_required
+  guidance:
+    - Monitor istiod and proxy memory usage; config overload causes proxy OOM before visible errors.
+    - Use mTLS STRICT mode in production; PERMISSIVE allows plaintext traffic silently.
+    - Check Gateway Secret status for WARMING state before assuming TLS is active.
+evidence_expectations:
+  intent_signals:
+    - PeerAuthentication mtls.mode
+    - Gateway spec.servers.tls
+    - sidecar.istio.io/inject annotation
+  live_signals:
+    - proxy OOMKilled or restart loops
+    - istiod memory leak or high latency
+    - Gateway Secret stuck in WARMING state
+  corroborating_sources:
+    - istioctl proxy-status
+    - kubectl get gateway -o yaml
+    - kubectl logs -n istio-system -l app=istiod

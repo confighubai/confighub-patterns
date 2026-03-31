@@ -3,7 +3,7 @@ id: FRM-NET-0001
 slug: network-exposure
 name: Network exposure
 family: network-exposure
-summary: Curated controls for ingress, TLS, and NetworkPolicy posture that keep services reachable without overexposure.
+summary: Curated controls for ingress, TLS, NetworkPolicy, Gateway API, Istio, Linkerd, and Traefik posture.
 description: >
   This framework groups the first promoted controls for network-facing
   Kubernetes configuration. It is intended to help teams reason about safe
@@ -15,11 +15,17 @@ control_ids:
   - CTRL-NET-0002
   - CTRL-NET-0003
   - CTRL-NET-0004
+  - CTRL-NET-0005
+  - CTRL-NET-0006
+  - CTRL-NET-0007
 platforms:
   - kubernetes
   - ingress
   - gateway-api
   - networkpolicy
+  - istio
+  - linkerd
+  - traefik
 tags:
   - network
   - ingress

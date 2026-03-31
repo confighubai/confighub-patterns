@@ -1,12 +1,12 @@
 {
   "consumer_counts": {
-    "ai": 22,
-    "cli": 22,
-    "confighub": 22,
-    "cub_scout": 22,
-    "sdk": 17
+    "ai": 25,
+    "cli": 25,
+    "confighub": 25,
+    "cub_scout": 25,
+    "sdk": 20
   },
-  "control_count": 22,
+  "control_count": 25,
   "control_ids": [
     "CTRL-CLUSTER-0001",
     "CTRL-CLUSTER-0002",
@@ -24,6 +24,9 @@
     "CTRL-NET-0002",
     "CTRL-NET-0003",
     "CTRL-NET-0004",
+    "CTRL-NET-0005",
+    "CTRL-NET-0006",
+    "CTRL-NET-0007",
     "CTRL-RBAC-0001",
     "CTRL-RBAC-0002",
     "CTRL-SECRETS-0001",
@@ -767,12 +770,23 @@
       "path": "controls/network/gateway-api-route-and-tls-baseline.yaml",
       "pattern_ids": [
         "CCVE-2025-0110",
+        "CCVE-2025-0111",
+        "CCVE-2025-1401",
+        "CCVE-2025-1402",
+        "CCVE-2025-1405",
         "CCVE-2025-1406",
         "CCVE-2025-1408",
+        "CCVE-2025-1409",
+        "CCVE-2025-1414",
         "CCVE-2025-1415",
         "CCVE-2025-1416",
+        "CCVE-2025-1421",
+        "CCVE-2025-1422",
         "CCVE-2025-1424",
-        "CCVE-2025-1434"
+        "CCVE-2025-1434",
+        "CCVE-2025-1736",
+        "CCVE-2025-2257",
+        "CCVE-2025-3083"
       ],
       "remediation_guidance_count": 3,
       "remediation_safety_class": "review_required",
@@ -811,6 +825,183 @@
         "referencegrant",
         "public-exposure",
         "tls",
+        "baseline"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule",
+        "sdk_worker"
+      ],
+      "family": "network-exposure",
+      "id": "CTRL-NET-0005",
+      "maturity": "seeded",
+      "path": "controls/network/istio-service-mesh-reliability.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0060",
+        "CCVE-2025-0171",
+        "CCVE-2025-0172",
+        "CCVE-2025-0300",
+        "CCVE-2025-0401",
+        "CCVE-2025-0402",
+        "CCVE-2025-0403",
+        "CCVE-2025-0405",
+        "CCVE-2025-0406",
+        "CCVE-2025-0618",
+        "CCVE-2025-0619",
+        "CCVE-2025-0620"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "diagnose_then_fix",
+      "resource_kinds": [
+        "Gateway",
+        "VirtualService",
+        "DestinationRule",
+        "PeerAuthentication",
+        "Sidecar",
+        "EnvoyFilter",
+        "Pod"
+      ],
+      "severity": "critical",
+      "slug": "istio-service-mesh-reliability",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state",
+        "connected_validation"
+      ],
+      "tags": [
+        "istio",
+        "service-mesh",
+        "envoy",
+        "proxy",
+        "mtls",
+        "sidecar",
+        "gateway",
+        "baseline"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule",
+        "sdk_worker"
+      ],
+      "family": "network-exposure",
+      "id": "CTRL-NET-0006",
+      "maturity": "seeded",
+      "path": "controls/network/linkerd-service-mesh-reliability.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0075",
+        "CCVE-2025-0076",
+        "CCVE-2025-0507",
+        "CCVE-2025-2891",
+        "CCVE-2025-2892",
+        "CCVE-2025-2895",
+        "CCVE-2025-2896",
+        "CCVE-2025-2897",
+        "CCVE-2025-2898",
+        "CCVE-2025-2899",
+        "CCVE-2025-2900",
+        "CCVE-2025-2901",
+        "CCVE-2025-2902",
+        "CCVE-2025-2903",
+        "CCVE-2025-2904",
+        "CCVE-2025-2905"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "diagnose_then_fix",
+      "resource_kinds": [
+        "Namespace",
+        "Deployment",
+        "Pod",
+        "ServiceProfile",
+        "Server",
+        "ServerAuthorization"
+      ],
+      "severity": "critical",
+      "slug": "linkerd-service-mesh-reliability",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state",
+        "connected_validation"
+      ],
+      "tags": [
+        "linkerd",
+        "service-mesh",
+        "proxy",
+        "identity",
+        "mtls",
+        "injection",
+        "baseline"
+      ]
+    },
+    {
+      "detection_modes": [
+        "native_rule"
+      ],
+      "family": "network-exposure",
+      "id": "CTRL-NET-0007",
+      "maturity": "seeded",
+      "path": "controls/network/traefik-ingress-reliability.yaml",
+      "pattern_ids": [
+        "CCVE-2025-0141",
+        "CCVE-2025-0142",
+        "CCVE-2025-0143",
+        "CCVE-2025-0144",
+        "CCVE-2025-0145",
+        "CCVE-2025-0150",
+        "CCVE-2025-0152",
+        "CCVE-2025-0155",
+        "CCVE-2025-0157",
+        "CCVE-2025-0158"
+      ],
+      "remediation_guidance_count": 3,
+      "remediation_safety_class": "review_required",
+      "remediation_strategy": "diagnose_then_fix",
+      "resource_kinds": [
+        "IngressRoute",
+        "IngressRouteTCP",
+        "IngressRouteUDP",
+        "Middleware",
+        "TLSOption",
+        "TLSStore",
+        "TraefikService"
+      ],
+      "severity": "critical",
+      "slug": "traefik-ingress-reliability",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "sdk",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "static",
+        "live_state"
+      ],
+      "tags": [
+        "traefik",
+        "ingress",
+        "ingressroute",
+        "tls",
+        "acme",
+        "letsencrypt",
         "baseline"
       ]
     },
@@ -1083,13 +1274,13 @@
   ],
   "detection_mode_counts": {
     "derived_comparison": 5,
-    "native_rule": 22,
-    "sdk_worker": 3
+    "native_rule": 25,
+    "sdk_worker": 5
   },
   "family_counts": {
     "cluster-hardening": 6,
     "gitops-operators": 6,
-    "network-exposure": 4,
+    "network-exposure": 7,
     "rbac-and-identity": 2,
     "secrets-and-credentials": 2,
     "workload-hardening": 2
@@ -1174,7 +1365,10 @@
         "CTRL-NET-0001",
         "CTRL-NET-0002",
         "CTRL-NET-0003",
-        "CTRL-NET-0004"
+        "CTRL-NET-0004",
+        "CTRL-NET-0005",
+        "CTRL-NET-0006",
+        "CTRL-NET-0007"
       ],
       "family": "network-exposure",
       "id": "FRM-NET-0001",
@@ -1189,7 +1383,10 @@
         "kubernetes",
         "ingress",
         "gateway-api",
-        "networkpolicy"
+        "networkpolicy",
+        "istio",
+        "linkerd",
+        "traefik"
       ],
       "slug": "network-exposure",
       "tags": [
@@ -1211,6 +1408,8 @@
         "CTRL-RBAC-0002",
         "CTRL-NET-0001",
         "CTRL-NET-0002",
+        "CTRL-NET-0004",
+        "CTRL-NET-0005",
         "CTRL-SECRETS-0002",
         "CTRL-CLUSTER-0001",
         "CTRL-CLUSTER-0003",
@@ -1230,7 +1429,9 @@
         "kubernetes",
         "argocd",
         "flux",
-        "helm"
+        "helm",
+        "gateway-api",
+        "istio"
       ],
       "slug": "platform-best",
       "tags": [
@@ -1321,8 +1522,8 @@
       ]
     }
   ],
-  "generated_at": "2026-03-31T11:39:17+00:00",
-  "pattern_coverage_count": 165,
+  "generated_at": "2026-03-31T12:02:28+00:00",
+  "pattern_coverage_count": 214,
   "pattern_ids": [
     "CCVE-2025-0001",
     "CCVE-2025-0002",
@@ -1336,21 +1537,37 @@
     "CCVE-2025-0013",
     "CCVE-2025-0032",
     "CCVE-2025-0039",
+    "CCVE-2025-0060",
     "CCVE-2025-0063",
     "CCVE-2025-0067",
     "CCVE-2025-0068",
+    "CCVE-2025-0075",
+    "CCVE-2025-0076",
     "CCVE-2025-0077",
     "CCVE-2025-0078",
     "CCVE-2025-0110",
+    "CCVE-2025-0111",
     "CCVE-2025-0124",
     "CCVE-2025-0125",
     "CCVE-2025-0127",
     "CCVE-2025-0128",
     "CCVE-2025-0129",
+    "CCVE-2025-0141",
+    "CCVE-2025-0142",
+    "CCVE-2025-0143",
+    "CCVE-2025-0144",
+    "CCVE-2025-0145",
+    "CCVE-2025-0150",
+    "CCVE-2025-0152",
+    "CCVE-2025-0155",
     "CCVE-2025-0156",
+    "CCVE-2025-0157",
+    "CCVE-2025-0158",
     "CCVE-2025-0166",
     "CCVE-2025-0168",
     "CCVE-2025-0169",
+    "CCVE-2025-0171",
+    "CCVE-2025-0172",
     "CCVE-2025-0197",
     "CCVE-2025-0206",
     "CCVE-2025-0207",
@@ -1359,17 +1576,27 @@
     "CCVE-2025-0275",
     "CCVE-2025-0296",
     "CCVE-2025-0297",
+    "CCVE-2025-0300",
     "CCVE-2025-0317",
     "CCVE-2025-0318",
     "CCVE-2025-0368",
+    "CCVE-2025-0401",
+    "CCVE-2025-0402",
+    "CCVE-2025-0403",
+    "CCVE-2025-0405",
+    "CCVE-2025-0406",
     "CCVE-2025-0430",
     "CCVE-2025-0431",
     "CCVE-2025-0463",
     "CCVE-2025-0464",
     "CCVE-2025-0480",
     "CCVE-2025-0481",
+    "CCVE-2025-0507",
     "CCVE-2025-0586",
     "CCVE-2025-0593",
+    "CCVE-2025-0618",
+    "CCVE-2025-0619",
+    "CCVE-2025-0620",
     "CCVE-2025-0665",
     "CCVE-2025-0666",
     "CCVE-2025-0667",
@@ -1396,14 +1623,22 @@
     "CCVE-2025-1263",
     "CCVE-2025-1264",
     "CCVE-2025-1270",
+    "CCVE-2025-1401",
+    "CCVE-2025-1402",
+    "CCVE-2025-1405",
     "CCVE-2025-1406",
     "CCVE-2025-1408",
+    "CCVE-2025-1409",
+    "CCVE-2025-1414",
     "CCVE-2025-1415",
     "CCVE-2025-1416",
+    "CCVE-2025-1421",
+    "CCVE-2025-1422",
     "CCVE-2025-1424",
     "CCVE-2025-1434",
     "CCVE-2025-1601",
     "CCVE-2025-1629",
+    "CCVE-2025-1736",
     "CCVE-2025-1821",
     "CCVE-2025-1822",
     "CCVE-2025-1824",
@@ -1411,6 +1646,7 @@
     "CCVE-2025-1977",
     "CCVE-2025-2155",
     "CCVE-2025-2156",
+    "CCVE-2025-2257",
     "CCVE-2025-2432",
     "CCVE-2025-2472",
     "CCVE-2025-2478",
@@ -1433,6 +1669,19 @@
     "CCVE-2025-2741",
     "CCVE-2025-2742",
     "CCVE-2025-2790",
+    "CCVE-2025-2891",
+    "CCVE-2025-2892",
+    "CCVE-2025-2895",
+    "CCVE-2025-2896",
+    "CCVE-2025-2897",
+    "CCVE-2025-2898",
+    "CCVE-2025-2899",
+    "CCVE-2025-2900",
+    "CCVE-2025-2901",
+    "CCVE-2025-2902",
+    "CCVE-2025-2903",
+    "CCVE-2025-2904",
+    "CCVE-2025-2905",
     "CCVE-2025-2941",
     "CCVE-2025-2942",
     "CCVE-2025-2943",
@@ -1458,6 +1707,7 @@
     "CCVE-2025-2978",
     "CCVE-2025-2979",
     "CCVE-2025-2990",
+    "CCVE-2025-3083",
     "CCVE-2025-3153",
     "CCVE-2025-3167",
     "CCVE-2025-3201",
@@ -1495,9 +1745,9 @@
   "schema_version": "control-taxonomy-summary-v1",
   "source_pattern_repo": "/Users/alexis/Public/github-repos/confighub-scan",
   "surface_counts": {
-    "connected_validation": 3,
-    "live_state": 20,
+    "connected_validation": 5,
+    "live_state": 23,
     "repo_vs_live": 5,
-    "static": 19
+    "static": 22
   }
 }

@@ -37,12 +37,23 @@ resource_kinds:
   - Secret
 pattern_ids:
   - CCVE-2025-0110
+  - CCVE-2025-0111
+  - CCVE-2025-1401
+  - CCVE-2025-1402
+  - CCVE-2025-1405
   - CCVE-2025-1406
   - CCVE-2025-1408
+  - CCVE-2025-1409
+  - CCVE-2025-1414
   - CCVE-2025-1415
   - CCVE-2025-1416
+  - CCVE-2025-1421
+  - CCVE-2025-1422
   - CCVE-2025-1424
   - CCVE-2025-1434
+  - CCVE-2025-1736
+  - CCVE-2025-2257
+  - CCVE-2025-3083
 tags:
   - gateway-api
   - gateway

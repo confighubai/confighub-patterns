@@ -52,6 +52,10 @@ Seeded controls now in `controls/network/`:
 - `network-policy-connectivity-baseline`
 - `ingress-class-and-tls-baseline`
 - `ingress-annotation-safety`
+- `gateway-api-route-and-tls-baseline`
+- `istio-service-mesh-reliability`
+- `linkerd-service-mesh-reliability`
+- `traefik-ingress-reliability`
 
 ## 4. Secrets And Credential Hygiene
 

@@ -1,0 +1,71 @@
+schema_version: control-definition-v1
+id: CTRL-NET-0007
+slug: traefik-ingress-reliability
+name: Traefik ingress reliability
+family: network-exposure
+summary: Detect Traefik IngressRoute, TLS, ACME, cross-namespace, and Helm upgrade failures that cause routing or certificate issues.
+description: >
+  This control groups the high-signal Traefik ingress failures that operators
+  encounter in production: IngressRoute cross-namespace service references
+  blocked, TLS certificate namespace mismatches, HTTPS redirects breaking
+  ACME HTTP-01 challenges, and Helm upgrade issues causing 404 errors.
+maturity: seeded
+severity: critical
+supported_surfaces:
+  - static
+  - live_state
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - sdk
+  - ai
+detection_modes:
+  - native_rule
+resource_kinds:
+  - IngressRoute
+  - IngressRouteTCP
+  - IngressRouteUDP
+  - Middleware
+  - TLSOption
+  - TLSStore
+  - TraefikService
+pattern_ids:
+  - CCVE-2025-0141
+  - CCVE-2025-0142
+  - CCVE-2025-0143
+  - CCVE-2025-0144
+  - CCVE-2025-0145
+  - CCVE-2025-0150
+  - CCVE-2025-0152
+  - CCVE-2025-0155
+  - CCVE-2025-0157
+  - CCVE-2025-0158
+tags:
+  - traefik
+  - ingress
+  - ingressroute
+  - tls
+  - acme
+  - letsencrypt
+  - baseline
+remediation:
+  strategy: diagnose_then_fix
+  safety_class: review_required
+  guidance:
+    - Enable cross-namespace references explicitly via allowCrossNamespace or ServersTransport.
+    - Test ACME HTTP-01 challenges before enabling HTTPS redirects on the same entrypoint.
+    - Review Traefik v3 CRD API group changes before upgrading from v2.
+evidence_expectations:
+  intent_signals:
+    - IngressRoute spec.routes and spec.tls
+    - Middleware cross-namespace references
+    - TLS certificate and store configuration
+  live_signals:
+    - 404 or 421 errors from Traefik
+    - ACME certificate renewal failures
+    - IngressRoute not resolving cross-namespace services
+  corroborating_sources:
+    - kubectl get ingressroute -A -o yaml
+    - kubectl logs -l app.kubernetes.io/name=traefik
+    - traefik dashboard or API
