@@ -68,8 +68,8 @@ As of 2026-03-22:
 - the first generated framework coverage view now exists at
   `dist/framework-coverage-report-v1.json`
 - the repo-native release manifest now exists at `dist/bundle-manifest-v1.json`
-- the release manifest now advertises Kyverno and Trivy mapping files as
-  first-class runtime bundle assets
+- the release manifest now advertises Kyverno, Trivy, and Kubescape mapping
+  files as first-class runtime bundle assets
 - the promoted taxonomy now includes 19 controls, 7 frameworks, and 110 covered
   pattern IDs
 - the repo now has native validation plumbing via `make validate` and
@@ -86,7 +86,7 @@ As of 2026-03-22:
 - `frameworks/`
   - grouped views over controls for standards, platforms, and workflows
 - `mappings/`
-  - Kyverno, Trivy, and future external mapping tables
+  - Kyverno, Trivy, and Kubescape external mapping tables
 - `schema/`
   - taxonomy and bundle schemas
 - `quality/`

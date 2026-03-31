@@ -1,6 +1,6 @@
 {
   "schema_version": "bundle-manifest-v1",
-  "published_at": "2026-03-24T22:06:19Z",
+  "published_at": "2026-03-31T08:14:33Z",
   "bundle_version": "dev",
   "source_repo": "confighubai/confighub-patterns",
   "files": [
@@ -34,6 +34,14 @@
       "schema_version": "trivy-ccve-mapping-v1",
       "sha256": "fa8323306463c5b5898462a62d682b19f126777f744bf953f3d1a5a0ada5a469",
       "size_bytes": 212,
+      "required": true
+    },
+    {
+      "name": "kubescape-ccve-mappings",
+      "path": "mappings/kubescape/kubescape-ccve-mappings-v1.json",
+      "schema_version": "kubescape-ccve-mapping-v1",
+      "sha256": "29f107338c2f85ff96f477777d456b19ff4d29c1c7921ae74b1a39bc654b437b",
+      "size_bytes": 17249,
       "required": true
     },
     {
