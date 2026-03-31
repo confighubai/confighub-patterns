@@ -1,5 +1,5 @@
 {
-  "control_count": 19,
+  "control_count": 20,
   "control_ids": [
     "CTRL-CLUSTER-0001",
     "CTRL-CLUSTER-0002",
@@ -10,6 +10,7 @@
     "CTRL-GITOPS-0003",
     "CTRL-GITOPS-0004",
     "CTRL-GITOPS-0005",
+    "CTRL-GITOPS-0006",
     "CTRL-NET-0001",
     "CTRL-NET-0002",
     "CTRL-NET-0003",
@@ -719,24 +720,29 @@
       ]
     },
     {
-      "description": "This control covers the high-signal Flux failure modes that show up as broken HelmRelease or Kustomization reconciliation, especially where static config and live-state evidence need to be read together.\n",
+      "description": "This control covers the high-signal Flux failure modes that show up as broken GitRepository sources, failed Kustomization builds, and stalled HelmRelease reconciliation. It includes critical source readiness failures that block the entire GitOps pipeline, especially where static config and live-state evidence need to be read together.\n",
       "detection_modes": [
         "native_rule",
         "derived_comparison"
       ],
       "evidence_expectations": {
         "corroborating_sources": [
+          "flux get sources git -A",
           "flux get all",
           "source-controller logs",
+          "kustomize-controller logs",
           "helm-controller logs"
         ],
         "intent_signals": [
           "spec.timeout",
-          "spec.dependsOn"
+          "spec.dependsOn",
+          "spec.url (GitRepository)",
+          "spec.chart (HelmRelease)"
         ],
         "live_signals": [
           "status.conditions",
-          "Ready Unknown or Failed reconciliation state"
+          "Ready False or Unknown reconciliation state",
+          "source-controller error messages"
         ]
       },
       "example_refs": [
@@ -756,6 +762,42 @@
       "maturity": "seeded",
       "name": "Flux reconciliation reliability",
       "pattern_refs": [
+        {
+          "category": "SOURCE",
+          "confidence": "high",
+          "id": "CCVE-2025-0001",
+          "name": "GitRepository not ready",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "RENDER",
+          "confidence": "high",
+          "id": "CCVE-2025-0002",
+          "name": "Kustomization build failed",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "SOURCE",
+          "confidence": "high",
+          "id": "CCVE-2025-0003",
+          "name": "HelmRelease chart not ready",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
         {
           "category": "STATE",
           "confidence": "high",
@@ -823,6 +865,9 @@
       ],
       "remediation": {
         "guidance": [
+          "Check GitRepository authentication and network access when source is not ready.",
+          "Verify Kustomization overlay paths and patch targets when builds fail.",
+          "Confirm HelmRepository and chart references when HelmRelease cannot fetch chart.",
           "Fix dependency cycles and timeout configuration in intent before retrying reconciliation.",
           "Correlate live Ready or progressing state with the desired config to separate rollout lag from bad configuration.",
           "Use live cluster evidence when investigating stuck or repeatedly failing releases."
@@ -831,13 +876,14 @@
         "strategy": "diagnose_then_fix"
       },
       "resource_kinds": [
+        "GitRepository",
         "HelmRelease",
         "Kustomization"
       ],
       "severity": "high",
       "slug": "flux-reconciliation-reliability",
       "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/gitops/flux-reconciliation-reliability.yaml",
-      "summary": "Detect release, source, and dependency conditions that cause Flux reconciliation to stall or fail.",
+      "summary": "Detect source, build, release, and dependency conditions that cause Flux reconciliation to stall or fail.",
       "supported_consumers": [
         "cli",
         "cub_scout",
@@ -852,9 +898,11 @@
       "tags": [
         "flux",
         "gitops",
+        "gitrepository",
         "helmrelease",
         "kustomization",
-        "reconciliation"
+        "reconciliation",
+        "source-readiness"
       ]
     },
     {
@@ -1329,6 +1377,109 @@
         "gitrepository",
         "prune",
         "baseline",
+        "reconciliation"
+      ]
+    },
+    {
+      "description": "This control surfaces the high-signal drift conditions that indicate live cluster state has diverged from Git-declared intent. It covers both manual kubectl edits and image tag drift that break the GitOps promise of source-of-truth enforcement. These patterns are essential for the intent-vs-live comparison story and apply to both ArgoCD and Flux managed workloads.\n",
+      "detection_modes": [
+        "native_rule",
+        "derived_comparison"
+      ],
+      "evidence_expectations": {
+        "corroborating_sources": [
+          "kubectl diff -f <manifest>",
+          "argocd app diff <name>",
+          "flux diff kustomization <name>"
+        ],
+        "intent_signals": [
+          "spec.template.spec.containers[*].image (from Git source)",
+          "desired resource spec from Git/Helm/Kustomize"
+        ],
+        "live_signals": [
+          "metadata.annotations['kubectl.kubernetes.io/last-applied-configuration']",
+          "actual running container images",
+          "live resource spec differing from Git source"
+        ]
+      },
+      "example_refs": [
+        {
+          "path": "examples/gitops-demo-packet/repo/kustomize-flux/apps/guestbook/deployment.yaml",
+          "purpose": "Git intent example that can be contrasted with live state to show drift.",
+          "repo": "confighub-scan"
+        },
+        {
+          "path": "examples/gitops-demo-packet/snapshot/live-state.yaml",
+          "purpose": "Live cluster snapshot showing drifted resources with different image tags.",
+          "repo": "confighub-scan"
+        }
+      ],
+      "family": "gitops-operators",
+      "id": "CTRL-GITOPS-0006",
+      "maturity": "seeded",
+      "name": "GitOps drift detection",
+      "pattern_refs": [
+        {
+          "category": "DRIFT",
+          "confidence": "medium",
+          "id": "CCVE-2025-0011",
+          "name": "Manual kubectl edit detected",
+          "severity": {
+            "bucket": "warning",
+            "raw": "warning"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        },
+        {
+          "category": "DRIFT",
+          "confidence": "high",
+          "id": "CCVE-2025-0012",
+          "name": "Image tag drift",
+          "severity": {
+            "bucket": "critical",
+            "raw": "critical"
+          },
+          "tags": [],
+          "track": "misconfiguration"
+        }
+      ],
+      "remediation": {
+        "guidance": [
+          "Identify the source of drift (manual edit, auto-updater, CI, or emergency patch).",
+          "Determine if drift should be permanent (update Git to match live) or reverted (sync to restore intent).",
+          "Enable drift alerting to detect future manual changes before they cause sync failures.",
+          "Use image digests or specific version tags to prevent unintended image drift."
+        ],
+        "safety_class": "review_required",
+        "strategy": "diagnose_then_fix"
+      },
+      "resource_kinds": [
+        "Deployment",
+        "StatefulSet",
+        "DaemonSet",
+        "Pod"
+      ],
+      "severity": "critical",
+      "slug": "gitops-drift-detection",
+      "source_path": "/Users/alexis/Public/github-repos/confighub-patterns/controls/gitops/gitops-drift-detection.yaml",
+      "summary": "Detect configuration drift between Git intent and live cluster state across ArgoCD and Flux environments.",
+      "supported_consumers": [
+        "cli",
+        "cub_scout",
+        "confighub",
+        "ai"
+      ],
+      "supported_surfaces": [
+        "live_state",
+        "repo_vs_live"
+      ],
+      "tags": [
+        "gitops",
+        "drift",
+        "intent-vs-live",
+        "argocd",
+        "flux",
         "reconciliation"
       ]
     },
@@ -2975,7 +3126,8 @@
         "CTRL-GITOPS-0002",
         "CTRL-GITOPS-0003",
         "CTRL-GITOPS-0004",
-        "CTRL-GITOPS-0005"
+        "CTRL-GITOPS-0005",
+        "CTRL-GITOPS-0006"
       ],
       "controls": [
         {
@@ -3012,6 +3164,13 @@
           "name": "Flux intent and reconcile baseline",
           "severity": "high",
           "slug": "flux-intent-and-reconcile-baseline"
+        },
+        {
+          "family": "gitops-operators",
+          "id": "CTRL-GITOPS-0006",
+          "name": "GitOps drift detection",
+          "severity": "critical",
+          "slug": "gitops-drift-detection"
         }
       ],
       "description": "This framework groups the first operator-facing controls for Argo CD and Flux. It is aimed at teams who need to distinguish desired-state defects from rollout and reconciliation failures.\n",
@@ -3109,6 +3268,7 @@
       "control_ids": [
         "CTRL-GITOPS-0003",
         "CTRL-GITOPS-0005",
+        "CTRL-GITOPS-0006",
         "CTRL-WORKLOAD-0001",
         "CTRL-WORKLOAD-0002",
         "CTRL-RBAC-0001",
@@ -3133,6 +3293,13 @@
           "name": "Flux intent and reconcile baseline",
           "severity": "high",
           "slug": "flux-intent-and-reconcile-baseline"
+        },
+        {
+          "family": "gitops-operators",
+          "id": "CTRL-GITOPS-0006",
+          "name": "GitOps drift detection",
+          "severity": "critical",
+          "slug": "gitops-drift-detection"
         },
         {
           "family": "workload-hardening",
@@ -3362,13 +3529,18 @@
       ]
     }
   ],
-  "generated_at": "2026-03-24T22:06:13+00:00",
-  "pattern_coverage_count": 110,
+  "generated_at": "2026-03-31T11:22:15+00:00",
+  "pattern_coverage_count": 115,
   "pattern_ids": [
+    "CCVE-2025-0001",
+    "CCVE-2025-0002",
+    "CCVE-2025-0003",
     "CCVE-2025-0004",
     "CCVE-2025-0005",
     "CCVE-2025-0006",
     "CCVE-2025-0007",
+    "CCVE-2025-0011",
+    "CCVE-2025-0012",
     "CCVE-2025-0013",
     "CCVE-2025-0032",
     "CCVE-2025-0039",

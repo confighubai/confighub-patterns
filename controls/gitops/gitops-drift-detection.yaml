@@ -1,0 +1,68 @@
+schema_version: control-definition-v1
+id: CTRL-GITOPS-0006
+slug: gitops-drift-detection
+name: GitOps drift detection
+family: gitops-operators
+summary: Detect configuration drift between Git intent and live cluster state across ArgoCD and Flux environments.
+description: >
+  This control surfaces the high-signal drift conditions that indicate live
+  cluster state has diverged from Git-declared intent. It covers both manual
+  kubectl edits and image tag drift that break the GitOps promise of
+  source-of-truth enforcement. These patterns are essential for the
+  intent-vs-live comparison story and apply to both ArgoCD and Flux
+  managed workloads.
+maturity: seeded
+severity: critical
+supported_surfaces:
+  - live_state
+  - repo_vs_live
+supported_consumers:
+  - cli
+  - cub_scout
+  - confighub
+  - ai
+detection_modes:
+  - native_rule
+  - derived_comparison
+resource_kinds:
+  - Deployment
+  - StatefulSet
+  - DaemonSet
+  - Pod
+pattern_ids:
+  - CCVE-2025-0011
+  - CCVE-2025-0012
+tags:
+  - gitops
+  - drift
+  - intent-vs-live
+  - argocd
+  - flux
+  - reconciliation
+example_refs:
+  - repo: confighub-scan
+    path: examples/gitops-demo-packet/repo/kustomize-flux/apps/guestbook/deployment.yaml
+    purpose: Git intent example that can be contrasted with live state to show drift.
+  - repo: confighub-scan
+    path: examples/gitops-demo-packet/snapshot/live-state.yaml
+    purpose: Live cluster snapshot showing drifted resources with different image tags.
+remediation:
+  strategy: diagnose_then_fix
+  safety_class: review_required
+  guidance:
+    - Identify the source of drift (manual edit, auto-updater, CI, or emergency patch).
+    - Determine if drift should be permanent (update Git to match live) or reverted (sync to restore intent).
+    - Enable drift alerting to detect future manual changes before they cause sync failures.
+    - Use image digests or specific version tags to prevent unintended image drift.
+evidence_expectations:
+  intent_signals:
+    - spec.template.spec.containers[*].image (from Git source)
+    - desired resource spec from Git/Helm/Kustomize
+  live_signals:
+    - metadata.annotations['kubectl.kubernetes.io/last-applied-configuration']
+    - actual running container images
+    - live resource spec differing from Git source
+  corroborating_sources:
+    - kubectl diff -f <manifest>
+    - argocd app diff <name>
+    - flux diff kustomization <name>

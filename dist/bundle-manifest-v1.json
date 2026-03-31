@@ -1,6 +1,6 @@
 {
   "schema_version": "bundle-manifest-v1",
-  "published_at": "2026-03-31T08:14:33Z",
+  "published_at": "2026-03-31T11:22:17Z",
   "bundle_version": "dev",
   "source_repo": "confighubai/confighub-patterns",
   "files": [
@@ -64,24 +64,24 @@
       "name": "control-taxonomy-summary",
       "path": "dist/control-taxonomy-summary-v1.json",
       "schema_version": "control-taxonomy-summary-v1",
-      "sha256": "dc4f55e3c2fe7760c44af82ad18084837bf18a39d98446edeb6c03376402f60b",
-      "size_bytes": 31478,
+      "sha256": "2ff5cb12c9d13f11fd2858bd8b6ede846233a80d93ad30bf30e2eeef9c3d6846",
+      "size_bytes": 32831,
       "required": false
     },
     {
       "name": "control-framework-bundle",
       "path": "dist/control-framework-bundle-v1.json",
       "schema_version": "control-framework-bundle-v1",
-      "sha256": "70aaa8cf9dd0ea54597248275686e1f8a2d4dc0c2bd36be199c7662ee7a57054",
-      "size_bytes": 115283,
+      "sha256": "0996fe809a9e285545a1d3e4b53237be3166082ceeb2cbcadc9d723d7d88f506",
+      "size_bytes": 121316,
       "required": false
     },
     {
       "name": "framework-coverage-report",
       "path": "dist/framework-coverage-report-v1.json",
       "schema_version": "framework-coverage-report-v1",
-      "sha256": "7367254c54681db130553535f69b739cc1444959f3ab93b8d55ac81662e042e8",
-      "size_bytes": 12308,
+      "sha256": "a75255b34e7c8e6f745ad56079fa6bfa91f399f8ad5a3107aaf11459fcce1b6c",
+      "size_bytes": 12546,
       "required": false
     }
   ]
