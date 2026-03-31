@@ -26,6 +26,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--risk-function-links", default="dist/risk-function-links-v1.json", help="Path to risk/function links")
     parser.add_argument("--kyverno-mappings", default="mappings/kyverno/kyverno-ccve-mappings-v1.json", help="Path to Kyverno mapping file")
     parser.add_argument("--trivy-mappings", default="mappings/trivy/trivy-ccve-mappings-v1.json", help="Path to Trivy mapping file")
+    parser.add_argument("--kubescape-mappings", default="mappings/kubescape/kubescape-ccve-mappings-v1.json", help="Path to Kubescape mapping file")
     parser.add_argument("--cross-tool-mapping", default="dist/quality/cross-tool-mapping-v1.json", help="Path to cross-tool mapping artifact")
     parser.add_argument("--helm-pattern-db", default="dist/helm-pattern-database-v1.json", help="Path to Helm pattern database artifact")
     parser.add_argument("--control-taxonomy-summary", default="dist/control-taxonomy-summary-v1.json", help="Path to control taxonomy summary artifact")
@@ -100,6 +101,7 @@ def build_manifest(args: argparse.Namespace) -> dict[str, Any]:
         ("risk-function-links", Path(args.risk_function_links), True),
         ("kyverno-ccve-mappings", Path(args.kyverno_mappings), True),
         ("trivy-ccve-mappings", Path(args.trivy_mappings), True),
+        ("kubescape-ccve-mappings", Path(args.kubescape_mappings), True),
         ("cross-tool-mapping", Path(args.cross_tool_mapping), True),
         ("helm-pattern-database", Path(args.helm_pattern_db), False),
         ("control-taxonomy-summary", Path(args.control_taxonomy_summary), False),

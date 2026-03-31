@@ -2,7 +2,7 @@
 
 ## Current State
 
-As of 2026-03-22:
+As of 2026-03-31:
 - `confighub-patterns` exists locally as the first extraction bootstrap
 - the bootstrap repo is now published at `https://github.com/confighubai/confighub-patterns`
 - repo scope, bundle scope, directory ownership docs, and taxonomy docs are in place
@@ -30,7 +30,7 @@ Move source-of-truth assets only after:
 
 When the move starts for real, the safest first copies are:
 - pattern source files from `confighub-scan/risks/`
-- mapping tables from `confighub-scan/risks/kyverno/` and `risks/trivy/`
+- mapping tables from `confighub-scan/risks/kyverno/`, `risks/trivy/`, and `risks/kubescape/`
 - schema/taxonomy files from `confighub-scan/risks/schema/`
 - pattern-quality inputs from `confighub-scan/risks/quality/`
 - bundle builders and released runtime artifacts
@@ -50,9 +50,9 @@ Current copy state:
   artifacts, mappings, schemas, and policy inputs are all now present locally
 - this is still a non-destructive copy wave; `confighub-scan` remains the
   active write home until consumers switch to released bundles
-- the copied wave now includes schema files, mapping JSONs, pattern-quality
-  policy inputs, pattern-facing builders, released bundle artifacts, and the
-  source corpus README
+- the copied wave now includes schema files, mapping JSONs (Kyverno, Trivy,
+  Kubescape), pattern-quality policy inputs, pattern-facing builders, released
+  bundle artifacts, and the source corpus README
 
 The target taxonomy is now explicit:
 - `patterns/` for broad canonical risk knowledge
@@ -81,6 +81,8 @@ The first seeded implementation slice is now explicit too:
 - a repo-native release manifest at `dist/bundle-manifest-v1.json`
 - a repo-native validation path via `make validate` and
   `.github/workflows/validate.yml`
+- all three imported-evidence mapping assets (Kyverno, Trivy, Kubescape) are
+  now first-class in the bundle manifest
 
 ## Explicit Non-Goals For Bootstrap
 
