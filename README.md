@@ -1,143 +1,133 @@
 # confighub-patterns
 
-`confighub-patterns` is a repo for ConfigHub risk pattern data and released runtime bundles.
+`confighub-patterns` is the shared data and bundle repo used by
+`confighub-scan` and ConfigHub-connected scanning flows.
 
-This repo exists to separate data-like pattern assets from the scanner engine.
-It should become the authoring home for:
-- canonical CCVE and related pattern definitions,
-- promoted controls derived from the broader corpus,
-- framework views that group controls for standards and workflows,
-- third-party mapping tables,
-- remediation metadata and safety classes,
-- taxonomy and bundle schemas,
-- pattern-quality and promotion policy inputs,
-- released bundle artifacts.
+If `confighub-scan` is the engine, this repo is the data it runs on.
 
-It should not become a second engine repo. Executable Go rules, scan
-orchestration, worker wrappers, CLI code, and engine-only quality reports stay
-in `confighub-scan`.
+## What This Repo Is For
 
-## Primary Consumers
+This repo holds the reusable assets behind scanning and validation:
 
-This repo exists to support three clear user stories:
+- pattern definitions
+- promoted controls
+- framework views
+- third-party mapping tables
+- external evidence schemas
+- bundle manifests and release artifacts
 
-1. ConfigHub built-in functions
-   - function workers use `confighub-scan` for execution and this repo for catalog, controls, mappings, and remedies
-2. Standalone cub-based scan
-   - today the local entry point is `cub-scan`
-   - later the same engine may be exposed as `cub scan` or a `cub` plugin
-3. Wrapper CLIs and TUIs
-   - `cub-scout` and similar tools wrap the same engine and consume the same bundle contract
+It exists so the scanner and ConfigHub integrations can share one pattern and
+bundle source instead of copying data logic into multiple places.
 
-## Near-Term Product Goal
+## What This Repo Is Not
 
-This repo is not just a migration bucket. In the next wave it needs to support
-three practical outcomes:
+This is not a second scanner.
 
-1. make ConfigHub built-in functions easy to consume through released bundles
-2. make local CLI and AI-assisted scan flows easy to consume through the same
-   bundles
-3. make the database bigger every week through mined patterns, borrowed external
-   patterns, mappings, and promoted controls
+It does not own:
 
-## Status
+- executable Go rules
+- CLI behavior
+- worker processes
+- scan orchestration
+- ConfigHub integration code
 
-Bootstrap plus active bundle/control growth.
+Those stay in `confighub-scan`.
 
-As of 2026-03-22:
-- this repo has been created locally as the first extraction step,
-- the repo is now also pushed to GitHub at `confighubai/confighub-patterns`,
-- no canonical pattern source files have been moved yet,
-- `confighub-scan` remains the active authoring home until the migration
-  checklist is executed,
-- the shared bundle contract and migration sequence still live in
-  `confighub-scan` planning docs.
-- first-wave readiness is now captured by
-  `scripts/build-first-wave-copy-manifest.py` and
-  `dist/first-wave-copy-manifest-v1.json`
-- the full first-wave copy set is now present:
-  - all 39 planned items are present in `confighub-patterns`
-  - the copy manifest now tracks both `copied_matching` and `copied_drifted` states as repo-native files intentionally evolve
-  - the raw pattern corpus and archive are copied locally
-  - `confighub-scan` still remains the active write home until consumer cutover
-- the first seeded controls and frameworks now live in this repo and validate
-  through `scripts/build-control-taxonomy-summary.py`
-- the first generated promoted-taxonomy bundle now exists at
-  `dist/control-framework-bundle-v1.json`
-- the first generated framework coverage view now exists at
-  `dist/framework-coverage-report-v1.json`
-- the repo-native release manifest now exists at `dist/bundle-manifest-v1.json`
-- the release manifest now advertises Kyverno, Trivy, and Kubescape mapping
-  files as first-class runtime bundle assets
-- the promoted taxonomy now includes 25 controls, 7 frameworks, and 214 covered
-  pattern IDs
-- the repo now has native validation plumbing via `make validate` and
-  `.github/workflows/validate.yml`
-- near-term success is not only "move files"; it is also "grow the reusable
-  database while keeping bundle consumers easy to support"
+## How It Gets Used
 
-## Intended Layout
+### Outside ConfigHub
+
+`cub-scan` uses bundle assets from this repo for:
+
+- risk and pattern metadata
+- promoted controls
+- imported-evidence mappings
+- external evidence schema contracts
+
+### Inside ConfigHub
+
+ConfigHub function workers use `confighub-scan` for execution and this repo for:
+
+- pattern and CCVE data
+- controls and framework views
+- mapping tables
+- released bundle artifacts
+
+### For Evidence Contracts
+
+The canonical external evidence schema also lives here, so advisory evidence
+export can stay consistent across tools.
+
+## What Lives Here
+
+The intended layout is:
 
 - `patterns/`
-  - canonical CCVE and related pattern definitions
+  Canonical pattern definitions.
 - `controls/`
-  - promoted operator-facing controls derived from patterns
+  Operator-facing promoted controls.
 - `frameworks/`
-  - grouped views over controls for standards, platforms, and workflows
+  Grouped views for standards, platforms, and workflows.
 - `mappings/`
-  - Kyverno, Trivy, and Kubescape external mapping tables
+  Kyverno, Trivy, Kubescape, and other external mappings.
 - `schema/`
-  - taxonomy and bundle schemas
-- `quality/`
-  - quality, promotion, severity, and release-policy inputs
+  Bundle and evidence schemas.
 - `scripts/`
-  - bundle and release-artifact builders
+  Bundle and release builders.
 - `dist/`
-  - released bundle artifacts
+  Generated bundle artifacts.
 - `docs/`
-  - authoring, taxonomy, and release guidance
+  Authoring and release guidance.
 
-See also:
-- `docs/TAXONOMY.md`
-- `docs/PRODUCT-THESIS.md`
-- `docs/CANDIDATE-CONTROL-FAMILIES.md`
-- `docs/EXTERNAL-REGO-LIBRARY-REVIEW.md`
-- `dist/control-taxonomy-summary-v1.json`
-- `dist/control-framework-bundle-v1.json`
-- `dist/framework-coverage-report-v1.json`
-- `dist/bundle-manifest-v1.json`
+## Current Status
 
-## Consumer Model
+As of 2026-04-02:
 
-The expected interaction model is:
-- `confighub-patterns` publishes versioned bundles,
-- ConfigHub built-in functions consume those bundles through `confighub-scan`,
-- standalone cub-based scan consumes those bundles locally and in CI,
-- wrapper CLIs/TUIs consume the same bundle cache contract.
+- this repo is active and used as the shared bundle home
+- the release manifest exists at `dist/bundle-manifest-v1.json`
+- the promoted taxonomy includes 25 controls, 7 frameworks, and 214 covered
+  pattern IDs
+- Kyverno, Trivy, and Kubescape mappings are published as bundle assets
+- the external evidence schema is published here
+- local validation is wired through `make validate`
 
-The initial shared cache contract is:
-- `~/.confighub/pattern-bundles/current/`
-- compatibility path: `~/.confighub/risk-catalog-v1.json`
+`confighub-scan` remains the engine and integration repo.
 
-## Validation
+## How To Work On It
 
-Local validation now runs natively in this repo:
+Validate the repo locally with:
 
 ```bash
 make validate
 ```
 
-If the sibling `confighub-scan` checkout is not at `../confighub-scan`, point the
-copy-manifest check at it explicitly:
+If your sibling `confighub-scan` checkout is not at `../confighub-scan`, point
+the copy-manifest check at it explicitly:
 
 ```bash
 make validate FIRST_WAVE_SOURCE_REPO=/path/to/confighub-scan
 ```
 
-## Current References
+## The Relationship To `confighub-scan`
 
-Until the migration is complete, the active planning contract remains in
-`confighub-scan`:
-- `docs/adr/0002-repo-boundaries-pattern-home-and-scan-surfaces.md`
-- `planning/PATTERNS-REPO-MIGRATION-CHECKLIST.md`
-- `planning/BUNDLE-CONTRACT-v1.md`
+Use this simple split:
+
+| Concern | Repo |
+|---|---|
+| Scan engine and Go rules | `confighub-scan` |
+| ConfigHub workers and SDK integration | `confighub-scan` |
+| Local CLI behavior | `confighub-scan` |
+| Pattern, control, mapping, and schema data | `confighub-patterns` |
+| Bundle artifacts | `confighub-patterns` |
+
+If you are looking for "how do I scan something?" go to `confighub-scan`.
+If you are looking for "where does the shared pattern and bundle data live?" you
+are in the right repo.
+
+## Best Related References
+
+- `../confighub-scan/README.md`
+- `../confighub-scan/docs/START-HERE.md`
+- `docs/MIGRATION-STATUS.md`
+- `docs/TAXONOMY.md`
+- `dist/bundle-manifest-v1.json`
