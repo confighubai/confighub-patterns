@@ -2,7 +2,7 @@
 
 ## Current State
 
-As of 2026-03-31:
+As of 2026-04-02:
 - `confighub-patterns` exists locally as the first extraction bootstrap
 - the bootstrap repo is now published at `https://github.com/confighubai/confighub-patterns`
 - repo scope, bundle scope, directory ownership docs, and taxonomy docs are in place
@@ -73,9 +73,9 @@ Near-term execution rule:
   and wrappers while the migration wave continues
 
 The first seeded implementation slice is now explicit too:
-- 19 seeded controls
+- 25 seeded controls
 - 7 seeded frameworks
-- a summary artifact at `dist/control-taxonomy-summary-v1.json`
+- a summary artifact at `dist/control-taxonomy-summary-v1.json` covering 214 promoted patterns
 - an initial promoted-taxonomy bundle at `dist/control-framework-bundle-v1.json`
 - a framework coverage report at `dist/framework-coverage-report-v1.json`
 - a repo-native release manifest at `dist/bundle-manifest-v1.json`

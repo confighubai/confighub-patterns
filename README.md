@@ -43,7 +43,7 @@ three practical outcomes:
 
 ## Status
 
-Bootstrap only.
+Bootstrap plus active bundle/control growth.
 
 As of 2026-03-22:
 - this repo has been created locally as the first extraction step,
@@ -70,7 +70,7 @@ As of 2026-03-22:
 - the repo-native release manifest now exists at `dist/bundle-manifest-v1.json`
 - the release manifest now advertises Kyverno, Trivy, and Kubescape mapping
   files as first-class runtime bundle assets
-- the promoted taxonomy now includes 19 controls, 7 frameworks, and 110 covered
+- the promoted taxonomy now includes 25 controls, 7 frameworks, and 214 covered
   pattern IDs
 - the repo now has native validation plumbing via `make validate` and
   `.github/workflows/validate.yml`
