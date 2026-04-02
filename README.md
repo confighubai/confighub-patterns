@@ -1,7 +1,6 @@
 # confighub-patterns
 
-`confighub-patterns` is the planned source-of-truth repo for ConfigHub pattern
-data and released runtime bundles.
+`confighub-patterns` is a repo for ConfigHub risk pattern data and released runtime bundles.
 
 This repo exists to separate data-like pattern assets from the scanner engine.
 It should become the authoring home for:
