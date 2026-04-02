@@ -1,6 +1,6 @@
 {
   "schema_version": "bundle-manifest-v1",
-  "published_at": "2026-03-31T12:02:36Z",
+  "published_at": "2026-04-02T10:21:32Z",
   "bundle_version": "dev",
   "source_repo": "confighubai/confighub-patterns",
   "files": [
@@ -82,6 +82,14 @@
       "schema_version": "framework-coverage-report-v1",
       "sha256": "793eb0d5b1cf9e34189fcf02254e60a23d91049c352227ce42aa8d4867c36319",
       "size_bytes": 17592,
+      "required": false
+    },
+    {
+      "name": "external-evidence-schema",
+      "path": "schema/external-evidence-v1.schema.json",
+      "schema_version": "external-evidence-v1",
+      "sha256": "b3b32e16c7cb5ec407bc8aed5e6dea787be4a8d05db4f9b204c425f63c1d7125",
+      "size_bytes": 8971,
       "required": false
     }
   ]

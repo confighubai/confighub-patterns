@@ -1,0 +1,299 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://confighub.ai/schema/external-evidence-v1.schema.json",
+  "schema_version": "external-evidence-v1",
+  "title": "External Evidence Payload v1",
+  "description": "Schema for advisory external evidence payloads. External evidence informs but does NOT gate ConfigHub validation workflows. The authoritative validation lane uses validate-unit/validate-space with ValidationResult output.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "provenance",
+    "findings",
+    "summary"
+  ],
+  "properties": {
+    "provenance": {
+      "description": "Metadata about how/when/where the scan was produced. Required for all external evidence submissions.",
+      "$ref": "#/$defs/provenance"
+    },
+    "association": {
+      "description": "Optional ConfigHub entity association. Links external evidence to Space, Unit, or Revision for richer views.",
+      "$ref": "#/$defs/association"
+    },
+    "findings": {
+      "description": "Array of scan findings. May be empty if the scan passed with no issues.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/finding"
+      }
+    },
+    "summary": {
+      "description": "Aggregate counts and pass/fail status for the scan.",
+      "$ref": "#/$defs/summary"
+    }
+  },
+  "$defs": {
+    "provenance": {
+      "type": "object",
+      "description": "Provenance captures metadata about scan origin and context.",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "source_version",
+        "scan_time"
+      ],
+      "properties": {
+        "source": {
+          "type": "string",
+          "description": "Tool that produced the evidence (e.g., 'cub-scan', 'trivy', 'kubescape').",
+          "minLength": 1
+        },
+        "source_version": {
+          "type": "string",
+          "description": "Version of the source tool.",
+          "minLength": 1
+        },
+        "scan_time": {
+          "type": "string",
+          "description": "ISO8601 timestamp of scan execution.",
+          "format": "date-time"
+        },
+        "catalog_version": {
+          "type": "string",
+          "description": "Catalog identifier used for the scan (e.g., 'risk-catalog-v1.json@abc123')."
+        },
+        "client_id": {
+          "type": "string",
+          "description": "Registered client identity for external evidence submission. Required when submitting to ConfigHub."
+        },
+        "environment": {
+          "type": "string",
+          "description": "Environment label (e.g., 'production', 'staging', 'development')."
+        },
+        "git_commit": {
+          "type": "string",
+          "description": "Git commit SHA of the scanned source."
+        },
+        "git_repo": {
+          "type": "string",
+          "description": "Git repository URL of the scanned source."
+        },
+        "git_branch": {
+          "type": "string",
+          "description": "Git branch name of the scanned source."
+        },
+        "cluster_name": {
+          "type": "string",
+          "description": "Target cluster name when scanning live state."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Target namespace when scoped to a single namespace."
+        }
+      }
+    },
+    "association": {
+      "type": "object",
+      "description": "Optional ConfigHub entity association for linking evidence to Space/Unit/Revision.",
+      "additionalProperties": false,
+      "properties": {
+        "space_id": {
+          "type": "string",
+          "description": "ConfigHub Space ID to associate with."
+        },
+        "unit_id": {
+          "type": "string",
+          "description": "ConfigHub Unit ID to associate with."
+        },
+        "unit_slug": {
+          "type": "string",
+          "description": "ConfigHub Unit slug (alternative to unit_id)."
+        },
+        "revision_id": {
+          "type": "string",
+          "description": "Specific Unit revision ID for point-in-time association."
+        }
+      }
+    },
+    "finding": {
+      "type": "object",
+      "description": "A single scan finding representing a detected issue.",
+      "additionalProperties": true,
+      "required": [
+        "id",
+        "severity",
+        "message",
+        "resource"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Finding identifier (e.g., 'CCVE-2025-3726').",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable finding name."
+        },
+        "category": {
+          "type": "string",
+          "description": "Finding category (e.g., 'SECURITY', 'DEPEND', 'SCALING')."
+        },
+        "track": {
+          "type": "string",
+          "description": "Finding track (e.g., 'misconfiguration', 'vulnerability')."
+        },
+        "detection_method": {
+          "type": "string",
+          "description": "How the finding was detected.",
+          "enum": [
+            "native_rule",
+            "policy_equivalent",
+            "runtime_state",
+            "hybrid"
+          ]
+        },
+        "severity": {
+          "type": "string",
+          "description": "Finding severity level.",
+          "enum": [
+            "critical",
+            "warning",
+            "high",
+            "info",
+            "medium",
+            "low"
+          ]
+        },
+        "confidence": {
+          "type": "string",
+          "description": "Detection confidence level.",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ]
+        },
+        "tool": {
+          "type": "string",
+          "description": "Tool context for the finding."
+        },
+        "resource": {
+          "type": "object",
+          "description": "Kubernetes resource reference.",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "name"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "description": "Kubernetes resource kind.",
+              "minLength": 1
+            },
+            "name": {
+              "type": "string",
+              "description": "Resource name.",
+              "minLength": 1
+            },
+            "namespace": {
+              "type": "string",
+              "description": "Resource namespace (empty for cluster-scoped resources)."
+            }
+          }
+        },
+        "message": {
+          "type": "string",
+          "description": "Human-readable finding message.",
+          "minLength": 1
+        },
+        "remedy_type": {
+          "type": "string",
+          "description": "Remediation strategy type."
+        },
+        "remedy_safety": {
+          "type": "string",
+          "description": "Remediation safety classification.",
+          "enum": [
+            "safe_auto",
+            "unsafe_auto",
+            "manual_only"
+          ]
+        },
+        "remediation": {
+          "type": "object",
+          "description": "Remediation guidance.",
+          "properties": {
+            "steps": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "commands": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "evidence_source": {
+          "type": "string",
+          "description": "Source of the evidence.",
+          "enum": [
+            "native",
+            "imported_kyverno",
+            "imported_trivy",
+            "imported_kubescape",
+            "connected",
+            "custom_policy"
+          ]
+        },
+        "control_ids": {
+          "type": "array",
+          "description": "Associated control IDs.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "description": "Aggregate counts and pass/fail status.",
+      "additionalProperties": false,
+      "required": [
+        "total",
+        "passed"
+      ],
+      "properties": {
+        "total": {
+          "type": "integer",
+          "description": "Total number of findings.",
+          "minimum": 0
+        },
+        "critical": {
+          "type": "integer",
+          "description": "Number of critical-severity findings.",
+          "minimum": 0
+        },
+        "warning": {
+          "type": "integer",
+          "description": "Number of warning-severity findings.",
+          "minimum": 0
+        },
+        "info": {
+          "type": "integer",
+          "description": "Number of info-severity findings.",
+          "minimum": 0
+        },
+        "passed": {
+          "type": "boolean",
+          "description": "True if no critical or warning findings exist. Advisory only - does NOT gate ConfigHub validation."
+        }
+      }
+    }
+  }
+}
