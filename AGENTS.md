@@ -28,6 +28,7 @@ It holds:
 | Find a specific CCVE definition | `patterns/` (source YAML) or bundle artifacts in `dist/` |
 | See promoted controls | `controls/` and `docs/TAXONOMY.md` |
 | See a framework view | `frameworks/` |
+| Find an operator recipe or recipe contract | `recipes/` and `schema/operator-recipe-v1.schema.json` |
 | See a third-party mapping | `mappings/kyverno/`, `mappings/trivy/`, `mappings/kubescape/` |
 | Understand the bundle contract | `schema/` and `docs/BUNDLE-SCOPE.md` |
 | Find the current released bundle | `dist/bundle-manifest-v1.json` |
@@ -45,6 +46,8 @@ It holds:
 | Migration status from `confighub-scan` | `docs/MIGRATION-STATUS.md` |
 | Product thesis | `docs/PRODUCT-THESIS.md` |
 | Candidate control families | `docs/CANDIDATE-CONTROL-FAMILIES.md` |
+| Operator recipe pack seed | `recipes/README.md` |
+| Operator recipe schema | `schema/operator-recipe-v1.schema.json` |
 | Release bundle manifest | `dist/bundle-manifest-v1.json` |
 | First-wave copy manifest | `dist/first-wave-copy-manifest-v1.json` |
 

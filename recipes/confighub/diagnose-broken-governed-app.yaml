@@ -1,0 +1,73 @@
+schema_version: operator-recipe-v1
+id: RECIPE-CONFIGHUB-0001
+slug: diagnose-broken-governed-app
+title: Diagnose a broken governed app
+summary: >
+  Start read-only, capture both the advisory and authoritative views for the
+  exact ConfigHub unit, then route the fix back to the governed source of truth
+  instead of treating live kubectl edits as the lasting answer.
+workflow_family: confighub
+when_to_use:
+  - A ConfigHub-managed workload is unhealthy and you need to decide whether the problem is bad intent, reconcile lag, or live-only drift.
+  - You want a compact workflow that gets you from first symptom to the right governed fix path without inventing ad hoc steps.
+read_only_first:
+  - description: Capture the advisory scan view for the current unit before changing anything.
+    command: >
+      cub function do --space <space> --worker confighub-scan-functions --where
+      "Slug='<unit>'" scan-unit --wait --output-json > /tmp/scan-unit.json
+    expected_signal: >
+      `/tmp/scan-unit.json` contains findings, resource context, and remediation
+      detail for the currently governed unit.
+  - description: Capture the authoritative validation result for the same unit and revision.
+    command: >
+      cub function do --space <space> --worker confighub-scan-functions --where
+      "Slug='<unit>'" validate-unit --wait --output-json > /tmp/validation.json
+    expected_signal: >
+      `/tmp/validation.json` shows pass/fail for the exact governed revision you
+      are about to discuss, promote, or apply.
+  - description: >
+      If the unit is GitOps-managed, run the repo-vs-live comparison workflow to
+      decide whether the durable fix belongs in source intent or in runtime
+      recovery.
+    command: examples/gitops-demo-packet/repo-and-snapshot.sh
+    expected_signal: >
+      Comparison output distinguishes bad intent, live-only drift, reconcile
+      lag, and ownership/prune gaps.
+mutating_steps:
+  - description: >
+      Make the real fix in the governed source of truth (unit config, Git repo,
+      Helm values, or Kustomize overlays) instead of relying on kubectl patch
+      as the lasting fix.
+    expected_signal: >
+      A new governed revision exists, and the long-term change is reviewable in
+      the source system that owns the resource.
+  - description: Re-run authoritative validation on the updated unit before promotion or apply.
+    command: >
+      cub function do --space <space> --worker confighub-scan-functions --where
+      "Slug='<unit>'" validate-unit --wait --output-json > /tmp/validation-after.json
+    expected_signal: >
+      The updated revision passes, or the remaining blockers are smaller and
+      explicit.
+success_looks_like:
+  - You can explain whether the problem was governed intent, reconcile/runtime state, or a non-authoritative live edit.
+  - The lasting fix is recorded in the governed source system instead of only in the cluster.
+  - The updated `validate-unit` result is clean enough to move forward with confidence.
+do_not_do:
+  - Do not use live kubectl edits as the lasting fix for Argo- or Flux-managed resources.
+  - Do not treat `scan-unit` advisory findings as the authoritative gate result.
+  - Do not route users back to the legacy write-back HTTP 405 path as the preferred connected workflow.
+related_tools:
+  - cub
+  - kubectl
+  - git
+  - confighub-scan
+related_issues:
+  - "#14"
+  - "#15"
+related_docs:
+  - ../confighub-scan/confighub/QUICKSTART.md
+  - ../confighub-scan/docs/FLAGSHIP-WALKTHROUGH.md
+  - ../confighub-scan/docs/INTENT-VS-LIVE-EVIDENCE.md
+notes:
+  - This recipe complements the existing control/framework model instead of replacing it.
+  - Keep commands read-only first; only mutate after you know which surface owns the durable fix.

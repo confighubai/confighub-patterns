@@ -1,0 +1,62 @@
+schema_version: operator-recipe-v1
+id: RECIPE-CONFIGHUB-0005
+slug: promotion-preflight
+title: Promotion preflight
+summary: >
+  Do a compact read-only preflight before promotion: confirm the exact governed
+  revision, check the authoritative gate, look for upgrade or environment
+  blockers, and stop quickly if the target is not healthy enough to trust.
+workflow_family: promotion
+when_to_use:
+  - You are about to ask for promotion or apply and want a repeatable read-only preflight instead of a vague "looks good to me."
+  - A governed revision appears ready, but you still need quick proof that the worker, target environment, and source wiring are healthy enough to proceed.
+read_only_first:
+  - description: Capture the authoritative validation result for the exact unit and revision being discussed.
+    command: >
+      cub function do --space <space> --worker confighub-scan-functions --where
+      "Slug='<unit>'" validate-unit --wait --output-json > /tmp/validation-preflight.json
+    expected_signal: >
+      `/tmp/validation-preflight.json` gives you a pass/fail answer tied to one
+      governed revision instead of a general impression.
+  - description: Capture the advisory scan if the reviewer will likely ask for richer findings or remediation detail next.
+    command: >
+      cub function do --space <space> --worker confighub-scan-functions --where
+      "Slug='<unit>'" scan-unit --wait --output-json > /tmp/scan-preflight.json
+    expected_signal: >
+      `/tmp/scan-preflight.json` is available as the richer companion receipt to
+      the authoritative validation result.
+  - description: Check the target worker, cluster, and source system health before calling something promotable.
+    expected_signal: >
+      The destination worker is reachable, the target environment is not already
+      degraded, and the Git/OCI/Helm source needed for rollout is readable.
+    stop_if: >
+      Any core dependency is already failing; stop and fix the environment first
+      instead of treating promotion as the recovery tool.
+  - description: If GitOps ownership is involved, confirm the repo-vs-live story before promotion.
+    command: ../confighub-scan/examples/gitops-demo-packet/repo-and-snapshot.sh
+    expected_signal: >
+      Comparison output shows whether you are promoting clean intent or merely
+      shipping unresolved drift or reconcile lag forward.
+mutating_steps: []
+success_looks_like:
+  - You have one exact governed revision, one authoritative result, and a quick read on target environment health.
+  - Promotion discussion can stop quickly if wiring or environment blockers exist instead of discovering them mid-rollout.
+  - If the answer is "go," it is based on receipts, not a mix of stale status pages and assumptions.
+do_not_do:
+  - Do not use promotion as the first diagnostic step for an environment that is already visibly unhealthy.
+  - Do not skip authoritative validation because the config diff "looks small."
+  - Do not keep digging once a hard blocker is obvious; stop and route to the right recovery path.
+related_tools:
+  - cub
+  - git
+  - kubectl
+  - confighub-scan
+related_issues:
+  - "#14"
+  - "#15"
+related_docs:
+  - ../confighub-scan/confighub/QUICKSTART.md
+  - ../confighub-scan/docs/FLAGSHIP-WALKTHROUGH.md
+  - ../confighub-scan/docs/INTENT-VS-LIVE-EVIDENCE.md
+notes:
+  - This recipe stays read-only on purpose. If preflight fails, route to diagnosis or governed-fix work instead of improvising a promotion.

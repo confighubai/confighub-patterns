@@ -11,4 +11,6 @@ Current repo-native scripts:
 - `build-control-taxonomy-summary.py`
 - `build-control-framework-bundle.py`
 - `build-framework-coverage-report.py`
+- `validate-external-evidence-schema.py`
+- `validate-operator-recipes.py`
 - `validate-control-projections.py`
