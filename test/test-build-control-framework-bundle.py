@@ -97,6 +97,8 @@ class BuildControlFrameworkBundleTests(unittest.TestCase):
             bundle["repo_root"] = "/tmp/other-machine/confighub-patterns"
             bundle["source_summary"] = "/tmp/other-machine/summary.json"
             bundle["source_catalog"] = "/tmp/other-machine/catalog.json"
+            bundle["controls"][0]["source_path"] = "/tmp/other-machine/controls/sample.yaml"
+            bundle["frameworks"][0]["source_path"] = "/tmp/other-machine/frameworks/sample.yaml"
             out_path.write_text(json.dumps(bundle, indent=2) + "\n", encoding="utf-8")
 
             check_result = subprocess.run(
