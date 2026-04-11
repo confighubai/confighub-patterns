@@ -32,6 +32,7 @@ It holds:
 | See a third-party mapping | `mappings/kyverno/`, `mappings/trivy/`, `mappings/kubescape/` |
 | Understand the bundle contract | `schema/` and `docs/BUNDLE-SCOPE.md` |
 | Find the current released bundle | `dist/bundle-manifest-v1.json` |
+| Cut or inspect a release | `docs/RELEASING.md` and `.github/workflows/release.yml` |
 | Run local validation | `make validate` |
 | Know what belongs here vs in `confighub-scan` | `AI-README-FIRST.md` and `docs/REPO-SCOPE.md` |
 
@@ -105,6 +106,7 @@ make validate FIRST_WAVE_SOURCE_REPO=../confighub-scan
 
 - `AI-README-FIRST.md` — AI contributor rules (read before editing)
 - `README.md` — human-facing overview
+- `docs/RELEASING.md` — release process and tag-driven automation
 - `docs/REPO-SCOPE.md` — what lives here and why
 - `docs/TAXONOMY.md` — controls, frameworks, promoted patterns
 - `../confighub-scan/AGENTS.md` — companion repo entry point

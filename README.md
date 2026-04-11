@@ -116,6 +116,12 @@ the copy-manifest check at it explicitly:
 make validate FIRST_WAVE_SOURCE_REPO=/path/to/confighub-scan
 ```
 
+## Releases
+
+Tagged releases in this repo publish a bundle tarball and checksum to GitHub
+Releases. For the release process, prerelease rules, and the required decision
+packet, see `docs/RELEASING.md`.
+
 ## The Relationship To `confighub-scan`
 
 Use this simple split:
@@ -142,4 +148,5 @@ are in the right repo.
 - `docs/EXTERNAL-REGO-LIBRARY-REVIEW.md`
 - `recipes/README.md`
 - `docs/BUNDLE-PROJECTIONS.md`
+- `docs/RELEASING.md`
 - `dist/bundle-manifest-v1.json`

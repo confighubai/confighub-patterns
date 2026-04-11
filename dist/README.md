@@ -19,4 +19,5 @@ Projection guidance:
   coverage and discovery surfaces
 
 Tagged releases in this repo publish a tarball and checksum to GitHub Releases
-via `.github/workflows/release.yml`.
+via `.github/workflows/release.yml`. For the human-facing release steps, see
+`docs/RELEASING.md`.
