@@ -21,10 +21,20 @@ Optional alongside the same release set:
 - `control-framework-bundle-v1.json`
 - `framework-coverage-report-v1.json`
 
+Projection rule:
+- `control-taxonomy-summary-v1.json` is the authoring/CI summary
+- `control-framework-bundle-v1.json` is the canonical released projection for
+  control/framework consumers
+- `framework-coverage-report-v1.json` is the compact derived coverage report
+
+See also:
+- `docs/BUNDLE-PROJECTIONS.md`
+
 Current state:
 - the repo now generates `dist/bundle-manifest-v1.json`
 - the manifest now advertises the imported-evidence mapping files alongside the
   runtime catalog/link artifacts and the promoted-taxonomy artifacts
+- the control/framework projections now have explicit schemas and validation
 
 ## Cache Layout
 

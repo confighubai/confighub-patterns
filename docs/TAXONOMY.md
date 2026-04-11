@@ -47,6 +47,20 @@ Frameworks:
 Frameworks answer:
 - which controls matter for this context?
 
+## Recipe
+
+A recipe is a short operational workflow built on top of patterns, controls, and
+frameworks.
+
+Recipes:
+- do not create new risk metadata
+- do not replace controls or frameworks
+- give agents and operators a compact workflow for a recurring job
+- can point back to the authoritative controls, tools, and docs they rely on
+
+Recipes answer:
+- what should I do next in this situation?
+
 ## Why We Need All Three
 
 The pattern corpus is intentionally broader than the currently promoted control
@@ -56,12 +70,15 @@ That lets us:
 - keep knowledge breadth without pretending every pattern is fully promoted
 - expose a cleaner operator-facing control layer
 - publish multiple framework views without duplicating the underlying risk data
+- add small operational recipes without turning the repo into a second scanner or
+  a long prose knowledge base
 
 ## Relationship To Runtime Execution
 
 - `confighub-patterns` owns pattern, control, and framework metadata
+- `confighub-patterns` can also own compact operator recipes that reference that metadata
 - `confighub-scan` owns native rule execution and evidence normalization
 - ConfigHub/SDK own connected worker execution
 
-Controls and frameworks are metadata and grouping layers, not a second rule
-engine.
+Controls, frameworks, and recipes are metadata/guidance layers, not a second
+rule engine.

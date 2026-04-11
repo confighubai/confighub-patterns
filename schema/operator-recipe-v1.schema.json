@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://confighub.ai/schema/operator-recipe-v1.schema.json",
+  "title": "Operator Recipe v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "slug",
+    "title",
+    "summary",
+    "workflow_family",
+    "when_to_use",
+    "read_only_first",
+    "mutating_steps",
+    "success_looks_like",
+    "do_not_do",
+    "related_tools",
+    "related_issues"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "operator-recipe-v1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^RECIPE-[A-Z0-9-]+$"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workflow_family": {
+      "type": "string",
+      "enum": [
+        "confighub",
+        "gitops",
+        "auth",
+        "recovery",
+        "promotion"
+      ]
+    },
+    "when_to_use": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "read_only_first": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/step"
+      },
+      "minItems": 1
+    },
+    "mutating_steps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/step"
+      }
+    },
+    "success_looks_like": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "do_not_do": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "related_tools": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9._/-]+$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "related_issues": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(#\\d+|https?://.+)$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "related_docs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "$defs": {
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "description"
+      ],
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_signal": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stop_if": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

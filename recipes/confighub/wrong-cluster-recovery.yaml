@@ -1,0 +1,59 @@
+schema_version: operator-recipe-v1
+id: RECIPE-CONFIGHUB-0007
+slug: wrong-cluster-recovery
+title: Wrong-cluster recovery
+summary: >
+  Treat an unexpected empty or "all green" environment as a possible context
+  mistake first: verify the current cluster, switch or reset intentionally, then
+  rerun the original read-only check before making any changes.
+workflow_family: recovery
+when_to_use:
+  - The cluster view looks too empty, too healthy, or otherwise inconsistent with the governed app you expected to inspect.
+  - A demo or incident workflow suddenly stops lining up with known namespaces, apps, or reconcile status.
+read_only_first:
+  - description: Record the current kubectl context before changing anything.
+    command: kubectl config current-context > /tmp/current-context.txt
+    expected_signal: >
+      `/tmp/current-context.txt` captures the exact cluster context you are
+      about to question.
+  - description: Capture basic cluster identity so you can compare it to the intended environment.
+    command: kubectl cluster-info > /tmp/cluster-info.txt
+    expected_signal: >
+      `/tmp/cluster-info.txt` gives you concrete endpoint or cluster identity
+      details instead of a vague "this feels wrong."
+  - description: Check for one expected namespace, app, or resource before assuming the environment itself is broken.
+    expected_signal: >
+      You have a simple presence/absence signal for the workload you expected to
+      see in this cluster.
+    stop_if: >
+      The current context is already correct and the expected resources are
+      present; this is not a wrong-cluster problem.
+mutating_steps:
+  - description: Switch to the intended kubectl context or reset kubeconfig/profile selection explicitly.
+    command: kubectl config use-context <expected-context>
+    expected_signal: >
+      `kubectl config current-context` now shows the intended target instead of
+      the mistaken one.
+  - description: Re-run the original read-only check after the context switch.
+    expected_signal: >
+      The workload, namespace, or reconcile state now matches the environment
+      you intended to inspect.
+success_looks_like:
+  - You can name the exact context mistake instead of calling it a mysterious environment failure.
+  - The original investigation resumes from the correct cluster before any mutations happen.
+  - If the environment is already green in the right cluster, you reset or switch context instead of re-importing or rebuilding unnecessary demo state.
+do_not_do:
+  - Do not mutate a cluster until the current context is explicitly confirmed.
+  - Do not interpret "missing" resources in the wrong cluster as proof that the governed app is gone.
+  - Do not pile on more setup or import work until you have ruled out a simple context mistake.
+related_tools:
+  - kubectl
+  - cub
+related_issues:
+  - "#14"
+  - "#15"
+related_docs:
+  - ../confighub-scan/confighub/QUICKSTART.md
+  - ../confighub-scan/docs/START-HERE.md
+notes:
+  - Prefer suspicion of wrong context over magical recovery. A fast identity check is cheaper than cleaning up the wrong cluster later.
