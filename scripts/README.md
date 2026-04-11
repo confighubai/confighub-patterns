@@ -10,3 +10,5 @@ Current repo-native scripts:
 - `build-first-wave-copy-manifest.py`
 - `build-control-taxonomy-summary.py`
 - `build-control-framework-bundle.py`
+- `build-framework-coverage-report.py`
+- `validate-control-projections.py`
