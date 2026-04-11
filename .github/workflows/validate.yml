@@ -53,5 +53,5 @@ jobs:
             python3 scripts/validate-control-projections.py
           fi
           if [ -f test/test-validate-control-projections.py ]; then
-            python3 -m unittest test/test-validate-control-projections.py
+            python3 test/test-validate-control-projections.py
           fi
