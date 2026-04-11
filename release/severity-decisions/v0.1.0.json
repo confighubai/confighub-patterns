@@ -1,0 +1,71 @@
+{
+  "schema_version": "severity-release-decision-v1",
+  "release_version": "v0.1.0",
+  "summary": {
+    "reviewer": "Codex",
+    "decision_basis": "First stable confighub-patterns bundle release after bundle projections, operator recipe schema and pack, remedies decision, managed-cluster seed, and external Rego review landed on main with green validation.",
+    "follow_up_url": "https://github.com/confighubai/confighub-patterns/releases/tag/v0.1.0"
+  },
+  "decisions": [
+    {
+      "id": "CCVE-2025-0062",
+      "decision": "accept",
+      "rationale": "Launch-rule sample retained in the first stable bundle cut; required evidence paths are present in the review sample and the current release validation/report bundle remains green."
+    },
+    {
+      "id": "CCVE-2025-0918",
+      "decision": "accept",
+      "rationale": "Launch-rule sample retained in the first stable bundle cut; required evidence paths are present in the review sample and the current release validation/report bundle remains green."
+    },
+    {
+      "id": "CCVE-2025-1531",
+      "decision": "accept",
+      "rationale": "Launch-rule sample retained in the first stable bundle cut; required evidence paths are present in the review sample and the current release validation/report bundle remains green."
+    },
+    {
+      "id": "CCVE-2025-2253",
+      "decision": "accept",
+      "rationale": "Launch-rule sample retained in the first stable bundle cut; required evidence paths are present in the review sample and the current release validation/report bundle remains green."
+    },
+    {
+      "id": "CCVE-2025-2630",
+      "decision": "accept",
+      "rationale": "Launch-rule sample retained in the first stable bundle cut; required evidence paths are present in the review sample and the current release validation/report bundle remains green."
+    },
+    {
+      "id": "CCVE-2025-2924",
+      "decision": "accept",
+      "rationale": "Launch-rule sample retained in the first stable bundle cut; required evidence paths are present in the review sample and the current release validation/report bundle remains green."
+    },
+    {
+      "id": "CCVE-2025-3005",
+      "decision": "accept",
+      "rationale": "Launch-rule sample retained in the first stable bundle cut; required evidence paths are present in the review sample and the current release validation/report bundle remains green."
+    },
+    {
+      "id": "CCVE-2025-3093",
+      "decision": "accept",
+      "rationale": "Launch-rule sample retained in the first stable bundle cut; required evidence paths are present in the review sample and the current release validation/report bundle remains green."
+    },
+    {
+      "id": "CCVE-2025-3190",
+      "decision": "accept",
+      "rationale": "Launch-rule sample retained in the first stable bundle cut; required evidence paths are present in the review sample and the current release validation/report bundle remains green."
+    },
+    {
+      "id": "CCVE-2025-4075",
+      "decision": "accept",
+      "rationale": "Launch-rule sample retained in the first stable bundle cut; required evidence paths are present in the review sample and the current release validation/report bundle remains green."
+    },
+    {
+      "id": "CCVE-2025-4077",
+      "decision": "accept",
+      "rationale": "Launch-rule sample retained in the first stable bundle cut; required evidence paths are present in the review sample and the current release validation/report bundle remains green."
+    },
+    {
+      "id": "CCVE-2025-4079",
+      "decision": "accept",
+      "rationale": "Launch-rule sample retained in the first stable bundle cut; required evidence paths are present in the review sample and the current release validation/report bundle remains green."
+    }
+  ]
+}

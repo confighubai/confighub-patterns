@@ -1,7 +1,7 @@
 {
   "schema_version": "bundle-manifest-v1",
-  "published_at": "2026-04-02T10:21:32Z",
-  "bundle_version": "dev",
+  "published_at": "2026-04-11T11:23:41Z",
+  "bundle_version": "v0.1.0",
   "source_repo": "confighubai/confighub-patterns",
   "files": [
     {

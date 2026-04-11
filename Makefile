@@ -1,4 +1,5 @@
 FIRST_WAVE_SOURCE_REPO ?= ../confighub-scan
+BUNDLE_VERSION ?= $(shell python3 -c 'import json, pathlib; p = pathlib.Path("dist/bundle-manifest-v1.json"); print(json.loads(p.read_text()).get("bundle_version", "dev") if p.exists() else "dev")' 2>/dev/null || echo dev)
 
 .PHONY: test-python validate-copy-manifest validate-control-taxonomy validate-control-framework-bundle validate-framework-coverage-report validate-bundle-manifest validate-cross-tool-mapping validate-external-evidence-schema validate-control-projections validate
 
@@ -25,7 +26,7 @@ validate-framework-coverage-report:
 	python3 scripts/build-framework-coverage-report.py --check
 
 validate-bundle-manifest:
-	python3 scripts/build-bundle-manifest.py --check
+	python3 scripts/build-bundle-manifest.py --bundle-version "$(BUNDLE_VERSION)" --check
 
 validate-cross-tool-mapping:
 	python3 scripts/build-cross-tool-mapping.py --check
@@ -42,7 +43,7 @@ validate:
 	$(MAKE) validate-control-taxonomy
 	$(MAKE) validate-control-framework-bundle
 	$(MAKE) validate-framework-coverage-report
-	$(MAKE) validate-bundle-manifest
+	$(MAKE) validate-bundle-manifest BUNDLE_VERSION="$(BUNDLE_VERSION)"
 	$(MAKE) validate-cross-tool-mapping
 	$(MAKE) validate-external-evidence-schema
 	$(MAKE) validate-control-projections
