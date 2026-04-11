@@ -139,6 +139,7 @@ are in the right repo.
 - `docs/MIGRATION-STATUS.md`
 - `docs/REMEDIES-DECISION.md`
 - `docs/TAXONOMY.md`
+- `docs/EXTERNAL-REGO-LIBRARY-REVIEW.md`
 - `recipes/README.md`
 - `docs/BUNDLE-PROJECTIONS.md`
 - `dist/bundle-manifest-v1.json`
