@@ -8,10 +8,10 @@
     "schema": 3
   },
   "copy_status_counts": {
-    "copied_drifted": 15,
-    "copied_matching": 24
+    "copied_drifted": 16,
+    "copied_matching": 23
   },
-  "generated_at": "2026-03-31T12:02:45+00:00",
+  "generated_at": "2026-04-11T10:59:35+00:00",
   "item_count": 39,
   "items": [
     {
@@ -165,12 +165,12 @@
     },
     {
       "category": "pattern_quality",
-      "copy_status": "copied_matching",
+      "copy_status": "copied_drifted",
       "destination": "quality/launch-rules-v1.json",
       "exists": true,
-      "size_bytes": 28834,
+      "size_bytes": 29226,
       "source": "risks/quality/launch-rules-v1.json",
-      "source_sha256": "c24ed856f80f507c9d2d5710d56d42e9b6db480e96d208a53b5ac4249d4efcb3",
+      "source_sha256": "21891803f1eb77bfd7fc4c36c8543b8f11cf27ee7e437b21342c47b146b70e66",
       "source_type": "file",
       "target": "quality/launch-rules-v1.json",
       "target_exists": true,
@@ -467,9 +467,9 @@
       "copy_status": "copied_drifted",
       "destination": "dist/quality/pattern-inventory-v1.json",
       "exists": true,
-      "size_bytes": 4046324,
+      "size_bytes": 4046247,
       "source": "dist/quality/pattern-inventory-v1.json",
-      "source_sha256": "43f49749fa5a2e755d9641ebaa2ed4a7b69391dd9cf4d53b2c14219d3ca805c3",
+      "source_sha256": "e6dde2008f51d0730e564284455d35bc17d46fcb5572525412d59158b9258224",
       "source_type": "file",
       "target": "dist/quality/pattern-inventory-v1.json",
       "target_exists": true,
@@ -482,7 +482,7 @@
       "exists": true,
       "size_bytes": 3956,
       "source": "dist/quality/pattern-inventory-summary-v1.json",
-      "source_sha256": "b413669ecc2ee85e8019bc00c6f7efc321c268b10a8894d55ebea9eec133adfa",
+      "source_sha256": "deea652acad88e70083504df4ace67853f12be886ffa21ac52ad37b3c5a1d110",
       "source_type": "file",
       "target": "dist/quality/pattern-inventory-summary-v1.json",
       "target_exists": true,
@@ -493,9 +493,9 @@
       "copy_status": "copied_drifted",
       "destination": "dist/quality/pattern-queue-report-v1.json",
       "exists": true,
-      "size_bytes": 888530,
+      "size_bytes": 888531,
       "source": "dist/quality/pattern-queue-report-v1.json",
-      "source_sha256": "ec4ef488e92d59d476c2de420c398476d397be2439c1e495b50943b174cac9a8",
+      "source_sha256": "68379a8624e429ac50e4597a76c183f393fdc35aea68e74e857e972404d24994",
       "source_type": "file",
       "target": "dist/quality/pattern-queue-report-v1.json",
       "target_exists": true,
