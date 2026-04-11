@@ -88,6 +88,7 @@ class BuildControlTaxonomySummaryTests(unittest.TestCase):
             )
             self.assertEqual(build_result.returncode, 0, build_result.stderr or build_result.stdout)
             summary = json.loads(out_path.read_text(encoding="utf-8"))
+            summary["pattern_validation_mode"] = "sibling_confighub_scan"
             summary["repo_root"] = "/tmp/other-machine/confighub-patterns"
             summary["source_pattern_repo"] = "/tmp/other-machine/confighub-scan"
             out_path.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
