@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://confighub.ai/schema/framework-coverage-report-v1.schema.json",
+  "title": "Framework Coverage Report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated_at",
+    "source_bundle",
+    "framework_count",
+    "cross_family_framework_ids",
+    "frameworks"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "framework-coverage-report-v1"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_bundle": {
+      "type": "string",
+      "minLength": 1
+    },
+    "framework_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "cross_family_framework_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^FRM-[A-Z0-9-]+$"
+      },
+      "uniqueItems": true
+    },
+    "frameworks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/framework_row"
+      }
+    }
+  },
+  "$defs": {
+    "severity_counts": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1
+      },
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "framework_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "family",
+        "maturity",
+        "platforms",
+        "tags",
+        "control_ids",
+        "control_count",
+        "control_families",
+        "pattern_ids",
+        "pattern_coverage_count",
+        "supported_surfaces",
+        "supported_consumers",
+        "detection_modes",
+        "severity_counts"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^FRM-[A-Z0-9-]+$"
+        },
+        "slug": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family": {
+          "type": "string",
+          "minLength": 1
+        },
+        "maturity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "platforms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "control_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^CTRL-[A-Z0-9-]+$"
+          },
+          "uniqueItems": true
+        },
+        "control_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "control_families": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "pattern_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^CCVE-[0-9]{4}-[0-9]{4}$"
+          },
+          "uniqueItems": true
+        },
+        "pattern_coverage_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "supported_surfaces": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "supported_consumers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "detection_modes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "severity_counts": {
+          "$ref": "#/$defs/severity_counts"
+        }
+      }
+    }
+  }
+}

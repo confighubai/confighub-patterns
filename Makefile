@@ -1,6 +1,6 @@
 FIRST_WAVE_SOURCE_REPO ?= ../confighub-scan
 
-.PHONY: test-python validate-copy-manifest validate-control-taxonomy validate-control-framework-bundle validate-framework-coverage-report validate-bundle-manifest validate-cross-tool-mapping validate-external-evidence-schema validate
+.PHONY: test-python validate-copy-manifest validate-control-taxonomy validate-control-framework-bundle validate-framework-coverage-report validate-bundle-manifest validate-cross-tool-mapping validate-external-evidence-schema validate-control-projections validate
 
 test-python:
 	python3 test/test-build-bundle-manifest.py
@@ -33,6 +33,9 @@ validate-cross-tool-mapping:
 validate-external-evidence-schema:
 	python3 scripts/validate-external-evidence-schema.py
 
+validate-control-projections:
+	python3 scripts/validate-control-projections.py
+
 validate:
 	$(MAKE) test-python
 	$(MAKE) validate-copy-manifest FIRST_WAVE_SOURCE_REPO="$(FIRST_WAVE_SOURCE_REPO)"
@@ -42,3 +45,4 @@ validate:
 	$(MAKE) validate-bundle-manifest
 	$(MAKE) validate-cross-tool-mapping
 	$(MAKE) validate-external-evidence-schema
+	$(MAKE) validate-control-projections

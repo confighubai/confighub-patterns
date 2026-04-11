@@ -89,6 +89,10 @@ As of 2026-04-02:
   pattern IDs
 - Kyverno, Trivy, and Kubescape mappings are published as bundle assets
 - the external evidence schema is published here
+- the control/framework projection contract is now explicit via
+  `dist/control-framework-bundle-v1.json`,
+  `dist/framework-coverage-report-v1.json`, and
+  `docs/BUNDLE-PROJECTIONS.md`
 - local validation is wired through `make validate`
 
 `confighub-scan` remains the engine and integration repo.
@@ -130,4 +134,5 @@ are in the right repo.
 - `../confighub-scan/docs/START-HERE.md`
 - `docs/MIGRATION-STATUS.md`
 - `docs/TAXONOMY.md`
+- `docs/BUNDLE-PROJECTIONS.md`
 - `dist/bundle-manifest-v1.json`
