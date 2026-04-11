@@ -215,6 +215,14 @@ def normalize_for_check(doc: dict[str, Any]) -> dict[str, Any]:
     normalized["repo_root"] = "<normalized>"
     normalized["source_summary"] = "<normalized>"
     normalized["source_catalog"] = "<normalized>"
+    normalized["controls"] = [
+        {**item, "source_path": "<normalized>"} if isinstance(item, dict) else item
+        for item in normalized.get("controls", [])
+    ]
+    normalized["frameworks"] = [
+        {**item, "source_path": "<normalized>"} if isinstance(item, dict) else item
+        for item in normalized.get("frameworks", [])
+    ]
     return normalized
 
 
