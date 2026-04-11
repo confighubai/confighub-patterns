@@ -17,3 +17,6 @@ Projection guidance:
   control/framework consumers
 - `framework-coverage-report-v1.json` is the compact derived report for
   coverage and discovery surfaces
+
+Tagged releases in this repo publish a tarball and checksum to GitHub Releases
+via `.github/workflows/release.yml`.

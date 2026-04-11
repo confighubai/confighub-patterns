@@ -1,0 +1,167 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_VERSION: ${{ github.ref_name }}
+    steps:
+      - name: Checkout confighub-patterns
+        uses: actions/checkout@v4
+
+      - name: Checkout confighub-scan source
+        id: scan_checkout
+        continue-on-error: true
+        uses: actions/checkout@v4
+        with:
+          repository: confighubai/confighub-scan
+          path: confighub-scan-source
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: python3 -m pip install --upgrade pip pyyaml jsonschema
+
+      - name: Validate release decision packet
+        run: |
+          test -f "release/severity-decisions/${RELEASE_VERSION}.json"
+          python3 scripts/validate-severity-release-decision.py \
+            --decision-file "release/severity-decisions/${RELEASE_VERSION}.json" \
+            --review-sample dist/quality/severity-review-sample-v1.json \
+            --policy quality/severity-release-decision-policy-v1.json \
+            --release-version "${RELEASE_VERSION}"
+
+      - name: Run full release validation
+        if: steps.scan_checkout.outcome == 'success'
+        run: make validate FIRST_WAVE_SOURCE_REPO=confighub-scan-source BUNDLE_VERSION="${RELEASE_VERSION}"
+
+      - name: Run release validation without sibling checkout
+        if: steps.scan_checkout.outcome != 'success'
+        shell: bash
+        run: |
+          echo "Skipping validate-copy-manifest because confighub-scan checkout is unavailable in this workflow context."
+          make test-python
+          python3 scripts/build-control-taxonomy-summary.py --check
+          python3 scripts/build-control-framework-bundle.py --check
+          python3 scripts/build-framework-coverage-report.py --check
+          python3 scripts/build-bundle-manifest.py --bundle-version "${RELEASE_VERSION}" --check
+          python3 scripts/build-cross-tool-mapping.py --check
+          python3 scripts/validate-external-evidence-schema.py
+          if [ -f scripts/validate-operator-recipes.py ]; then
+            python3 scripts/validate-operator-recipes.py
+          fi
+          if [ -f scripts/validate-control-projections.py ]; then
+            python3 scripts/validate-control-projections.py
+          fi
+          if [ -f test/test-validate-control-projections.py ]; then
+            python3 test/test-validate-control-projections.py
+          fi
+
+      - name: Stage release bundle
+        env:
+          RUNNER_TEMP: ${{ runner.temp }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import shutil
+          from pathlib import Path
+
+          release_version = os.environ["RELEASE_VERSION"]
+          repo_root = Path.cwd()
+          manifest = json.loads((repo_root / "dist/bundle-manifest-v1.json").read_text(encoding="utf-8"))
+          stage_root = Path(os.environ["RUNNER_TEMP"]) / f"confighub-patterns-{release_version}-bundle"
+          if stage_root.exists():
+              shutil.rmtree(stage_root)
+          stage_root.mkdir(parents=True, exist_ok=True)
+
+          extra_files = [
+              "README.md",
+              "dist/bundle-manifest-v1.json",
+              f"release/severity-decisions/{release_version}.json",
+          ]
+          for rel_path in extra_files:
+              src = repo_root / rel_path
+              dst = stage_root / rel_path
+              dst.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copy2(src, dst)
+
+          for entry in manifest.get("files", []):
+              rel_path = entry["path"]
+              src = repo_root / rel_path
+              dst = stage_root / rel_path
+              dst.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copy2(src, dst)
+          print(stage_root)
+          PY
+
+      - name: Archive release bundle
+        env:
+          RUNNER_TEMP: ${{ runner.temp }}
+        run: |
+          cd "${RUNNER_TEMP}"
+          tar -czf "confighub-patterns-${RELEASE_VERSION}-bundle.tar.gz" "confighub-patterns-${RELEASE_VERSION}-bundle"
+          shasum -a 256 "confighub-patterns-${RELEASE_VERSION}-bundle.tar.gz" > "confighub-patterns-${RELEASE_VERSION}-bundle.tar.gz.sha256"
+
+      - name: Write release notes
+        env:
+          RUNNER_TEMP: ${{ runner.temp }}
+        run: |
+          prerelease_note=""
+          if [[ "${RELEASE_VERSION}" == *"-rc."* ]]; then
+            prerelease_note="This is a prerelease cut of the bundle repo."
+          fi
+          cat > "${RUNNER_TEMP}/release-notes.md" <<EOF
+          ## ${RELEASE_VERSION}
+
+          Automated bundle release for \`confighub-patterns\`.
+
+          ### Included bundle surfaces
+
+          This release publishes the assets referenced by \`dist/bundle-manifest-v1.json\` plus the matching release decision packet:
+
+          - \`confighub-patterns-${RELEASE_VERSION}-bundle.tar.gz\`
+          - \`confighub-patterns-${RELEASE_VERSION}-bundle.tar.gz.sha256\`
+
+          ### Verification
+
+          - \`python3 scripts/validate-severity-release-decision.py --decision-file release/severity-decisions/${RELEASE_VERSION}.json --review-sample dist/quality/severity-review-sample-v1.json --policy quality/severity-release-decision-policy-v1.json --release-version ${RELEASE_VERSION}\`
+          - \`make validate FIRST_WAVE_SOURCE_REPO=../confighub-scan BUNDLE_VERSION=${RELEASE_VERSION}\`
+
+          ### Notes
+
+          ${prerelease_note}
+          This repo publishes bundle data and schemas, not an installable CLI, so there is no Homebrew formula step for this release.
+          EOF
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUNNER_TEMP: ${{ runner.temp }}
+        shell: bash
+        run: |
+          archive="${RUNNER_TEMP}/confighub-patterns-${RELEASE_VERSION}-bundle.tar.gz"
+          checksum="${RUNNER_TEMP}/confighub-patterns-${RELEASE_VERSION}-bundle.tar.gz.sha256"
+          notes="${RUNNER_TEMP}/release-notes.md"
+          prerelease_flag=""
+          if [[ "${RELEASE_VERSION}" == *"-rc."* ]]; then
+            prerelease_flag="--prerelease"
+          fi
+
+          if gh release view "${RELEASE_VERSION}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
+            gh release upload "${RELEASE_VERSION}" "${archive}" "${checksum}" --repo "${GITHUB_REPOSITORY}" --clobber
+            gh release edit "${RELEASE_VERSION}" --repo "${GITHUB_REPOSITORY}" --title "${RELEASE_VERSION}" --notes-file "${notes}" ${prerelease_flag}
+          else
+            gh release create "${RELEASE_VERSION}" "${archive}" "${checksum}" --repo "${GITHUB_REPOSITORY}" --title "${RELEASE_VERSION}" --notes-file "${notes}" ${prerelease_flag}
+          fi
