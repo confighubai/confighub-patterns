@@ -10,3 +10,5 @@ Current repo-native scripts:
 - `build-first-wave-copy-manifest.py`
 - `build-control-taxonomy-summary.py`
 - `build-control-framework-bundle.py`
+- `validate-external-evidence-schema.py`
+- `validate-operator-recipes.py`

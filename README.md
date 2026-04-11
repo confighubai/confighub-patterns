@@ -14,6 +14,7 @@ This repo holds the reusable assets behind scanning and validation:
 - framework views
 - third-party mapping tables
 - external evidence schemas
+- operator recipe schemas and examples
 - bundle manifests and release artifacts
 
 It exists so the scanner and ConfigHub integrations can share one pattern and
@@ -72,6 +73,8 @@ The intended layout is:
   Kyverno, Trivy, Kubescape, and other external mappings.
 - `schema/`
   Bundle and evidence schemas.
+- `recipes/`
+  Short machine-usable operator workflow recipes.
 - `scripts/`
   Bundle and release builders.
 - `dist/`
@@ -81,7 +84,7 @@ The intended layout is:
 
 ## Current Status
 
-As of 2026-04-02:
+As of 2026-04-11:
 
 - this repo is active and used as the shared bundle home
 - the release manifest exists at `dist/bundle-manifest-v1.json`
@@ -89,6 +92,7 @@ As of 2026-04-02:
   pattern IDs
 - Kyverno, Trivy, and Kubescape mappings are published as bundle assets
 - the external evidence schema is published here
+- the first operator-recipe schema and seeded ConfigHub recipe now live here
 - local validation is wired through `make validate`
 
 `confighub-scan` remains the engine and integration repo.
@@ -130,4 +134,5 @@ are in the right repo.
 - `../confighub-scan/docs/START-HERE.md`
 - `docs/MIGRATION-STATUS.md`
 - `docs/TAXONOMY.md`
+- `recipes/README.md`
 - `dist/bundle-manifest-v1.json`
