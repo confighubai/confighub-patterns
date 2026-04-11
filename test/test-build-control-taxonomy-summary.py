@@ -67,6 +67,49 @@ class BuildControlTaxonomySummaryTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("unknown control_ids", result.stdout + result.stderr)
 
+    def test_check_ignores_machine_local_path_fields(self) -> None:
+        fixture_root = FIXTURES / "valid"
+        with tempfile.TemporaryDirectory() as tmpdir:
+            out_path = Path(tmpdir) / "summary.json"
+            build_result = subprocess.run(
+                [
+                    "python3",
+                    str(SCRIPT),
+                    "--repo-root",
+                    str(fixture_root),
+                    "--source-repo",
+                    str(fixture_root / "missing-source-repo"),
+                    "--out",
+                    str(out_path),
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(build_result.returncode, 0, build_result.stderr or build_result.stdout)
+            summary = json.loads(out_path.read_text(encoding="utf-8"))
+            summary["repo_root"] = "/tmp/other-machine/confighub-patterns"
+            summary["source_pattern_repo"] = "/tmp/other-machine/confighub-scan"
+            out_path.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
+
+            check_result = subprocess.run(
+                [
+                    "python3",
+                    str(SCRIPT),
+                    "--repo-root",
+                    str(fixture_root),
+                    "--source-repo",
+                    str(fixture_root / "missing-source-repo"),
+                    "--out",
+                    str(out_path),
+                    "--check",
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(check_result.returncode, 0, check_result.stderr or check_result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()
