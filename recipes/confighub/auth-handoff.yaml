@@ -1,0 +1,54 @@
+schema_version: operator-recipe-v1
+id: RECIPE-CONFIGHUB-0006
+slug: auth-handoff
+title: Auth handoff
+summary: >
+  Detect expired or missing ConfigHub auth quickly, hand browser or device login
+  back to the human operator, then resume with the original read-only check once
+  credentials are working again.
+workflow_family: auth
+when_to_use:
+  - A `cub` command fails because the session is expired, missing, or pointed at the wrong account.
+  - Claude can keep doing the investigation, but a human needs to own the actual login step.
+read_only_first:
+  - description: Re-run a small read-only `cub` command to confirm this is really an auth problem and not a product behavior issue.
+    command: cub space list
+    expected_signal: >
+      The failure clearly points to missing or expired authentication instead of
+      a validation or data-shape problem.
+    stop_if: >
+      The failure is about something else, such as a malformed command or a
+      missing worker; do not route everything through auth by reflex.
+  - description: Preserve the exact failing command or error so the human knows what they are unblocking.
+    expected_signal: >
+      You can show a short, concrete reason for the handoff rather than saying
+      only "auth seems broken."
+mutating_steps:
+  - description: Hand login back to the human operator and have them run the standard ConfigHub auth flow.
+    command: cub auth login
+    expected_signal: >
+      The human completes browser or device authentication and `cub` starts
+      returning real API responses again.
+  - description: Re-run the original small read-only command before returning to the larger workflow.
+    command: cub space list
+    expected_signal: >
+      The command succeeds or now fails for a more specific reason that can be
+      addressed directly.
+success_looks_like:
+  - The human owns the login step and Claude resumes only after credentials are actually working.
+  - The original investigation continues from a known-good authenticated state instead of repeated blind retries.
+  - There is a concrete before-and-after signal showing that auth was the blocker.
+do_not_do:
+  - Do not try to complete browser or device login on behalf of the human operator.
+  - Do not paste tokens, cookies, or copied credential material into logs or chat.
+  - Do not keep retrying write or validation commands while the auth state is still unknown.
+related_tools:
+  - cub
+  - browser
+related_issues:
+  - "#14"
+  - "#15"
+related_docs:
+  - ../confighub-scan/confighub/QUICKSTART.md
+notes:
+  - "Keep the handoff short and explicit: why auth is needed, what the human must run, and what command will be retried after login."

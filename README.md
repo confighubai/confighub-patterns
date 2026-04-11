@@ -92,7 +92,7 @@ As of 2026-04-11:
   pattern IDs
 - Kyverno, Trivy, and Kubescape mappings are published as bundle assets
 - the external evidence schema is published here
-- the first operator-recipe schema and seeded ConfigHub recipe now live here
+- the first operator-recipe schema and an 8-workflow ConfigHub recipe pack now live here
 - local validation is wired through `make validate`
 
 `confighub-scan` remains the engine and integration repo.

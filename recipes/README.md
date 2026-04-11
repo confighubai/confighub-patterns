@@ -22,6 +22,10 @@ Seeded recipes in this repo today:
 - `confighub/show-kubectl-is-non-authoritative.yaml`
 - `confighub/governed-fix-with-pre-apply-validation.yaml`
 - `confighub/read-only-closeout.yaml`
+- `confighub/promotion-preflight.yaml`
+- `confighub/auth-handoff.yaml`
+- `confighub/wrong-cluster-recovery.yaml`
+- `confighub/cleanup-after-failed-setup.yaml`
 
 Relationship to the open issues:
 - `#15` defines the schema/contract for recipes

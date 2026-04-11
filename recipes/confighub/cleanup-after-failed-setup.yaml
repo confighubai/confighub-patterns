@@ -1,0 +1,58 @@
+schema_version: operator-recipe-v1
+id: RECIPE-CONFIGHUB-0008
+slug: cleanup-after-failed-setup
+title: Cleanup after failed prep or setup
+summary: >
+  Inspect a failed demo or workflow setup first, delete only the broken
+  artifacts, and verify that the main path still works before attempting another
+  import, seed, or rollout.
+workflow_family: recovery
+when_to_use:
+  - A prep or setup workflow failed midway and you need to recover without trashing the parts that are already healthy.
+  - You suspect partial artifacts were left behind, but you do not yet know which ones are actually safe to remove.
+read_only_first:
+  - description: Inspect the current state of the affected units, namespaces, or demo artifacts before deleting anything.
+    expected_signal: >
+      You can list the specific failed artifacts instead of describing the whole
+      environment as "probably broken."
+  - description: Check whether the main supported path is already healthy enough to reuse or reset instead of importing again.
+    expected_signal: >
+      You know whether the core demo or governed flow is already green and can
+      be reused without another full setup pass.
+    stop_if: >
+      The main path is already healthy; prefer reset or targeted cleanup over a
+      full rebuild.
+  - description: Capture one read-only receipt showing what failed and what is still intact.
+    expected_signal: >
+      The cleanup plan is based on named failed artifacts, not guesswork.
+mutating_steps:
+  - description: Remove only the units, namespaces, or temporary artifacts that are clearly part of the failed setup.
+    expected_signal: >
+      The failed leftovers are gone while known-good governed state remains
+      intact.
+  - description: Re-run the smallest supported verification path before attempting another setup pass.
+    command: ../confighub-scan/examples/gitops-demo-packet/repo-and-snapshot.sh
+    expected_signal: >
+      The main verification path still works, so the next attempt starts from a
+      clean and known-good baseline.
+success_looks_like:
+  - Cleanup removes the broken leftovers without wiping healthy state unnecessarily.
+  - The main supported path is proven intact before another import, setup, or promotion attempt begins.
+  - If the environment was already green, the answer becomes reset and reuse, not another speculative bootstrap.
+do_not_do:
+  - Do not delete everything first and investigate later.
+  - Do not re-import or reseed blindly when the only problem is a small set of failed artifacts.
+  - Do not declare cleanup finished until the main supported verification path passes again.
+related_tools:
+  - cub
+  - kubectl
+  - git
+  - confighub-scan
+related_issues:
+  - "#14"
+  - "#15"
+related_docs:
+  - ../confighub-scan/examples/gitops-demo-packet/README.md
+  - ../confighub-scan/docs/RECIPES.md
+notes:
+  - The cleanup goal is a known-good baseline, not a perfect story about every intermediate mistake.
