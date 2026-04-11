@@ -212,6 +212,9 @@ def build_bundle(repo_root: Path, summary_path: Path, catalog_path: Path) -> dic
 def normalize_for_check(doc: dict[str, Any]) -> dict[str, Any]:
     normalized = dict(doc)
     normalized["generated_at"] = "<normalized>"
+    normalized["repo_root"] = "<normalized>"
+    normalized["source_summary"] = "<normalized>"
+    normalized["source_catalog"] = "<normalized>"
     return normalized
 
 

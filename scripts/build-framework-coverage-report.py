@@ -42,6 +42,7 @@ def load_json(path: Path) -> dict[str, Any]:
 def normalize_for_check(doc: dict[str, Any]) -> dict[str, Any]:
     normalized = dict(doc)
     normalized["generated_at"] = "<normalized>"
+    normalized["source_bundle"] = "<normalized>"
     return normalized
 
 
