@@ -17,6 +17,12 @@ Use them for recurring operational moves like:
 - running a governed fix with pre-apply validation
 - doing read-only closeout or promotion preflight
 
+Seeded recipes in this repo today:
+- `confighub/diagnose-broken-governed-app.yaml`
+- `confighub/show-kubectl-is-non-authoritative.yaml`
+- `confighub/governed-fix-with-pre-apply-validation.yaml`
+- `confighub/read-only-closeout.yaml`
+
 Relationship to the open issues:
 - `#15` defines the schema/contract for recipes
 - `#14` is the broader recipe-pack buildout that will add more recipe files on

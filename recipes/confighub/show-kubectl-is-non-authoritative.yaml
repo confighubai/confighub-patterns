@@ -1,0 +1,54 @@
+schema_version: operator-recipe-v1
+id: RECIPE-CONFIGHUB-0002
+slug: show-kubectl-is-non-authoritative
+title: Show that kubectl is not the authoritative fix path
+summary: >
+  Prove, with a short read-only workflow, that a broken resource is governed by
+  GitOps or ConfigHub and that a live kubectl edit would not be the durable fix.
+workflow_family: gitops
+when_to_use:
+  - Someone wants to patch a live Argo- or Flux-managed object and you need a fast proof that the fix belongs in the governed source instead.
+  - The cluster is already showing drift, prune gaps, or reconcile trouble and you want to stop before running a long manual experiment.
+read_only_first:
+  - description: Run the repo-vs-live comparison workflow first to classify the failure.
+    command: examples/gitops-demo-packet/repo-and-snapshot.sh
+    expected_signal: >
+      The comparison output makes it clear whether the problem is bad intent,
+      live-only drift, prune gap, or reconcile lag.
+  - description: Capture the current advisory scan for the governed unit so the operator report has current findings attached.
+    command: >
+      cub function do --space <space> --worker confighub-scan-functions --where
+      "Slug='<unit>'" scan-unit --wait --output-json > /tmp/scan-unit.json
+    expected_signal: >
+      `/tmp/scan-unit.json` shows the current findings without pretending to be
+      the authoritative gate.
+  - description: Check the authoritative validation result for the same unit if a promotion or apply decision is pending.
+    command: >
+      cub function do --space <space> --worker confighub-scan-functions --where
+      "Slug='<unit>'" validate-unit --wait --output-json > /tmp/validation.json
+    expected_signal: >
+      `/tmp/validation.json` shows whether the governed revision itself is ready
+      to move forward.
+mutating_steps: []
+success_looks_like:
+  - You can point to comparison or validation evidence showing that the durable fix belongs in the governed source system.
+  - Everyone involved understands that a live kubectl patch would be temporary or actively counterproductive.
+  - The next action is a governed-source change, not an emergency live edit by default.
+do_not_do:
+  - Do not start with kubectl patch, kubectl edit, or a rollout restart as the lasting answer.
+  - Do not treat an already-visible OutOfSync or reconcile failure as a reason to run a longer speculative drift experiment.
+  - Do not confuse advisory scan output with authoritative validation output.
+related_tools:
+  - cub
+  - kubectl
+  - git
+  - confighub-scan
+related_issues:
+  - "#14"
+  - "#15"
+related_docs:
+  - ../confighub-scan/docs/INTENT-VS-LIVE-EVIDENCE.md
+  - ../confighub-scan/docs/FLAGSHIP-WALKTHROUGH.md
+  - ../confighub-scan/examples/gitops-demo-packet/README.md
+notes:
+  - This recipe is intentionally short because the goal is to stop the wrong fix path quickly, not to create a giant incident playbook.

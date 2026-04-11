@@ -1,0 +1,66 @@
+schema_version: operator-recipe-v1
+id: RECIPE-CONFIGHUB-0003
+slug: governed-fix-with-pre-apply-validation
+title: Governed fix with pre-apply validation
+summary: >
+  Make a real configuration change in the governed source, reseed or update the
+  unit, and run authoritative validation before asking for promotion or apply.
+workflow_family: promotion
+when_to_use:
+  - You already know the durable fix belongs in the governed source and want a compact, repeatable path to prove the next revision is safer.
+  - A unit is ConfigHub-managed and you want to avoid substituting a live cluster edit for a real source-of-truth change.
+read_only_first:
+  - description: Record the current authoritative result before changing anything.
+    command: >
+      cub function do --space <space> --worker confighub-scan-functions --where
+      "Slug='<unit>'" validate-unit --wait --output-json > /tmp/validation-before.json
+    expected_signal: >
+      `/tmp/validation-before.json` captures the blockers you are trying to
+      remove in the next revision.
+  - description: Record the advisory scan view if you also need remediation context or richer findings detail.
+    command: >
+      cub function do --space <space> --worker confighub-scan-functions --where
+      "Slug='<unit>'" scan-unit --wait --output-json > /tmp/scan-before.json
+    expected_signal: >
+      `/tmp/scan-before.json` gives you the richer findings context that
+      accompanies the governed validation result.
+mutating_steps:
+  - description: Update the governed unit definition or upstream Git-managed config with the real fix.
+    expected_signal: >
+      The intended change is reviewable in the source system that owns the
+      resource, not only in the live cluster.
+  - description: Create or update the ConfigHub unit from the corrected file.
+    command: >
+      cub unit create --space <space> <unit> <unit-file> || cub unit update
+      --space <space> <unit> <unit-file>
+    expected_signal: >
+      The unit now points at the corrected definition and exposes a new governed
+      revision for validation.
+  - description: Re-run authoritative validation on the updated unit before asking for promotion or apply.
+    command: >
+      cub function do --space <space> --worker confighub-scan-functions --where
+      "Slug='<unit>'" validate-unit --wait --output-json > /tmp/validation-after.json
+    expected_signal: >
+      `/tmp/validation-after.json` passes or shows a smaller, explicit blocker
+      set that you can discuss directly.
+success_looks_like:
+  - The durable change exists in the governed source system instead of only in the cluster.
+  - The updated governed revision has a clean or clearly improved `validate-unit` result.
+  - Promotion/apply discussion can reference one exact revision plus validation receipts, not a vague “we think it is fixed.”
+do_not_do:
+  - Do not skip `validate-unit` and assume a config edit is safe because it “looks small.”
+  - Do not treat `scan-unit` as the authoritative gate for approval or apply.
+  - Do not fall back to the legacy write-back HTTP 405 path as the normal connected workflow.
+related_tools:
+  - cub
+  - git
+  - confighub-scan
+related_issues:
+  - "#14"
+  - "#15"
+related_docs:
+  - ../confighub-scan/confighub/QUICKSTART.md
+  - ../confighub-scan/docs/FLAGSHIP-WALKTHROUGH.md
+  - ../confighub-scan/docs/CONFIGHUB-INTEGRATION.md
+notes:
+  - This recipe assumes the user already knows which governed file or repo owns the fix; use the diagnostic recipe first if that is still ambiguous.

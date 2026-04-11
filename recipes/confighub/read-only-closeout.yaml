@@ -1,0 +1,54 @@
+schema_version: operator-recipe-v1
+id: RECIPE-CONFIGHUB-0004
+slug: read-only-closeout
+title: Read-only closeout
+summary: >
+  Finish an investigation or promotion conversation without making more changes:
+  capture the current authoritative result, the richer advisory context, and the
+  repo-vs-live story in one compact receipt set.
+workflow_family: promotion
+when_to_use:
+  - You need to hand a governed app back to a human owner with a clear “safe to promote” or “still blocked” answer.
+  - The goal is evidence, not another mutation.
+read_only_first:
+  - description: Capture the current authoritative validation result for the exact unit and revision under discussion.
+    command: >
+      cub function do --space <space> --worker confighub-scan-functions --where
+      "Slug='<unit>'" validate-unit --wait --output-json > /tmp/validation.json
+    expected_signal: >
+      `/tmp/validation.json` gives you the pass/fail answer for the governed
+      revision that matters.
+  - description: Capture the richer advisory scan so the closeout includes the same findings context humans usually ask for next.
+    command: >
+      cub function do --space <space> --worker confighub-scan-functions --where
+      "Slug='<unit>'" scan-unit --wait --output-json > /tmp/scan-unit.json
+    expected_signal: >
+      `/tmp/scan-unit.json` carries the richer findings, remediation, and
+      evidence detail.
+  - description: If GitOps ownership is in play, capture the repo-vs-live comparison as the third receipt.
+    command: examples/gitops-demo-packet/repo-and-snapshot.sh
+    expected_signal: >
+      Comparison output clarifies whether remaining risk is in source intent,
+      runtime drift, or reconcile lag.
+mutating_steps: []
+success_looks_like:
+  - You can give a one-sentence promotion answer tied to one exact governed revision.
+  - The closeout includes authoritative validation, richer advisory detail, and GitOps comparison evidence when relevant.
+  - A human reviewer can tell whether the next step is promote, hold, or fix source intent without rerunning the whole investigation.
+do_not_do:
+  - Do not mutate the cluster or unit during a read-only closeout.
+  - Do not claim a promotion is safe based only on advisory findings.
+  - Do not leave the handoff without the actual receipt paths or outputs you used.
+related_tools:
+  - cub
+  - confighub-scan
+  - git
+related_issues:
+  - "#14"
+  - "#15"
+related_docs:
+  - ../confighub-scan/docs/FLAGSHIP-WALKTHROUGH.md
+  - ../confighub-scan/docs/INTENT-VS-LIVE-EVIDENCE.md
+  - ../confighub-scan/docs/START-HERE.md
+notes:
+  - This recipe is intentionally read-only. If the answer is “blocked,” route back to the governed-fix recipe instead of improvising a live edit.
