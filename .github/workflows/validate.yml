@@ -15,6 +15,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Checkout confighub-scan source
+        id: scan_checkout
+        continue-on-error: true
         uses: actions/checkout@v4
         with:
           repository: confighubai/confighub-scan
@@ -28,5 +30,28 @@ jobs:
       - name: Install Python dependencies
         run: python3 -m pip install --upgrade pip pyyaml jsonschema
 
-      - name: Run repo-native validation
+      - name: Run full repo-native validation
+        if: steps.scan_checkout.outcome == 'success'
         run: make validate FIRST_WAVE_SOURCE_REPO=confighub-scan-source
+
+      - name: Run repo-native validation without sibling checkout
+        if: steps.scan_checkout.outcome != 'success'
+        shell: bash
+        run: |
+          echo "Skipping validate-copy-manifest because confighub-scan checkout is unavailable in this workflow context."
+          make test-python
+          python3 scripts/build-control-taxonomy-summary.py --check
+          python3 scripts/build-control-framework-bundle.py --check
+          python3 scripts/build-framework-coverage-report.py --check
+          python3 scripts/build-bundle-manifest.py --check
+          python3 scripts/build-cross-tool-mapping.py --check
+          python3 scripts/validate-external-evidence-schema.py
+          if [ -f scripts/validate-operator-recipes.py ]; then
+            python3 scripts/validate-operator-recipes.py
+          fi
+          if [ -f scripts/validate-control-projections.py ]; then
+            python3 scripts/validate-control-projections.py
+          fi
+          if [ -f test/test-validate-control-projections.py ]; then
+            python3 -m unittest test/test-validate-control-projections.py
+          fi
