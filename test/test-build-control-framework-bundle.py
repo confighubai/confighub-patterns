@@ -71,6 +71,54 @@ class BuildControlFrameworkBundleTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("missing catalog entry", result.stdout + result.stderr)
 
+    def test_check_ignores_machine_local_path_fields(self) -> None:
+        fixture_root = FIXTURES / "valid"
+        with tempfile.TemporaryDirectory() as tmpdir:
+            out_path = Path(tmpdir) / "bundle.json"
+            build_result = subprocess.run(
+                [
+                    "python3",
+                    str(SCRIPT),
+                    "--repo-root",
+                    str(fixture_root),
+                    "--summary",
+                    str(fixture_root / "summary.json"),
+                    "--catalog",
+                    str(fixture_root / "catalog.json"),
+                    "--out",
+                    str(out_path),
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(build_result.returncode, 0, build_result.stderr or build_result.stdout)
+            bundle = json.loads(out_path.read_text(encoding="utf-8"))
+            bundle["repo_root"] = "/tmp/other-machine/confighub-patterns"
+            bundle["source_summary"] = "/tmp/other-machine/summary.json"
+            bundle["source_catalog"] = "/tmp/other-machine/catalog.json"
+            out_path.write_text(json.dumps(bundle, indent=2) + "\n", encoding="utf-8")
+
+            check_result = subprocess.run(
+                [
+                    "python3",
+                    str(SCRIPT),
+                    "--repo-root",
+                    str(fixture_root),
+                    "--summary",
+                    str(fixture_root / "summary.json"),
+                    "--catalog",
+                    str(fixture_root / "catalog.json"),
+                    "--out",
+                    str(out_path),
+                    "--check",
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(check_result.returncode, 0, check_result.stderr or check_result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

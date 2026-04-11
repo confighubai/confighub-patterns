@@ -96,6 +96,61 @@ class BuildFrameworkCoverageReportTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("schema_version must be", result.stdout + result.stderr)
 
+    def test_check_ignores_machine_local_path_fields(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            bundle = root / "bundle.json"
+            output = root / "report.json"
+            self.write_json(
+                bundle,
+                {
+                    "schema_version": "control-framework-bundle-v1",
+                    "controls": [
+                        {
+                            "id": "CTRL-GITOPS-0001",
+                            "slug": "gitops-health",
+                            "name": "GitOps health",
+                            "family": "gitops-operators",
+                            "severity": "high",
+                            "supported_surfaces": ["live_state"],
+                            "supported_consumers": ["cli"],
+                            "detection_modes": ["native_rule"],
+                            "pattern_refs": [{"id": "CCVE-2025-0001"}],
+                        }
+                    ],
+                    "frameworks": [
+                        {
+                            "id": "FRM-PLATFORM-0001",
+                            "slug": "platform-best",
+                            "name": "Platform best",
+                            "family": "platform-best",
+                            "maturity": "seeded",
+                            "platforms": ["kubernetes"],
+                            "tags": ["platform"],
+                            "control_ids": ["CTRL-GITOPS-0001"],
+                        }
+                    ],
+                },
+            )
+            build_result = subprocess.run(
+                ["python3", str(SCRIPT), "--bundle", str(bundle), "--out", str(output)],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(build_result.returncode, 0, build_result.stderr or build_result.stdout)
+            report = json.loads(output.read_text(encoding="utf-8"))
+            report["source_bundle"] = "/tmp/other-machine/bundle.json"
+            output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+
+            check_result = subprocess.run(
+                ["python3", str(SCRIPT), "--bundle", str(bundle), "--out", str(output), "--check"],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(check_result.returncode, 0, check_result.stderr or check_result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

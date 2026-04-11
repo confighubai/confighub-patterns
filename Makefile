@@ -7,6 +7,7 @@ test-python:
 	python3 test/test-build-control-taxonomy-summary.py
 	python3 test/test-build-control-framework-bundle.py
 	python3 test/test-build-framework-coverage-report.py
+	python3 test/test-build-first-wave-copy-manifest.py
 	@if [ -f test/test-validate-control-projections.py ]; then \
 		python3 test/test-validate-control-projections.py; \
 	fi
