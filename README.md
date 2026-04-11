@@ -133,6 +133,7 @@ are in the right repo.
 - `../confighub-scan/README.md`
 - `../confighub-scan/docs/START-HERE.md`
 - `docs/MIGRATION-STATUS.md`
+- `docs/REMEDIES-DECISION.md`
 - `docs/TAXONOMY.md`
 - `docs/BUNDLE-PROJECTIONS.md`
 - `dist/bundle-manifest-v1.json`

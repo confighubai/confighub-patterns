@@ -33,8 +33,8 @@ standalone cub-based scan, and wrapper CLIs.
 ## Repo Boundary
 
 Expected long-term split:
-- `confighub-patterns`: patterns, controls, frameworks, mappings, remedies,
-  schema, quality inputs, runtime bundles
+- `confighub-patterns`: patterns, controls, frameworks, mappings, remediation
+  metadata, schema, quality inputs, runtime bundles
 - `confighub-scan`: engine, adapters, findings model, local bundle consumption,
   engine quality reports
 - ConfigHub/SDK: connected worker execution and orchestration

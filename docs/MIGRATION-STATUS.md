@@ -60,7 +60,7 @@ The target taxonomy is now explicit:
 - `frameworks/` for grouped views over controls
 
 Runtime rule:
-- controls, mappings, remedies, and released bundles belong here
+- controls, mappings, remediation metadata, and released bundles belong here
 - executable detector rules stay in `confighub-scan`
 - ConfigHub functions, standalone cub-based scan, and wrappers all consume the
   same released bundles
