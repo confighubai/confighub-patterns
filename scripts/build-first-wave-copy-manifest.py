@@ -190,6 +190,10 @@ def check_manifest(path: Path, manifest: dict[str, Any]) -> int:
     expected = dict(manifest)
     current.pop("generated_at", None)
     expected.pop("generated_at", None)
+    current["source_repo"] = "<normalized>"
+    expected["source_repo"] = "<normalized>"
+    current["target_repo"] = "<normalized>"
+    expected["target_repo"] = "<normalized>"
     if current != expected:
         print(f"manifest out of date: {path}")
         return 1
