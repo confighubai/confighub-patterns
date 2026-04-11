@@ -118,6 +118,24 @@ Likely early framework views:
 - cluster-hardening
 - platform-best
 
+## 8. Managed Cluster Hardening
+
+Candidate control themes:
+- private endpoint and private node posture
+- managed-cluster network policy enablement
+- provider-native identity and RBAC choices
+- registry and image-scanning posture
+- external secret storage preference in managed environments
+
+Initial framework decision:
+- start with one shared `managed-cluster-hardening` family if this gets
+  promoted
+- do not split by provider until canonical pattern coverage and operator demand
+  clearly justify it
+
+See:
+- `docs/MANAGED-CLUSTER-HARDENING-SEED.md`
+
 ## Promotion Rule
 
 Use controls when we want a stable, operator-facing check.
